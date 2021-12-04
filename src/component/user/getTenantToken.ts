@@ -1,5 +1,5 @@
 import env from '../../constants/env';
-import * as TBUserConnecter from '../../application/thingsboardConnecter/user';
+import * as TBUserConnecter from '../../interface/thingsboardConnecter/user';
 import WinstonLogger, { simpleMsg } from '../../helpers/loggers';
 import checkAxiosError from '../../helpers/checkAxiosError';
 import { SearchTenantAdminRes, SearchTenantRes } from '../../types/user';
