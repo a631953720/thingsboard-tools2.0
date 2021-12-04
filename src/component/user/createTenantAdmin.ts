@@ -18,5 +18,5 @@ export default async function createTenantAdmin(token: string) {
 
     const newTenantAdminId = newTenantAdminInfo.id.id;
     loggers.debug({ createTenantAdminName: newTenantAdminInfo.name }, 'Create new tenant admin');
-    return newTenantAdminId as string;
+    return newTenantAdminId;
 }
