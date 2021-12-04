@@ -15,7 +15,7 @@ const getTenantProfile = (tenantAdminId: string) => ({
     lastName: env.TB_User.tenantName,
 });
 
-export default async function createTenantAdmin(token: string, tenantAdminId: string) {
+export default async function createTenant(token: string, tenantAdminId: string) {
     const newTenantAdminInfo = await TBUserConnecter.createTenant(
         token,
         tenantAdminId,
