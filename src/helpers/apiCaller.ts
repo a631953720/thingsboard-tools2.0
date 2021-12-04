@@ -49,10 +49,7 @@ async function APICaller(configs: AxiosRequestConfig) {
             };
 
             // showErrorLog('APICaller error', errorMessage);
-            loggers.error({
-                type: 'APICaller error',
-                message: errorMessage,
-            });
+            loggers.error(errorMessage, 'APICaller error 1');
 
             return errorMessage;
             // eslint-disable-next-line no-else-return
@@ -60,20 +57,14 @@ async function APICaller(configs: AxiosRequestConfig) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
-            loggers.error({
-                type: 'APICaller error',
-                message: error.request,
-            });
+            loggers.error({ message: error.request }, 'APICaller error 2');
             return {
                 ...defaultError,
                 data: error.request,
             };
         } else {
             // Something happened in setting up the request that triggered an Error
-            loggers.error({
-                type: 'APICaller error',
-                message: error.message,
-            });
+            loggers.error({ message: error.message }, 'APICaller error 3');
             return {
                 ...defaultError,
                 data: {
