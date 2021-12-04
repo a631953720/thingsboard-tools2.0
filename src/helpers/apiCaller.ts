@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import loggers from './loggers';
+import WinstonLogger from './loggers';
 
-const { showErrorLog } = loggers;
+const loggers = new WinstonLogger({ type: 'API caller' });
 
 const defaultError = {
     status: 500,
@@ -49,7 +49,7 @@ async function APICaller(configs: AxiosRequestConfig) {
             };
 
             // showErrorLog('APICaller error', errorMessage);
-            showErrorLog({
+            loggers.error({
                 type: 'APICaller error',
                 message: errorMessage,
             });
@@ -60,7 +60,7 @@ async function APICaller(configs: AxiosRequestConfig) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
-            showErrorLog({
+            loggers.error({
                 type: 'APICaller error',
                 message: error.request,
             });
@@ -70,7 +70,7 @@ async function APICaller(configs: AxiosRequestConfig) {
             };
         } else {
             // Something happened in setting up the request that triggered an Error
-            showErrorLog({
+            loggers.error({
                 type: 'APICaller error',
                 message: error.message,
             });

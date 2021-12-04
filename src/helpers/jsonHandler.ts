@@ -1,13 +1,13 @@
-import loggers from './loggers';
+import WinstonLogger from './loggers';
 
-const { showErrorLog } = loggers;
+const loggers = new WinstonLogger({ type: 'API caller' });
 
 export function jsonParse(params: any) {
     try {
         const jsonObject = JSON.parse(params);
         return jsonObject;
     } catch (error) {
-        showErrorLog({
+        loggers.error({
             type: 'Json parse',
             message: 'jsonParser error',
         });
@@ -20,7 +20,7 @@ export function jsonStringify(params: any) {
         const jsonString = JSON.stringify(params);
         return jsonString;
     } catch (error) {
-        showErrorLog({
+        loggers.error({
             type: 'Json stringify',
             message: 'jsonStringify error',
         });
