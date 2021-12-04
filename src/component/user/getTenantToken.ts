@@ -53,7 +53,10 @@ async function getTenantId(token: string, tenantInfo:SearchTenantRes, tenantAdmi
 
 async function getTenantToken(adminToken: string, tenantId: string) {
     const tenantInfo = await loginTenant(adminToken, tenantId);
-    if (checkAxiosError(tenantInfo)) return '';
+    if (checkAxiosError(tenantInfo)) {
+        simpleMsg('Get tenant token error');
+        return '';
+    }
     const tenantToken = tenantInfo.token;
     simpleMsg(`Get tenant token success: ${tenantToken}`);
     return tenantToken;
@@ -61,22 +64,26 @@ async function getTenantToken(adminToken: string, tenantId: string) {
 
 export default async function tryGetTenantToken() {
     const adminToken = await getSystemAdminToken();
-
-    // 1. 檢查Tenant admin是否存在並取得id
+    // 1. 搜尋tenant admin是否存在
     // eslint-disable-next-line max-len
     const tenantAdminsInfo = await searchTenantAdmin(adminToken, tenantAdminName);
     if (checkAxiosError(tenantAdminsInfo)) return '';
 
-    // 2. 檢查Tenant是否存在並取得Tenant id
+    // 2. 取得Tenant admin id
     const tenantAdminId = await getTenantAdminId(adminToken, tenantAdminsInfo);
+
+    // 3. 搜尋Tenant是否存在
     const searchTenantInfo = await searchTenant(
         adminToken,
         tenantAdminId,
         tenantEmail,
     );
+    if (checkAxiosError(searchTenantInfo)) return '';
+
+    // 4. 取得Tenant id
     const tenantId = await getTenantId(adminToken, searchTenantInfo, tenantAdminId);
 
-    // 3. 取得Tenant token
+    // 5. 取得Tenant token
     const tenantToken = getTenantToken(adminToken, tenantId);
 
     return tenantToken;
