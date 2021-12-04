@@ -1,9 +1,9 @@
 import express from 'express';
-import ENV from './constants/env';
-import loggers from './helpers/loggers';
+import env from './constants/env';
+import { simpleMsg } from './helpers/loggers';
 
 const app = express();
-const { port } = ENV.Server;
+const { port } = env.Server;
 
 app.get('/', (req, res) => {
     res.send('Hello, World!!');
@@ -11,5 +11,5 @@ app.get('/', (req, res) => {
 
 app.listen(
     port,
-    () => loggers.showSimpleMessage(`http server is running at port ${port}.`),
+    () => simpleMsg(`http server is running at port ${port}.`),
 );

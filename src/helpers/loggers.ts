@@ -1,64 +1,68 @@
-import ENV from '../constants/env';
+import env from '../constants/env';
+import winstonLoggers from './createWinstonLogger';
 
-import logger from './createWinstonLogger';
-
-const { isDebug } = ENV.Server;
+const { isDebug } = env.Server;
 const {
     CommonLoggerConfig,
     ShowSimpleMessage,
-} = logger;
+} = winstonLoggers;
 
-type CommonLoggerProps = {
-    type: string,
-    message: any
+type LoggersProps = {
+    type: string
 };
 
-function showDebugLog({ type, message }: CommonLoggerProps) {
-    if (isDebug) {
-        CommonLoggerConfig.info({
-            label: `[${type}]`,
-            message,
+export default class Loggers {
+    private type: string;
+
+    constructor({ type }: LoggersProps) {
+        this.type = type;
+    }
+
+    debug(message: any, action = '') {
+        if (isDebug) {
+            CommonLoggerConfig.info({
+                label: `[${this.type}]`,
+                message: {
+                    action,
+                    message,
+                },
+            });
+        }
+    }
+
+    error(message: any, action = '') {
+        CommonLoggerConfig.error({
+            label: `[${this.type}]`,
+            message: {
+                action,
+                message,
+            },
+        });
+    }
+
+    warning(message: any, action = '') {
+        CommonLoggerConfig.warn({
+            label: `[${this.type}]`,
+            message: {
+                action,
+                message,
+            },
         });
     }
 }
 
-function showWarningLog({ type, message }: CommonLoggerProps) {
-    CommonLoggerConfig.warn({
-        label: `[${type}]`,
-        message,
-    });
-}
+export const simpleMsg = ShowSimpleMessage.info.bind(ShowSimpleMessage);
 
-function showErrorLog({ type, message }: CommonLoggerProps) {
-    CommonLoggerConfig.error({
-        label: `[${type}]`,
-        message,
-    });
-}
-
-const loggers = {
-    showDebugLog,
-    showErrorLog,
-    showWarningLog,
-    // https://github.com/winstonjs/winston/issues/1591
-    // 不用bind，會出現self._addDefaultMeta is not a function的錯誤
-    showSimpleMessage: ShowSimpleMessage.info.bind(ShowSimpleMessage),
-};
-
-export default loggers;
-
+const testLogger = new Loggers({ type: 'Winston logger test' });
 // 下面可用來測試功能是否正常
-loggers.showSimpleMessage('----------logger test start----------');
-loggers.showDebugLog({
-    type: 'debug',
+simpleMsg('----------logger test start----------');
+testLogger.debug({
     message: 'debug',
 });
-loggers.showErrorLog({
-    type: 'error',
+testLogger.error({
     message: 'error',
 });
-loggers.showWarningLog({
-    type: 'warning',
+testLogger.warning({
     message: 'warning',
 });
-loggers.showSimpleMessage('----------logger test end-----------');
+simpleMsg('----------logger test end-----------');
