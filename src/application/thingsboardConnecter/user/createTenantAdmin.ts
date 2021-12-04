@@ -9,6 +9,16 @@ type TenantAdminsProfileProps = {
     title: string
 };
 
+type Response = {
+    status: number
+    id: { // API 成功才會有
+        entityType: string
+        id: string
+    },
+    name: string
+    email: string
+};
+
 export default function createTenantAdmins(
     adminToken: string,
     tenantAdminsProfile: TenantAdminsProfileProps,
@@ -22,5 +32,5 @@ export default function createTenantAdmins(
             'X-Authorization': `Bearer ${adminToken}`,
         },
         data: jsonStringify(tenantAdminsProfile),
-    });
+    }) as Promise<Response>;
 }

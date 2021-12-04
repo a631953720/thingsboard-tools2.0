@@ -10,15 +10,20 @@ const adminProfile = {
     password: env.TB_User.systemAdminPassword,
 };
 
-export default async function getSystemAdminToken() {
+type Response = {
+    status: number
+    token: string
+    refreshToken: string
+};
+
+export default function loginSystemAdminToken() {
     loggers.debug(adminProfile, 'Login admin account');
-    const response = await APICaller({
+    return APICaller({
         method: 'post',
         url: `http://${env.TB.ip}:${env.TB.port}/api/auth/login`,
         headers: {
             'Content-Type': 'application/json',
         },
         data: jsonStringify(adminProfile),
-    });
-    return response;
+    }) as Promise<Response>;
 }

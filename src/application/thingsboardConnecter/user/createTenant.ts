@@ -5,6 +5,18 @@ import WinstonLogger from '../../../helpers/loggers';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
+type Response = {
+    status: number
+    id: { // API 成功才會有
+        entityType: string
+        id: string
+    }
+    name: string
+    lastName: string
+    firstName: string
+    email: string
+};
+
 export default function createTenant(token: string, tenantAdminId: string, profile: any) {
     loggers.debug({ targetTenantAdmin: tenantAdminId }, 'Creat Tenant account');
     return APICaller({
@@ -15,5 +27,5 @@ export default function createTenant(token: string, tenantAdminId: string, profi
             'X-Authorization': `Bearer ${token}`,
         },
         data: jsonStringify(profile),
-    });
+    }) as Promise<Response>;
 }
