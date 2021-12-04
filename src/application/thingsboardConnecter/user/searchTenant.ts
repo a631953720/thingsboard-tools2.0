@@ -1,26 +1,9 @@
 import env from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';
+import { SearchTenantRes } from '../../../types/user';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
-
-type TenantEntity = {
-    id: {
-        id: string
-        entityType: string
-    },
-    name: string
-    firstName: string
-    lastName: string
-}
-
-type Response = {
-    status: number
-    data: Array<TenantEntity>
-    hasNext: boolean
-    totalElements: number
-    totalPages: number
-}
 
 export default function searchTenant(token: string, tenantAdminId: string, tenantEmail: string) {
     loggers.debug({
@@ -34,5 +17,5 @@ export default function searchTenant(token: string, tenantAdminId: string, tenan
             'Content-Type': 'application/json',
             'X-Authorization': `Bearer ${token}`,
         },
-    }) as Promise<Response>;
+    }) as Promise<SearchTenantRes>;
 }
