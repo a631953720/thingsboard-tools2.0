@@ -5,7 +5,18 @@ import checkAxiosError from '../../helpers/checkAxiosError';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 
-const getTenantProfile = (tenantAdminId: string) => ({
+type TenantProfile = {
+    authority: string,
+    email: string,
+    tenantId: {
+        entityType: string,
+        id: string,
+    },
+    firstName: string,
+    lastName: string,
+}
+
+const getTenantProfile = (tenantAdminId: string): TenantProfile => ({
     authority: 'TENANT_ADMIN',
     email: env.TB_User.tenantEmail,
     tenantId: {
@@ -16,11 +27,15 @@ const getTenantProfile = (tenantAdminId: string) => ({
     lastName: env.TB_User.tenantName,
 });
 
-export default async function createTenant(token: string, tenantAdminId: string) {
+export default async function createTenant(
+    token: string,
+    tenantAdminId: string,
+    profile?: TenantProfile,
+) {
     const newTenantInfo = await TBUserConnecter.createTenant(
         token,
         tenantAdminId,
-        getTenantProfile(tenantAdminId),
+        profile || getTenantProfile(tenantAdminId),
     );
 
     if (checkAxiosError(newTenantInfo)) {
