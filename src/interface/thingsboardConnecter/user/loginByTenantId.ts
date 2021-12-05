@@ -10,7 +10,7 @@ type LoginTenantRes = {
     refreshToken: string
 };
 
-export default function loginTenant(token: string, tenantId: string) {
+export default function loginByTenantId(token: string, tenantId: string) {
     loggers.debug({ tenantId }, 'Login tenant account');
     return APICaller({
         method: 'get',
