@@ -25,7 +25,7 @@ async function getSystemAdminToken() {
     return response.token;
 }
 
-async function getTenantAdminId(token: string, tenantAdminsInfo: SearchTenantAdminRes) {
+async function getFirstTenantAdminId(token: string, tenantAdminsInfo: SearchTenantAdminRes) {
     let tenantAdminId;
     if (checkTenantAdminOrTenantExist(tenantAdminsInfo)) {
         const firstTenantAdminId = tenantAdminsInfo.data[0].id.id;
@@ -38,7 +38,7 @@ async function getTenantAdminId(token: string, tenantAdminsInfo: SearchTenantAdm
     return tenantAdminId;
 }
 
-async function getTenantId(token: string, tenantInfo: SearchTenantRes, tenantAdminId: string) {
+async function getFirstTenantId(token: string, tenantInfo: SearchTenantRes, tenantAdminId: string) {
     let tenantId;
     if (checkTenantAdminOrTenantExist(tenantInfo)) {
         const firstTenantId = tenantInfo.data[0].id.id;
@@ -67,7 +67,7 @@ type GetTenantTokenRes = {
     tenantToken: string
 }
 
-export default async function tryGetTenantToken(): Promise<GetTenantTokenRes> {
+export default async function getOrCreateNewTenantToGeToken(): Promise<GetTenantTokenRes> {
     const adminToken = await getSystemAdminToken();
 
     // 1. 搜尋tenant admin是否存在
@@ -75,14 +75,14 @@ export default async function tryGetTenantToken(): Promise<GetTenantTokenRes> {
     if (checkStatusError(tenantAdminsInfo)) return { status: 500, tenantToken: '' };
 
     // 2. 取得Tenant admin id
-    const tenantAdminId = await getTenantAdminId(adminToken, tenantAdminsInfo);
+    const tenantAdminId = await getFirstTenantAdminId(adminToken, tenantAdminsInfo);
 
     // 3. 搜尋Tenant是否存在
     const searchTenantInfo = await searchTenant(adminToken, tenantAdminId, tenantEmail);
     if (checkStatusError(searchTenantInfo)) return { status: 500, tenantToken: '' };
 
     // 4. 取得Tenant id
-    const tenantId = await getTenantId(adminToken, searchTenantInfo, tenantAdminId);
+    const tenantId = await getFirstTenantId(adminToken, searchTenantInfo, tenantAdminId);
 
     // 5. 取得Tenant token
     const tenantToken = await getTenantToken(adminToken, tenantId);
