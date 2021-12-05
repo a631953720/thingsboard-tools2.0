@@ -39,10 +39,10 @@ export type SearchTenantRes = {
 }
 
 export type TenantProfileProps = {
-    authority: string,
+    authority: 'TENANT_ADMIN',
     email: string,
-    tenantId: {
-        entityType: string,
+    tenantId: { // Tenant admin id
+        entityType: 'TENANT',
         id: string,
     },
     firstName: string,
