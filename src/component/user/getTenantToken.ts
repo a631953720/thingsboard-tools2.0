@@ -78,11 +78,7 @@ export default async function tryGetTenantToken(): Promise<GetTenantTokenRes> {
     const tenantAdminId = await getTenantAdminId(adminToken, tenantAdminsInfo);
 
     // 3. 搜尋Tenant是否存在
-    const searchTenantInfo = await searchTenant(
-        adminToken,
-        tenantAdminId,
-        tenantEmail,
-    );
+    const searchTenantInfo = await searchTenant(adminToken, tenantAdminId, tenantEmail);
     if (checkStatusError(searchTenantInfo)) return { status: 500, tenantToken: '' };
 
     // 4. 取得Tenant id
