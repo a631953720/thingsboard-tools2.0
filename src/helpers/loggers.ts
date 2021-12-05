@@ -56,13 +56,7 @@ export const simpleMsg = ShowSimpleMessage.info.bind(ShowSimpleMessage);
 const testLogger = new Loggers({ type: 'Winston logger test' });
 // 下面可用來測試功能是否正常
 simpleMsg('----------logger test start----------');
-testLogger.debug({
-    message: 'debug',
-});
-testLogger.error({
-    message: 'error',
-});
-testLogger.warning({
-    message: 'warning',
-});
+testLogger.debug('debug');
+testLogger.error('error');
+testLogger.warning('warning');
 simpleMsg('----------logger test end-----------');
