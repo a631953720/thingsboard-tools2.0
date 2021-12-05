@@ -1,3 +1,8 @@
+export type SystemAdminProfileProps = {
+    username: string
+    password: string
+}
+
 type TenantAdminEntity = {
     id: {
         id: string
