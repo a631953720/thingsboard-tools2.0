@@ -1,7 +1,7 @@
 import env from '../../constants/env';
 import * as TBUserConnecter from '../../interface/thingsboardConnecter/user';
 import WinstonLogger, { simpleMsg } from '../../helpers/loggers';
-import checkAxiosError from '../../helpers/checkAxiosError';
+import checkStatusError from '../../helpers/checkStatusError';
 import { SearchTenantAdminRes, SearchTenantRes } from '../../types/user';
 import checkTenantAdminOrTenantExist from './checkTenantAdminOrTenantExist';
 import createTenantAdmin from './createTenantAdmin';
@@ -19,13 +19,13 @@ const {
 async function getSystemAdminToken() {
     loggers.debug('Try to get admin token', 'Login system admin');
     const response = await loginSystemAdmin();
-    if (checkAxiosError(response)) {
+    if (checkStatusError(response)) {
         return '';
     }
     return response.token;
 }
 
-async function getTenantAdminId(token: string, tenantAdminsInfo:SearchTenantAdminRes) {
+async function getTenantAdminId(token: string, tenantAdminsInfo: SearchTenantAdminRes) {
     let tenantAdminId;
     if (checkTenantAdminOrTenantExist(tenantAdminsInfo)) {
         const firstTenantAdminId = tenantAdminsInfo.data[0].id.id;
@@ -38,7 +38,7 @@ async function getTenantAdminId(token: string, tenantAdminsInfo:SearchTenantAdmi
     return tenantAdminId;
 }
 
-async function getTenantId(token: string, tenantInfo:SearchTenantRes, tenantAdminId: string) {
+async function getTenantId(token: string, tenantInfo: SearchTenantRes, tenantAdminId: string) {
     let tenantId;
     if (checkTenantAdminOrTenantExist(tenantInfo)) {
         const firstTenantId = tenantInfo.data[0].id.id;
@@ -53,21 +53,26 @@ async function getTenantId(token: string, tenantInfo:SearchTenantRes, tenantAdmi
 
 async function getTenantToken(adminToken: string, tenantId: string) {
     const tenantInfo = await loginTenant(adminToken, tenantId);
-    if (checkAxiosError(tenantInfo)) {
+    if (checkStatusError(tenantInfo)) {
         simpleMsg('Get tenant token error');
         return '';
     }
     const tenantToken = tenantInfo.token;
-    simpleMsg(`Get tenant token success: ${tenantToken}`);
+    simpleMsg('Get tenant token success');
     return tenantToken;
 }
 
-export default async function tryGetTenantToken() {
+type GetTenantTokenRes = {
+    status: number
+    tenantToken: string
+}
+
+export default async function tryGetTenantToken(): Promise<GetTenantTokenRes> {
     const adminToken = await getSystemAdminToken();
+
     // 1. 搜尋tenant admin是否存在
-    // eslint-disable-next-line max-len
     const tenantAdminsInfo = await searchTenantAdmin(adminToken, tenantAdminName);
-    if (checkAxiosError(tenantAdminsInfo)) return '';
+    if (checkStatusError(tenantAdminsInfo)) return { status: 500, tenantToken: '' };
 
     // 2. 取得Tenant admin id
     const tenantAdminId = await getTenantAdminId(adminToken, tenantAdminsInfo);
@@ -78,13 +83,13 @@ export default async function tryGetTenantToken() {
         tenantAdminId,
         tenantEmail,
     );
-    if (checkAxiosError(searchTenantInfo)) return '';
+    if (checkStatusError(searchTenantInfo)) return { status: 500, tenantToken: '' };
 
     // 4. 取得Tenant id
     const tenantId = await getTenantId(adminToken, searchTenantInfo, tenantAdminId);
 
     // 5. 取得Tenant token
-    const tenantToken = getTenantToken(adminToken, tenantId);
+    const tenantToken = await getTenantToken(adminToken, tenantId);
 
-    return tenantToken;
+    return { status: 200, tenantToken };
 }
