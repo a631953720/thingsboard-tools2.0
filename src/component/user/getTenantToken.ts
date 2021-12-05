@@ -10,7 +10,7 @@ import createTenant from './createTenant';
 const loggers = new WinstonLogger({ type: 'User component' });
 const { tenantAdminName, tenantEmail } = env.TB_User;
 const {
-    loginSystemAdminToken,
+    loginSystemAdmin,
     searchTenantAdmin,
     searchTenant,
     loginTenant,
@@ -18,7 +18,7 @@ const {
 
 async function getSystemAdminToken() {
     loggers.debug('Try to get admin token', 'Login system admin');
-    const response = await loginSystemAdminToken();
+    const response = await loginSystemAdmin();
     if (checkAxiosError(response)) {
         return '';
     }

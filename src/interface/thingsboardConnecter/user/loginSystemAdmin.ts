@@ -10,13 +10,13 @@ const adminProfile = {
     password: env.TB_User.systemAdminPassword,
 };
 
-type Response = {
+type LoginSystemAdminRes = {
     status: number
     token: string
     refreshToken: string
 };
 
-export default function loginSystemAdminToken() {
+export default function loginSystemAdmin() {
     loggers.debug(adminProfile, 'Login admin account');
     return APICaller({
         method: 'post',
@@ -25,5 +25,5 @@ export default function loginSystemAdminToken() {
             'Content-Type': 'application/json',
         },
         data: jsonStringify(adminProfile),
-    }) as Promise<Response>;
+    }) as Promise<LoginSystemAdminRes>;
 }

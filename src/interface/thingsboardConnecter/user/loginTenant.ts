@@ -4,13 +4,13 @@ import WinstonLogger from '../../../helpers/loggers';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
-type Response = {
+type LoginTenantRes = {
     status: number
     token: string
     refreshToken: string
 };
 
-export default function getTenantToken(token: string, tenantId: string) {
+export default function loginTenant(token: string, tenantId: string) {
     loggers.debug({ tenantId }, 'Login tenant account');
     return APICaller({
         method: 'get',
@@ -19,5 +19,5 @@ export default function getTenantToken(token: string, tenantId: string) {
             'Content-Type': 'application/json',
             'X-Authorization': `Bearer ${token}`,
         },
-    }) as Promise<Response>;
+    }) as Promise<LoginTenantRes>;
 }

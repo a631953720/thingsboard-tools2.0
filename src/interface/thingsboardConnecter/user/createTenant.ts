@@ -5,7 +5,7 @@ import WinstonLogger from '../../../helpers/loggers';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
-type Response = {
+type CreateTenantRes = {
     status: number
     id: { // API 成功才會有
         entityType: string
@@ -27,5 +27,5 @@ export default function createTenant(token: string, tenantAdminId: string, profi
             'X-Authorization': `Bearer ${token}`,
         },
         data: jsonStringify(profile),
-    }) as Promise<Response>;
+    }) as Promise<CreateTenantRes>;
 }

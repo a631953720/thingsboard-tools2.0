@@ -9,7 +9,7 @@ type TenantAdminsProfileProps = {
     title: string
 };
 
-type Response = {
+type CreateTenantAdminRes = {
     status: number
     id: { // API 成功才會有
         entityType: string
@@ -19,7 +19,7 @@ type Response = {
     email: string
 };
 
-export default function createTenantAdmins(
+export default function createTenantAdmin(
     adminToken: string,
     tenantAdminsProfile: TenantAdminsProfileProps,
 ) {
@@ -32,5 +32,5 @@ export default function createTenantAdmins(
             'X-Authorization': `Bearer ${adminToken}`,
         },
         data: jsonStringify(tenantAdminsProfile),
-    }) as Promise<Response>;
+    }) as Promise<CreateTenantAdminRes>;
 }
