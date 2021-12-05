@@ -1,4 +1,4 @@
-import checkTenantAdminOrTenantExist from './checkTenantAdminOrTenantExist';
+import checkTenantAdminOrTenantExist from './helpers/checkTenantAdminOrTenantExist';
 import createTenantAdmin from './createTenantAdmin';
 import WinstonLogger from '../../helpers/loggers';
 import { SearchTenantAdminRes } from '../../types/user';
