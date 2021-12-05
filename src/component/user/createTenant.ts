@@ -2,21 +2,11 @@ import env from '../../constants/env';
 import * as TBUserConnecter from '../../interface/thingsboardConnecter/user';
 import WinstonLogger from '../../helpers/loggers';
 import checkStatusError from '../../helpers/checkStatusError';
+import { TenantProfileProps } from '../../types/user';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 
-type TenantProfile = {
-    authority: string,
-    email: string,
-    tenantId: {
-        entityType: string,
-        id: string,
-    },
-    firstName: string,
-    lastName: string,
-}
-
-const getTenantProfile = (tenantAdminId: string): TenantProfile => ({
+const getTenantProfile = (tenantAdminId: string): TenantProfileProps => ({
     authority: 'TENANT_ADMIN',
     email: env.TB_User.tenantEmail,
     tenantId: {
@@ -30,7 +20,7 @@ const getTenantProfile = (tenantAdminId: string): TenantProfile => ({
 export default async function createTenant(
     token: string,
     tenantAdminId: string,
-    profile?: TenantProfile,
+    profile?: TenantProfileProps,
 ) {
     const newTenantInfo = await TBUserConnecter.createTenant(
         token,

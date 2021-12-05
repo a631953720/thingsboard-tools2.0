@@ -32,3 +32,28 @@ export type SearchTenantRes = {
     totalElements: number
     totalPages: number
 }
+
+export type TenantProfileProps = {
+    authority: string,
+    email: string,
+    tenantId: {
+        entityType: string,
+        id: string,
+    },
+    firstName: string,
+    lastName: string,
+}
+
+export type TenantAdminsProfileProps = {
+    title: string
+    additionalInfo?: {
+        description: string
+    }
+    email?: string
+    country?: string
+    city?: string
+    state?: string
+    address?: string
+    address2?: string
+    phone?: string
+}

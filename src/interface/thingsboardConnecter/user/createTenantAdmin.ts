@@ -2,12 +2,9 @@ import env from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
+import { TenantAdminsProfileProps } from '../../../types/user';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
-
-type TenantAdminsProfileProps = {
-    title: string
-};
 
 type CreateTenantAdminRes = {
     status: number

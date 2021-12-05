@@ -2,6 +2,7 @@ import env from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
+import { TenantProfileProps } from '../../../types/user';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
@@ -17,7 +18,11 @@ type CreateTenantRes = {
     email: string
 };
 
-export default function createTenant(token: string, tenantAdminId: string, profile: any) {
+export default function createTenant(
+    token: string,
+    tenantAdminId: string,
+    profile: TenantProfileProps,
+) {
     loggers.debug({ targetTenantAdmin: tenantAdminId }, 'Creat Tenant account');
     return APICaller({
         method: 'post',
