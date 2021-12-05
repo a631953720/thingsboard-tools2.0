@@ -1,7 +1,7 @@
 import env from '../../constants/env';
 import * as TBUserConnecter from '../../interface/thingsboardConnecter/user';
 import WinstonLogger from '../../helpers/loggers';
-import checkAxiosError from '../../helpers/checkAxiosError';
+import checkStatusError from '../../helpers/checkStatusError';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 
@@ -38,7 +38,7 @@ export default async function createTenant(
         profile || getTenantProfile(tenantAdminId),
     );
 
-    if (checkAxiosError(newTenantInfo)) {
+    if (checkStatusError(newTenantInfo)) {
         loggers.error('Create Tenant error', 'Create new tenant');
         return '';
     }
