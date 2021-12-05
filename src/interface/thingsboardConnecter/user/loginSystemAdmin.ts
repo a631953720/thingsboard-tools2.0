@@ -2,13 +2,9 @@ import env from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
+import { SystemAdminProfileProps } from '../../../types/user';
 
 const loggers = new WinstonLogger({ type: 'System admin' });
-
-const adminProfile = {
-    username: env.TB_User.systemAdminEmail,
-    password: env.TB_User.systemAdminPassword,
-};
 
 type LoginSystemAdminRes = {
     status: number
@@ -16,7 +12,7 @@ type LoginSystemAdminRes = {
     refreshToken: string
 };
 
-export default function loginSystemAdmin() {
+export default function loginSystemAdmin(adminProfile: SystemAdminProfileProps) {
     loggers.debug(adminProfile, 'Login admin account');
     return APICaller({
         method: 'post',
