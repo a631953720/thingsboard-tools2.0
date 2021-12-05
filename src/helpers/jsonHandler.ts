@@ -7,10 +7,7 @@ export function jsonParse(params: any) {
         const jsonObject = JSON.parse(params);
         return jsonObject;
     } catch (error) {
-        loggers.error({
-            type: 'Json parse',
-            message: 'jsonParser error',
-        });
+        loggers.error('JsonParser error', 'Json handler');
         return params;
     }
 }
@@ -20,10 +17,7 @@ export function jsonStringify(params: any) {
         const jsonString = JSON.stringify(params);
         return jsonString;
     } catch (error) {
-        loggers.error({
-            type: 'Json stringify',
-            message: 'jsonStringify error',
-        });
+        loggers.error('JsonStringify error', 'Json handler');
         return params;
     }
 }
