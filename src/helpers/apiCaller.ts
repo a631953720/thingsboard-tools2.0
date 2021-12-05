@@ -3,21 +3,6 @@ import WinstonLogger from './loggers';
 
 const loggers = new WinstonLogger({ type: 'API caller' });
 
-const defaultError = {
-    status: 500,
-    data: {
-        message: 'Untreated error',
-    },
-};
-
-// eslint-disable-next-line no-unused-vars
-const defaultSuccess = {
-    status: 200,
-    data: {
-        message: 'Request success',
-    },
-};
-
 /**
  * @typedef {object} defaultError Default error object
  * @property {number} status
@@ -42,7 +27,6 @@ async function APICaller(configs: AxiosRequestConfig) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             const errorMessage = {
-                ...defaultError,
                 status: error.response.status,
                 data: error.response.data,
                 url: error.response.config.url,
@@ -59,14 +43,14 @@ async function APICaller(configs: AxiosRequestConfig) {
             // http.ClientRequest in node.js
             loggers.error({ message: error.request }, 'APICaller error 2');
             return {
-                ...defaultError,
+                status: 500,
                 data: error.request,
             };
         } else {
             // Something happened in setting up the request that triggered an Error
             loggers.error({ message: error.message }, 'APICaller error 3');
             return {
-                ...defaultError,
+                status: 500,
                 data: {
                     message: error.message,
                 },
