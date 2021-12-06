@@ -10,6 +10,7 @@ export default async function createTenantAdmin(
     token: string,
     tenantAdminProfile?: TenantAdminsProfileProps,
 ) {
+    let newTenantAdminId = '';
     const newTenantAdminInfo = await TBUserConnecter.createTenantAdmin(
         token,
         tenantAdminProfile ? { ...tenantAdminProfile } : { title: TB_USER.tenantAdminName },
@@ -17,10 +18,11 @@ export default async function createTenantAdmin(
 
     if (checkStatusError(newTenantAdminInfo)) {
         loggers.error('Create Tenant error', 'Create new tenant');
-        return '';
+        return newTenantAdminId;
     }
 
-    const newTenantAdminId = newTenantAdminInfo.id.id;
-    loggers.debug({ createTenantAdminName: newTenantAdminInfo.name }, 'Create new tenant admin');
+    newTenantAdminId = newTenantAdminInfo.id.id;
+    loggers.debug({ newTenantAdminId }, 'Create new tenant admin');
+
     return newTenantAdminId;
 }

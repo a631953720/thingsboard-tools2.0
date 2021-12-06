@@ -22,6 +22,7 @@ export default async function createTenant(
     tenantAdminId: string,
     profile?: TenantProfileProps,
 ) {
+    let newTenantId = '';
     const newTenantInfo = await TBUserConnecter.createTenant(
         token,
         tenantAdminId,
@@ -30,10 +31,10 @@ export default async function createTenant(
 
     if (checkStatusError(newTenantInfo)) {
         loggers.error('Create Tenant error', 'Create new tenant');
-        return '';
+        return newTenantId;
     }
 
-    const newTenantId = newTenantInfo.id.id;
+    newTenantId = newTenantInfo.id.id;
     loggers.debug({ newTenantInfo }, 'Create new tenant');
-    return newTenantId as string;
+    return newTenantId;
 }
