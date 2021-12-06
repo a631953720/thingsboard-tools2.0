@@ -6,22 +6,41 @@ import { TenantAdminsProfileProps } from '../../../types/user';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
-type CreateTenantAdminRes = {
+interface CreateTenantAdminRes {
     status: number
-    id: { // API 成功才會有
+    id?: { // API 成功才會有
         entityType: string
         id: string
     },
-    name: string
-    email: string
-};
+    name?: string
+    email?: string
+}
 
-export default function createTenantAdmin(
+class CreateTenantAdminDTO implements CreateTenantAdminRes {
+    status: number;
+
+    id: {
+        entityType: string,
+        id: string
+    };
+
+    name: string;
+
+    email: string;
+
+    constructor(data: any) {
+        this.status = data.status;
+        this.id = data.id;
+        this.name = data.name;
+        this.email = data.email;
+    }
+}
+
+export default async function createTenantAdmin(
     adminToken: string,
     tenantAdminsProfile: TenantAdminsProfileProps,
 ) {
-    loggers.debug(tenantAdminsProfile, 'Creat Tenant admin');
-    return APICaller({
+    const response = await APICaller({
         method: 'post',
         url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/tenant`,
         headers: {
@@ -30,4 +49,7 @@ export default function createTenantAdmin(
         },
         data: jsonStringify(tenantAdminsProfile),
     }) as Promise<CreateTenantAdminRes>;
+    const DTO = new CreateTenantAdminDTO(response);
+    loggers.debug({ tenantAdminsProfile, DTO }, 'Creat Tenant admin');
+    return DTO;
 }

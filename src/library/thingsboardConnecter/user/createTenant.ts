@@ -6,25 +6,50 @@ import { TenantProfileProps } from '../../../types/user';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
-type CreateTenantRes = {
+interface CreateTenantRes {
     status: number
-    id: { // API 成功才會有
+    id?: { // API 成功才會有
         entityType: string
         id: string
     }
-    name: string
-    lastName: string
-    firstName: string
-    email: string
-};
+    name?: string
+    lastName?: string
+    firstName?: string
+    email?: string
+}
 
-export default function createTenant(
+class CreateTenantDTO implements CreateTenantRes {
+    status: number;
+
+    id: {
+        entityType: string
+        id: string
+    };
+
+    name: string;
+
+    lastName: string;
+
+    firstName: string;
+
+    email: string;
+
+    constructor(data: any) {
+        this.status = data.status;
+        this.id = data.id;
+        this.name = data.name;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.email = data.email;
+    }
+}
+
+export default async function createTenant(
     token: string,
     tenantAdminId: string,
     profile: TenantProfileProps,
 ) {
-    loggers.debug({ targetTenantAdmin: tenantAdminId }, 'Creat Tenant account');
-    return APICaller({
+    const response = await APICaller({
         method: 'post',
         url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/user?sendActivationMail=false`,
         headers: {
@@ -32,5 +57,9 @@ export default function createTenant(
             'X-Authorization': `Bearer ${token}`,
         },
         data: jsonStringify(profile),
-    }) as Promise<CreateTenantRes>;
+    });
+
+    const DTO = new CreateTenantDTO(response);
+    loggers.debug({ targetTenantAdmin: tenantAdminId, DTO }, 'Creat Tenant account');
+    return DTO;
 }

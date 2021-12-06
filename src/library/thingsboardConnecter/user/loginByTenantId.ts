@@ -4,20 +4,36 @@ import WinstonLogger from '../../../helpers/loggers';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
-type LoginTenantRes = {
+interface LoginTenantRes {
     status: number
-    token: string
-    refreshToken: string
-};
+    token?: string
+    refreshToken?: string
+}
 
-export default function loginByTenantId(token: string, tenantId: string) {
-    loggers.debug({ tenantId }, 'Login tenant account');
-    return APICaller({
+class LoginTenantDTO implements LoginTenantRes {
+    status:number;
+
+    token:string;
+
+    refreshToken: string;
+
+    constructor(data: any) {
+        this.status = data.status;
+        this.token = data.token;
+        this.refreshToken = data.refreshToken;
+    }
+}
+
+export default async function loginByTenantId(token: string, tenantId: string) {
+    const reponse = await APICaller({
         method: 'get',
         url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/user/${tenantId}/token`,
         headers: {
             'Content-Type': 'application/json',
             'X-Authorization': `Bearer ${token}`,
         },
-    }) as Promise<LoginTenantRes>;
+    });
+    const DTO = new LoginTenantDTO(reponse);
+    loggers.debug({ tenantId, DTO }, 'Login tenant account');
+    return DTO;
 }
