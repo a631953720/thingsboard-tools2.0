@@ -1,22 +1,35 @@
 import express from 'express';
 import { simpleMsg } from '../../helpers/loggers';
-import { getOrCreateNewTenantToGetToken } from '../../controller/user';
+import {
+    getOrCreateNewTenantToGetToken,
+    getTenantTokenByTenantId,
+} from '../../controller/user';
 import checkStatusError from '../../helpers/checkStatusError';
 
 const router = express.Router();
 
 router.get('/test', (req, res) => {
-    simpleMsg(req);
     res.json('echo');
 });
 
-router.get('/getTenantToken', async (req, res) => {
-    simpleMsg(req);
-    const test = await getOrCreateNewTenantToGetToken();
-    if (checkStatusError(test)) {
-        res.status(test.status).json(test);
+// 若tenant或是tenant admin不存在會自動create
+router.get('/getOrCreateNewTenantToGetToken', async (req, res) => {
+    const response = await getOrCreateNewTenantToGetToken();
+    simpleMsg(`getOrCreateNewTenantToGetToken, status: ${response.status}`);
+    if (checkStatusError(response)) {
+        res.status(response.status).json(response);
     }
-    res.status(test.status).json(test.data);
+    res.status(response.status).json(response.data);
+});
+
+// 會自動登入systemAdmin，單純只靠tenant id取得token
+router.get('/getTenantTokenByTenantId/:tenantId', async (req, res) => {
+    const response = await getTenantTokenByTenantId(req.params.tenantId);
+    simpleMsg(`getTenantTokenByTenantId, status: ${response.status}`);
+    if (checkStatusError(response)) {
+        res.status(response.status).json(response);
+    }
+    res.status(response.status).json(response.data);
 });
 
 export default router;
