@@ -1,5 +1,5 @@
 import env from '../../constants/env';
-import * as TBUserConnecter from '../../interface/thingsboardConnecter/user';
+import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import { SystemAdminProfileProps } from '../../types/user';
