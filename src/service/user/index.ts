@@ -1,4 +1,3 @@
-export { default as getOrCreateNewTenantToGetToken } from './getOrCreateNewTenantToGetToken';
 export { default as createTenant } from './createTenant';
 export { default as createTenantAdmin } from './createTenantAdmin';
 export { default as getFirstTenantAdminId } from './getFirstTenantAdminId';
