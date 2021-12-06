@@ -50,7 +50,7 @@ const CommonLoggerConfig = createLogger({
         }),
         new transports.File({
             format: prettyPrint(), // Log file don't need color!
-            filename: './output/error.log',
+            filename: './logs/error.log',
             level: 'error',
         }),
     ],
