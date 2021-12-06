@@ -1,4 +1,4 @@
-import env from '../../../constants/env';
+import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';
 
@@ -14,7 +14,7 @@ export default function loginByTenantId(token: string, tenantId: string) {
     loggers.debug({ tenantId }, 'Login tenant account');
     return APICaller({
         method: 'get',
-        url: `http://${env.TB.ip}:${env.TB.port}/api/user/${tenantId}/token`,
+        url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/user/${tenantId}/token`,
         headers: {
             'Content-Type': 'application/json',
             'X-Authorization': `Bearer ${token}`,

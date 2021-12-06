@@ -8,25 +8,41 @@ dotenv.config({
     path: path.resolve(__dirname, `../../../${process.env.NODE_ENV}.env`),
 });
 
-const env = {
-    Server: {
-        port: process.env.PORT || '3000',
-        isDebug: process.env.DEBUT === 'true',
-    },
-    TB: {
-        ip: process.env.TB_SERVER_IP || '127.0.0.1',
-        port: process.env.TB_SERVER_PORT || '80',
-    },
-    TB_User: {
-        systemAdminEmail: process.env.TB_ADMIN_EMAIL || 'sysadmin@thingsboard.org',
-        systemAdminPassword: process.env.TB_ADMIN_PASSWORD || 'sysadmin',
-        tenantAdminName: process.env.TENANT_ADMIN_NAME || 'thingsboard-tools-tenant-admin',
-        tenantName: process.env.TENANT_NAME || 'thingsboard-tools-tenant',
-        tenantEmail: process.env.TENANT_EMAIL || 'test@gmail.com',
-    },
+export const SERVER = {
+    port: process.env.PORT || '3000',
+    isDebug: process.env.DEBUT === 'true',
 };
 
-console.log('project mode: ', process.env.NODE_ENV);
-console.log('project env: ', env);
+export const TB_SERVER = {
+    ip: process.env.TB_SERVER_IP || '127.0.0.1',
+    port: process.env.TB_SERVER_PORT || '80',
+};
 
-export default env;
+export const TB_USER = {
+    systemAdminEmail: process.env.TB_ADMIN_EMAIL || 'sysadmin@thingsboard.org',
+    systemAdminPassword: process.env.TB_ADMIN_PASSWORD || 'sysadmin',
+    tenantAdminName: process.env.TENANT_ADMIN_NAME || 'thingsboard-tools-tenant-admin',
+    tenantName: process.env.TENANT_NAME || 'thingsboard-tools-tenant',
+    tenantEmail: process.env.TENANT_EMAIL || 'test@gmail.com',
+};
+
+if (process.env.NODE_ENV === 'development') {
+    console.log('project env: ', {
+        mode: process.env.NODE_ENV,
+        SERVER,
+        TB_SERVER,
+        TB_USER,
+    });
+} else {
+    const stringLength = TB_USER.systemAdminPassword.length;
+    const hideString = String('*').repeat(stringLength);
+    console.log('project env: ', {
+        mode: process.env.NODE_ENV,
+        SERVER,
+        TB_SERVER,
+        TB_USER: {
+            ...TB_USER,
+            systemAdminPassword: TB_USER.systemAdminPassword.replace(/.*/i, hideString),
+        },
+    });
+}

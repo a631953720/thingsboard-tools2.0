@@ -1,4 +1,4 @@
-import env from '../../constants/env';
+import { TB_USER } from '../../constants/env';
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 import WinstonLogger from '../../helpers/loggers';
 import checkStatusError from '../../helpers/checkStatusError';
@@ -8,13 +8,13 @@ const loggers = new WinstonLogger({ type: 'User component' });
 
 const getTenantProfile = (tenantAdminId: string): TenantProfileProps => ({
     authority: 'TENANT_ADMIN',
-    email: env.TB_User.tenantEmail,
+    email: TB_USER.tenantEmail,
     tenantId: {
         entityType: 'TENANT',
         id: tenantAdminId,
     },
     firstName: 'test',
-    lastName: env.TB_User.tenantName,
+    lastName: TB_USER.tenantName,
 });
 
 export default async function createTenant(

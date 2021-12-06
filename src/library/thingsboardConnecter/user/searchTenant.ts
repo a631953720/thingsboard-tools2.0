@@ -1,4 +1,4 @@
-import env from '../../../constants/env';
+import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';
 import { SearchTenantRes } from '../../../types/user';
@@ -12,7 +12,7 @@ export default function searchTenant(token: string, tenantAdminId: string, tenan
     }, 'Search Tenant account');
     return APICaller({
         method: 'get',
-        url: `http://${env.TB.ip}:${env.TB.port}/api/tenant/${tenantAdminId}/users?pageSize=10&page=0&sortProperty=createdTime&sortOrder=DESC&textSearch=${tenantEmail}`,
+        url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/tenant/${tenantAdminId}/users?pageSize=10&page=0&sortProperty=createdTime&sortOrder=DESC&textSearch=${tenantEmail}`,
         headers: {
             'Content-Type': 'application/json',
             'X-Authorization': `Bearer ${token}`,

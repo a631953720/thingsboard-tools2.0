@@ -1,4 +1,4 @@
-import env from '../../constants/env';
+import { TB_USER } from '../../constants/env';
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
@@ -7,8 +7,8 @@ import { SystemAdminProfileProps } from '../../types/user';
 const loggers = new WinstonLogger({ type: 'User component' });
 
 const defaultAdminProfile: SystemAdminProfileProps = {
-    username: env.TB_User.systemAdminEmail,
-    password: env.TB_User.systemAdminPassword,
+    username: TB_USER.systemAdminEmail,
+    password: TB_USER.systemAdminPassword,
 };
 
 export default async function getSystemAdminToken(adminProfile?: SystemAdminProfileProps) {

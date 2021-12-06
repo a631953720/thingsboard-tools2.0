@@ -1,4 +1,4 @@
-import env from '../../constants/env';
+import { TB_USER } from '../../constants/env';
 import getSystemAdminToken from './getSystemAdminToken';
 import getFirstTenantAdminId from './getFirstTenantAdminId';
 import getFirstTenantId from './getFirstTenantId';
@@ -9,7 +9,7 @@ import WinstonLogger from '../../helpers/loggers';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 
-const { tenantAdminName, tenantEmail } = env.TB_User;
+const { tenantAdminName, tenantEmail } = TB_USER;
 
 type GetTenantTokenRes = {
     status: number

@@ -1,7 +1,7 @@
-import env from '../constants/env';
+import { SERVER } from '../constants/env';
 import winstonLoggers from './createWinstonLogger';
 
-const { isDebug } = env.Server;
+const { isDebug } = SERVER;
 const {
     CommonLoggerConfig,
     ShowSimpleMessage,
