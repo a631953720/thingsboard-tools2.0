@@ -2,7 +2,7 @@ import { TB_USER } from '../../constants/env';
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 import WinstonLogger from '../../helpers/loggers';
 import checkStatusError from '../../helpers/checkStatusError';
-import { TenantAdminsProfileProps } from '../../types/user';
+import { TenantAdminsProfileProps } from '../../interface/user';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 

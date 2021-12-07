@@ -13,7 +13,7 @@ router.get('/test', (req, res) => {
 });
 
 // 若tenant或是tenant admin不存在會自動create
-router.get('/getOrCreateNewTenantToGetToken', async (req, res) => {
+router.post('/getOrCreateNewTenantToGetToken?autoCreate', async (req, res) => {
     const response = await getOrCreateNewTenantToGetToken();
     simpleMsg(`getOrCreateNewTenantToGetToken, status: ${response.status}`);
     if (checkStatusError(response)) {

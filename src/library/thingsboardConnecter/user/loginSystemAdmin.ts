@@ -2,7 +2,7 @@ import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
-import { SystemAdminProfileProps } from '../../../types/user';
+import { SystemAdminProfileProps } from '../../../interface/user';
 
 const loggers = new WinstonLogger({ type: 'System admin' });
 
