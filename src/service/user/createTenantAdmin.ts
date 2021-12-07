@@ -8,12 +8,12 @@ const loggers = new WinstonLogger({ type: 'User component' });
 
 export default async function createTenantAdmin(
     token: string,
-    tenantAdminProfile?: TenantAdminsProfileProps,
+    tenantAdminProfile?: TenantAdminsProfileProps
 ) {
     let newTenantAdminId = '';
     const newTenantAdminInfo = await TBUserConnecter.createTenantAdmin(
         token,
-        tenantAdminProfile ? { ...tenantAdminProfile } : { title: TB_USER.tenantAdminName },
+        tenantAdminProfile ? { ...tenantAdminProfile } : { title: TB_USER.tenantAdminName }
     );
 
     if (checkStatusError(newTenantAdminInfo)) {

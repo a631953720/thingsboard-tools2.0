@@ -7,15 +7,15 @@ import { SystemAdminProfileProps } from '../../../interface/user';
 const loggers = new WinstonLogger({ type: 'System admin' });
 
 interface LoginSystemAdminRes {
-    status: number
-    token: string
-    refreshToken: string
+    status: number;
+    token: string;
+    refreshToken: string;
 }
 
 class LoginSystemAdminDTO implements LoginSystemAdminRes {
-    status:number;
+    status: number;
 
-    token:string;
+    token: string;
 
     refreshToken: string;
 

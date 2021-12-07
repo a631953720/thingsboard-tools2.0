@@ -5,15 +5,15 @@ import WinstonLogger from '../../../helpers/loggers';
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
 interface LoginTenantRes {
-    status: number
-    token?: string
-    refreshToken?: string
+    status: number;
+    token?: string;
+    refreshToken?: string;
 }
 
 class LoginTenantDTO implements LoginTenantRes {
-    status:number;
+    status: number;
 
-    token:string;
+    token: string;
 
     refreshToken: string;
 

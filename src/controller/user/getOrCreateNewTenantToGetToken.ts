@@ -15,10 +15,10 @@ const loggers = new WinstonLogger({ type: 'User component' });
 const { tenantAdminName, tenantEmail, systemAdminEmail } = TB_USER;
 
 interface GetTenantTokenRes {
-    systemAdminEmail: string
-    tenantAdminName: string
-    tenantEmail: string
-    tenantToken: string
+    systemAdminEmail: string;
+    tenantAdminName: string;
+    tenantEmail: string;
+    tenantToken: string;
 }
 
 class GetTenantTokenDTO implements GetTenantTokenRes {
@@ -55,7 +55,10 @@ export default async function getOrCreateNewTenantToGetToken(): Promise<HTTPStat
     // 2. 取得搜尋到的第一個Tenant id，若不存在就會嘗試create新的
     let tenantId = await getFirstTenantId(adminToken, tenantAdminId, tenantEmail);
     if (!tenantId) {
-        loggers.warning('Tenant admin is not exist, try to create new tenant admin', 'Check Tenant admin');
+        loggers.warning(
+            'Tenant admin is not exist, try to create new tenant admin',
+            'Check Tenant admin'
+        );
         tenantId = await createTenant(adminToken, tenantAdminId);
     }
     if (!tenantId) return HTTP5xx({ errorMessage: 'Get Tenant token error' });

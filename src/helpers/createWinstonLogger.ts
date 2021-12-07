@@ -1,24 +1,10 @@
-import {
-    createLogger,
-    format,
-    transports,
-} from 'winston';
+import { createLogger, format, transports } from 'winston';
 
-const {
-    combine,
-    timestamp,
-    simple,
-    colorize,
-    printf,
-    prettyPrint,
-} = format;
+const { combine, timestamp, simple, colorize, printf, prettyPrint } = format;
 
 // This logger will show information to user
 const ShowSimpleMessage = createLogger({
-    format: combine(
-        colorize(),
-        simple(),
-    ),
+    format: combine(colorize(), simple()),
     transports: [new transports.Console()],
 });
 
@@ -38,8 +24,8 @@ const alignColorsAndTime = combine(
                 info.level = info.level.replace(/info/i, 'debug');
             }
             return `${info.level} ${info.timestamp} ${info.label}: ${info.message} `;
-        },
-    ),
+        }
+    )
 );
 
 // This logger will show log likes debug, warning, error, etc...

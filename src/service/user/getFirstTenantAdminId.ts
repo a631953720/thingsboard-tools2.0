@@ -5,10 +5,7 @@ import WinstonLogger from '../../helpers/loggers';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 
-export default async function getFirstTenantAdminId(
-    token: string,
-    tenantAdminName: string,
-) {
+export default async function getFirstTenantAdminId(token: string, tenantAdminName: string) {
     let tenantAdminId = '';
     const tenantAdminsInfo = await TBUserConnecter.searchTenantAdmin(token, tenantAdminName);
     if (checkStatusError(tenantAdminsInfo)) return '';

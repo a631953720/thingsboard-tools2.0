@@ -7,23 +7,24 @@ import { TenantProfileProps } from '../../../interface/user';
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
 interface CreateTenantRes {
-    status: number
-    id?: { // API 成功才會有
-        entityType: string
-        id: string
-    }
-    name?: string
-    lastName?: string
-    firstName?: string
-    email?: string
+    status: number;
+    id?: {
+        // API 成功才會有
+        entityType: string;
+        id: string;
+    };
+    name?: string;
+    lastName?: string;
+    firstName?: string;
+    email?: string;
 }
 
 class CreateTenantDTO implements CreateTenantRes {
     status: number;
 
     id: {
-        entityType: string
-        id: string
+        entityType: string;
+        id: string;
     };
 
     name: string;
@@ -47,7 +48,7 @@ class CreateTenantDTO implements CreateTenantRes {
 export default async function createTenant(
     token: string,
     tenantAdminId: string,
-    profile: TenantProfileProps,
+    profile: TenantProfileProps
 ) {
     const response = await APICaller({
         method: 'post',

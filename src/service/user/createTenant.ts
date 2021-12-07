@@ -20,13 +20,13 @@ const getTenantProfile = (tenantAdminId: string): TenantProfileProps => ({
 export default async function createTenant(
     token: string,
     tenantAdminId: string,
-    profile?: TenantProfileProps,
+    profile?: TenantProfileProps
 ) {
     let newTenantId = '';
     const newTenantInfo = await TBUserConnecter.createTenant(
         token,
         tenantAdminId,
-        profile || getTenantProfile(tenantAdminId),
+        profile || getTenantProfile(tenantAdminId)
     );
 
     if (checkStatusError(newTenantInfo)) {

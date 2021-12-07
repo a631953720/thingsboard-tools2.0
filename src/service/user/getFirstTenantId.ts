@@ -8,7 +8,7 @@ const loggers = new WinstonLogger({ type: 'User component' });
 export default async function getFirstTenantId(
     token: string,
     tenantAdminId: string,
-    tenantEmail: string,
+    tenantEmail: string
 ) {
     let tenantId = '';
     const searchTenantInfo = await TBUserConnecter.searchTenant(token, tenantAdminId, tenantEmail);

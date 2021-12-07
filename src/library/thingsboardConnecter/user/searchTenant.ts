@@ -6,20 +6,20 @@ const loggers = new WinstonLogger({ type: 'Tenant' });
 
 type TenantEntity = {
     id: {
-        id: string
-        entityType: string
-    },
-    name: string
-    firstName: string
-    lastName: string
-}
+        id: string;
+        entityType: string;
+    };
+    name: string;
+    firstName: string;
+    lastName: string;
+};
 
 interface SearchTenantRes {
-    status: number
-    data?: Array<TenantEntity>
-    hasNext?: boolean
-    totalElements?: number
-    totalPages?: number
+    status: number;
+    data?: Array<TenantEntity>;
+    hasNext?: boolean;
+    totalElements?: number;
+    totalPages?: number;
 }
 
 class SearchTenantDTO implements SearchTenantRes {
@@ -45,7 +45,7 @@ class SearchTenantDTO implements SearchTenantRes {
 export default async function searchTenant(
     token: string,
     tenantAdminId: string,
-    tenantEmail: string,
+    tenantEmail: string
 ) {
     const response = await APICaller({
         method: 'get',
@@ -56,10 +56,13 @@ export default async function searchTenant(
         },
     });
     const DTO = new SearchTenantDTO(response);
-    loggers.debug({
-        targetTenantAdminId: tenantAdminId,
-        targetTenantEmail: tenantEmail,
-        DTO,
-    }, 'Search Tenant account');
+    loggers.debug(
+        {
+            targetTenantAdminId: tenantAdminId,
+            targetTenantEmail: tenantEmail,
+            DTO,
+        },
+        'Search Tenant account'
+    );
     return DTO;
 }

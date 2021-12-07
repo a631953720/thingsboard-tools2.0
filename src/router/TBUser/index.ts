@@ -1,9 +1,6 @@
 import express from 'express';
 import { simpleMsg } from '../../helpers/loggers';
-import {
-    getOrCreateNewTenantToGetToken,
-    getTenantTokenByTenantId,
-} from '../../controller/user';
+import { getOrCreateNewTenantToGetToken, getTenantTokenByTenantId } from '../../controller/user';
 import checkStatusError from '../../helpers/checkStatusError';
 
 const router = express.Router();

@@ -2,13 +2,10 @@ import { SERVER } from '../constants/env';
 import winstonLoggers from './createWinstonLogger';
 
 const { isDebug } = SERVER;
-const {
-    CommonLoggerConfig,
-    ShowSimpleMessage,
-} = winstonLoggers;
+const { CommonLoggerConfig, ShowSimpleMessage } = winstonLoggers;
 
 type LoggersProps = {
-    type: string
+    type: string;
 };
 
 export default class Loggers {

@@ -6,19 +6,19 @@ const loggers = new WinstonLogger({ type: 'Tenant' });
 
 type TenantAdminEntity = {
     id: {
-        id: string
-        entityType: string
-    },
-    name: string
-    title: string
-}
+        id: string;
+        entityType: string;
+    };
+    name: string;
+    title: string;
+};
 
 interface SearchTenantAdminRes {
-    status: number
-    data?: Array<TenantAdminEntity>
-    hasNext?: boolean
-    totalElements?: number
-    totalPages?: number
+    status: number;
+    data?: Array<TenantAdminEntity>;
+    hasNext?: boolean;
+    totalElements?: number;
+    totalPages?: number;
 }
 
 class SearchTenantAdminDTO implements SearchTenantAdminRes {
