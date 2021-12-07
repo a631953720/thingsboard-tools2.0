@@ -4,3 +4,4 @@ tsconfig.tsbuildinfo
 development.env
 production.env
 *.log
+.eslintcache
