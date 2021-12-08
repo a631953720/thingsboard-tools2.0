@@ -1,5 +1,5 @@
 import express from 'express';
-import { getOrCreateNewTenantToGetToken, getTenantTokenByTenantId } from '../../controller/user';
+import { autoLoginTenantAccount } from '../../controller/userController';
 
 const router = express.Router();
 
@@ -8,9 +8,6 @@ router.get('/test', (req, res) => {
 });
 
 // 若tenant或是tenant admin不存在會自動create
-router.post('/getOrCreateNewTenantToGetToken', getOrCreateNewTenantToGetToken);
-
-// 會自動登入systemAdmin，單純只靠tenant id取得token
-router.get('/getTenantTokenByTenantId/:tenantId', getTenantTokenByTenantId);
+router.get('/autoLoginTenant', autoLoginTenantAccount);
 
 export default router;
