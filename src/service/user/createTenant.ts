@@ -3,8 +3,6 @@ import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 import WinstonLogger from '../../helpers/loggers';
 import { TenantProfileProps } from '../../interface/user';
 import TBCreateTenantDTO from '../../interface/thingsboardConnector/TBCreateTenantDTO';
-// import { HTTPStatusRes } from '../../interface/HTTPStatus';
-// import { CreateTenantRes } from '../../interface/thingsboardConnector/userInterface';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 

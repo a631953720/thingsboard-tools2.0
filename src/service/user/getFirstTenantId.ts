@@ -1,6 +1,5 @@
 import checkTenantAdminOrTenantExist from './helpers/checkTenantAdminOrTenantExist';
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
-// import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import { TenantEntity } from '../../interface/thingsboardConnector/TBUserInterface';
 import TBSearchTenantDTO from '../../interface/thingsboardConnector/TBSearchTenantDTO';
@@ -38,13 +37,9 @@ export default async function getFirstTenantId(
     tenantAdminId: string,
     tenantEmail: string
 ) {
-    // let tenantId = '';
     const tenantsInfo = await TBUserConnecter.searchTenant(token, tenantAdminId, tenantEmail);
-    // if (checkStatusError(searchTenantInfo)) return '';
     loggers.debug({ tenantsInfo }, 'Get tenant id success');
     if (checkTenantAdminOrTenantExist(tenantsInfo)) {
-        // const firstTenantId = searchTenantInfo.data[0].id.id;
-        // tenantId = firstTenantId;
         const DTO = new GetFirstTenantIdDTO({
             ...tenantsInfo,
             errorMessage: 'Tenant admin list length is 0',

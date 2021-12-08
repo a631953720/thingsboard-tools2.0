@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { getSystemAdminToken, getTenantToken } from '../../service/user';
 import { HTTPError } from '../../constants/defaultHTTPCode';
-// import { HTTPStatusRes } from '../../interface/HTTPStatus';
 import checkStatusError from '../../helpers/checkStatusError';
 
 interface GetTenantTokenByTenantIdRes {

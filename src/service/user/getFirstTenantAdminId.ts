@@ -1,6 +1,5 @@
 import checkTenantAdminOrTenantExist from './helpers/checkTenantAdminOrTenantExist';
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
-// import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import { TenantAdminEntity } from '../../interface/thingsboardConnector/TBUserInterface';
 import TBSearchTenantAdminDTO from '../../interface/thingsboardConnector/TBSearchTenantAdminDTO';

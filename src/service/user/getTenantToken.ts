@@ -30,10 +30,6 @@ class GetTenantTokenDTO implements getTenantTokenRes {
 
 export default async function getTenantToken(adminToken: string, tenantId: string) {
     const tenantInfo = await TBUserConnecter.loginByTenantId(adminToken, tenantId);
-    // if (checkStatusError(tenantInfo)) {
-    //     const ErrorDTO = new GetTenantTokenDTO(tenantInfo);
-    //     return ErrorDTO;
-    // }
     const DTO = new GetTenantTokenDTO(tenantInfo);
     return DTO;
 }

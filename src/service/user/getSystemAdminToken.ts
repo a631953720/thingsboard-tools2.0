@@ -1,7 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { TB_USER } from '../../constants/env';
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
-// import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import { SystemAdminProfileProps } from '../../interface/user';
 import TBLoginSystemAdminDTO from '../../interface/thingsboardConnector/TBLoginSystemAdminDTO';
@@ -41,10 +40,6 @@ class GetSystemAdminTokenDTO implements GetSystemAdminTokenRes {
 export default async function getSystemAdminToken(adminProfile?: SystemAdminProfileProps) {
     loggers.debug('Try to get admin token', 'Login system admin');
     const response = await TBUserConnecter.loginSystemAdmin(adminProfile || defaultAdminProfile);
-    // if (checkStatusError(response)) {
-    //     const ErrorDTO = new GetSystemAdminTokenDTO(response);
-    //     return ErrorDTO;
-    // }
     const DTO = new GetSystemAdminTokenDTO(response);
     return DTO;
 }

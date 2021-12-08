@@ -105,6 +105,5 @@ export default async function getOrCreateNewTenantToGetToken(
         tenantEmail,
         token: tenantToken.token,
     });
-    console.log(DTO);
     return res.status(200).json(DTO);
 }
