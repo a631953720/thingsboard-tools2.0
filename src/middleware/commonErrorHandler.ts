@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Request, Response, NextFunction } from 'express';
 import WinstonLogger from '../helpers/loggers';
-import { HTTPError } from '../constants/defaultHTTPCode';
+import HTTPError from '../constants/defaultHTTPCode';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 

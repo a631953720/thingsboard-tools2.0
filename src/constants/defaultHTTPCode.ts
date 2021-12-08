@@ -1,11 +1,6 @@
-export function HTTP2xx({ status = 200, data }: { status?: number; data: any }) {
-    return {
-        status,
-        data,
-    };
-}
+type HTTPErrorType = { status?: number; errorMessage: any };
 
-export function HTTPError({ status = 500, errorMessage }: { status?: number; errorMessage: any }) {
+export default function HTTPError({ status = 500, errorMessage }: HTTPErrorType) {
     return {
         status,
         errorMessage,
