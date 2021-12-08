@@ -1,7 +1,7 @@
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 // import checkStatusError from '../../helpers/checkStatusError';
 // import { simpleMsg } from '../../helpers/loggers';
-import LoginTenantDTO from '../../interface/thingsboardConnector/TBLoginTenantDTO';
+import TBLoginTenantDTO from '../../interface/thingsboardConnector/TBLoginTenantDTO';
 
 interface getTenantTokenRes {
     status: number;
@@ -20,7 +20,7 @@ class GetTenantTokenDTO implements getTenantTokenRes {
     errorMessage?: any;
 
     // 來自前一個DTO
-    constructor(data: LoginTenantDTO) {
+    constructor(data: TBLoginTenantDTO) {
         this.status = data.status;
         this.token = data.token;
         this.refreshToken = data.refreshToken;

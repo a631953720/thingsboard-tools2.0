@@ -4,7 +4,7 @@ import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 // import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import { SystemAdminProfileProps } from '../../interface/user';
-import LoginSystemAdminDTO from '../../interface/thingsboardConnector/TBLoginSystemAdminDTO';
+import TBLoginSystemAdminDTO from '../../interface/thingsboardConnector/TBLoginSystemAdminDTO';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 
@@ -30,7 +30,7 @@ class GetSystemAdminTokenDTO implements GetSystemAdminTokenRes {
     errorMessage?: any;
 
     // 來自前一個DTO
-    constructor(data: LoginSystemAdminDTO) {
+    constructor(data: TBLoginSystemAdminDTO) {
         this.status = data.status;
         this.token = data.token;
         this.refreshToken = data.refreshToken;
