@@ -70,7 +70,7 @@ export default async function autoLoginToGetTenantToken() {
     if (isTenantEntityNotFound(tenantAdmin)) {
         return new AutoLoginToGetTenantTokenDTO({
             status: 500,
-            errorMessage: 'Empty not found or search API error',
+            errorMessage: 'Tenant entity not found or search API error',
         });
     }
     const firstTenantAdminId = tenantAdmin.data[0].id.id;
@@ -84,7 +84,7 @@ export default async function autoLoginToGetTenantToken() {
     if (isTenantEntityNotFound(tenant)) {
         return new AutoLoginToGetTenantTokenDTO({
             status: 500,
-            errorMessage: 'Empty not found or search API error',
+            errorMessage: 'Tenant entity not found or search API error',
         });
     }
     const firstTenantId = tenant.data[0].id.id;
