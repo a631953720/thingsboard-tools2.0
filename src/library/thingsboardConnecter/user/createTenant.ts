@@ -3,47 +3,9 @@ import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
 import { TenantProfileProps } from '../../../interface/user';
+import CreateTenantDTO from '../../../interface/thingsboardConnector/TBCreateTenantDTO';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
-
-interface CreateTenantRes {
-    status: number;
-    id?: {
-        // API 成功才會有
-        entityType: string;
-        id: string;
-    };
-    name?: string;
-    lastName?: string;
-    firstName?: string;
-    email?: string;
-}
-
-class CreateTenantDTO implements CreateTenantRes {
-    status: number;
-
-    id: {
-        entityType: string;
-        id: string;
-    };
-
-    name: string;
-
-    lastName: string;
-
-    firstName: string;
-
-    email: string;
-
-    constructor(data: any) {
-        this.status = data.status;
-        this.id = data.id;
-        this.name = data.name;
-        this.firstName = data.firstName;
-        this.lastName = data.lastName;
-        this.email = data.email;
-    }
-}
 
 export default async function createTenant(
     token: string,

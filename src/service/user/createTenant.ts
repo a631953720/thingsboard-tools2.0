@@ -1,8 +1,10 @@
 import { TB_USER } from '../../constants/env';
 import * as TBUserConnecter from '../../library/thingsboardConnecter/user';
 import WinstonLogger from '../../helpers/loggers';
-import checkStatusError from '../../helpers/checkStatusError';
 import { TenantProfileProps } from '../../interface/user';
+import TBCreateTenantDTO from '../../interface/thingsboardConnector/TBCreateTenantDTO';
+// import { HTTPStatusRes } from '../../interface/HTTPStatus';
+// import { CreateTenantRes } from '../../interface/thingsboardConnector/userInterface';
 
 const loggers = new WinstonLogger({ type: 'User component' });
 
@@ -17,24 +19,53 @@ const getTenantProfile = (tenantAdminId: string): TenantProfileProps => ({
     lastName: TB_USER.tenantName,
 });
 
+interface CreateTenantRes {
+    status: number;
+    id: string;
+    name: string;
+    lastName: string;
+    firstName: string;
+    email: string;
+    errorMessage?: any;
+}
+
+class CreateTenantDTO implements CreateTenantRes {
+    status: number;
+
+    id: string;
+
+    name: string;
+
+    lastName: string;
+
+    firstName: string;
+
+    email: string;
+
+    errorMessage?: any;
+
+    constructor(data: TBCreateTenantDTO) {
+        this.status = data.status;
+        this.id = data.id.id;
+        this.name = data.name;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.email = data.email;
+        this.errorMessage = data.errorMessage;
+    }
+}
+
 export default async function createTenant(
     token: string,
     tenantAdminId: string,
     profile?: TenantProfileProps
 ) {
-    let newTenantId = '';
     const newTenantInfo = await TBUserConnecter.createTenant(
         token,
         tenantAdminId,
         profile || getTenantProfile(tenantAdminId)
     );
-
-    if (checkStatusError(newTenantInfo)) {
-        loggers.error('Create Tenant error', 'Create new tenant');
-        return newTenantId;
-    }
-
-    newTenantId = newTenantInfo.id.id;
     loggers.debug({ newTenantInfo }, 'Create new tenant');
-    return newTenantId;
+    const DTO = new CreateTenantDTO(newTenantInfo);
+    return DTO;
 }

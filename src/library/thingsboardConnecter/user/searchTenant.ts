@@ -1,46 +1,9 @@
 import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';
+import SearchTenantDTO from '../../../interface/thingsboardConnector/TBSearchTenantDTO';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
-
-type TenantEntity = {
-    id: {
-        id: string;
-        entityType: string;
-    };
-    name: string;
-    firstName: string;
-    lastName: string;
-};
-
-interface SearchTenantRes {
-    status: number;
-    data?: Array<TenantEntity>;
-    hasNext?: boolean;
-    totalElements?: number;
-    totalPages?: number;
-}
-
-class SearchTenantDTO implements SearchTenantRes {
-    status: number;
-
-    data: Array<TenantEntity>;
-
-    hasNext: boolean;
-
-    totalElements: number;
-
-    totalPages: number;
-
-    constructor(data: any) {
-        this.status = data.status;
-        this.hasNext = data.hasNext;
-        this.totalElements = data.totalElements;
-        this.totalPages = data.totalPages;
-        this.data = data.data;
-    }
-}
 
 export default async function searchTenant(
     token: string,
