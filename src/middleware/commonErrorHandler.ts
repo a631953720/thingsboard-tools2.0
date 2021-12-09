@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import WinstonLogger from '../helpers/loggers';
 import HTTPError from '../constants/defaultHTTPCode';
 
-const loggers = new WinstonLogger({ type: 'User component' });
+const loggers = new WinstonLogger({ type: 'Common error' });
 
 export default function errorHandler(err: Error, req: Request, res: Response, _next: NextFunction) {
     loggers.error(err, 'Common error handler');

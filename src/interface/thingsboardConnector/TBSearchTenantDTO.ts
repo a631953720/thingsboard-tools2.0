@@ -19,6 +19,6 @@ export default class TBSearchTenantDTO implements SearchTenantRes {
         this.totalElements = data.totalElements;
         this.totalPages = data.totalPages;
         this.data = data.data;
-        this.errorMessage = data.data;
+        this.errorMessage = data.errorMessage;
     }
 }

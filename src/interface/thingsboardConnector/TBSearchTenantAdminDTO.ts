@@ -19,6 +19,6 @@ export default class TBSearchTenantAdminDTO implements SearchTenantAdminRes {
         this.totalElements = data.totalElements;
         this.totalPages = data.totalPages;
         this.data = data.data; // TB把列表放在Data內
-        this.errorMessage = data.data; // APICaller 的錯誤訊息也會放在Data內
+        this.errorMessage = data.errorMessage; // APICaller 的錯誤訊息也會放在Data內
     }
 }

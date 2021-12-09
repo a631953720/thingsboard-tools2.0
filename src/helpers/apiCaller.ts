@@ -28,7 +28,7 @@ async function APICaller(configs: AxiosRequestConfig) {
             // that falls out of the range of 2xx
             const errorMessage = {
                 status: error.response.status,
-                data: error.response.data,
+                errorMessage: error.response.data,
                 url: error.response.config.url,
             };
 
@@ -44,16 +44,14 @@ async function APICaller(configs: AxiosRequestConfig) {
             loggers.error({ message: error.request }, 'APICaller error 2');
             return {
                 status: 500,
-                data: error.request,
+                errorMessage: error.request,
             };
         } else {
             // Something happened in setting up the request that triggered an Error
             loggers.error({ message: error.message }, 'APICaller error 3');
             return {
                 status: 500,
-                data: {
-                    message: error.message,
-                },
+                errorMessage: error.message,
             };
         }
     }

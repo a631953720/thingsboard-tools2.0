@@ -19,6 +19,6 @@ export default class TBCreateTenantAdminDTO implements CreateTenantAdminRes {
         this.id = data.id;
         this.name = data.name;
         this.email = data.email;
-        this.errorMessage = data.data;
+        this.errorMessage = data.errorMessage;
     }
 }

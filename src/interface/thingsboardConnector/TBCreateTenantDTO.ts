@@ -25,6 +25,6 @@ export default class TBCreateTenantDTO implements CreateTenantRes {
         this.firstName = data.firstName;
         this.lastName = data.lastName;
         this.email = data.email;
-        this.errorMessage = data.data;
+        this.errorMessage = data.errorMessage;
     }
 }

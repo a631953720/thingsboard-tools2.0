@@ -13,6 +13,6 @@ export default class TBLoginSystemAdminDTO implements LoginSystemAdminRes {
         this.status = data.status;
         this.token = data.token;
         this.refreshToken = data.refreshToken;
-        this.errorMessage = data.data; // 錯誤的時候會出現
+        this.errorMessage = data.errorMessage; // 錯誤的時候會出現
     }
 }

@@ -13,6 +13,6 @@ export default class TBLoginTenantDTO implements LoginTenantRes {
         this.status = data.status;
         this.token = data.token;
         this.refreshToken = data.refreshToken;
-        this.errorMessage = data.data;
+        this.errorMessage = data.errorMessage;
     }
 }
