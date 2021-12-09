@@ -1,41 +1,12 @@
+import { CreateTenantAdminRes } from '../../../interface/thingsboardConnector/TBUserInterface';
 import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
 import { TenantAdminsProfileProps } from '../../../interface/user';
+import TBCreateTenantAdminDTO from '../../../interface/thingsboardConnector/TBCreateTenantAdminDTO';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
-
-interface CreateTenantAdminRes {
-    status: number;
-    id?: {
-        // API 成功才會有
-        entityType: string;
-        id: string;
-    };
-    name?: string;
-    email?: string;
-}
-
-class CreateTenantAdminDTO implements CreateTenantAdminRes {
-    status: number;
-
-    id: {
-        entityType: string;
-        id: string;
-    };
-
-    name: string;
-
-    email: string;
-
-    constructor(data: any) {
-        this.status = data.status;
-        this.id = data.id;
-        this.name = data.name;
-        this.email = data.email;
-    }
-}
 
 export default async function createTenantAdmin(
     adminToken: string,
@@ -50,7 +21,7 @@ export default async function createTenantAdmin(
         },
         data: jsonStringify(tenantAdminsProfile),
     })) as Promise<CreateTenantAdminRes>;
-    const DTO = new CreateTenantAdminDTO(response);
+    const DTO = new TBCreateTenantAdminDTO(response);
     loggers.debug({ tenantAdminsProfile, DTO }, 'Creat Tenant admin');
     return DTO;
 }

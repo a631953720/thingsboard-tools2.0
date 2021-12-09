@@ -1,45 +1,9 @@
+import SearchTenantAdminDTO from '../../../interface/thingsboardConnector/TBSearchTenantAdminDTO';
 import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
-
-type TenantAdminEntity = {
-    id: {
-        id: string;
-        entityType: string;
-    };
-    name: string;
-    title: string;
-};
-
-interface SearchTenantAdminRes {
-    status: number;
-    data?: Array<TenantAdminEntity>;
-    hasNext?: boolean;
-    totalElements?: number;
-    totalPages?: number;
-}
-
-class SearchTenantAdminDTO implements SearchTenantAdminRes {
-    status: number;
-
-    data: Array<TenantAdminEntity>;
-
-    hasNext: boolean;
-
-    totalElements: number;
-
-    totalPages: number;
-
-    constructor(data: any) {
-        this.status = data.status;
-        this.hasNext = data.hasNext;
-        this.totalElements = data.totalElements;
-        this.totalPages = data.totalPages;
-        this.data = data.data;
-    }
-}
 
 export default async function searchTenantAdmin(token: string, tenantAdminName: string) {
     const response = await APICaller({

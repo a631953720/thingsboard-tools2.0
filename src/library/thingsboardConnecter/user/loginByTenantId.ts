@@ -1,28 +1,9 @@
 import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';
+import TBLoginTenantDTO from '../../../interface/thingsboardConnector/TBLoginTenantDTO';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
-
-interface LoginTenantRes {
-    status: number;
-    token?: string;
-    refreshToken?: string;
-}
-
-class LoginTenantDTO implements LoginTenantRes {
-    status: number;
-
-    token: string;
-
-    refreshToken: string;
-
-    constructor(data: any) {
-        this.status = data.status;
-        this.token = data.token;
-        this.refreshToken = data.refreshToken;
-    }
-}
 
 export default async function loginByTenantId(token: string, tenantId: string) {
     const reponse = await APICaller({
@@ -33,7 +14,7 @@ export default async function loginByTenantId(token: string, tenantId: string) {
             'X-Authorization': `Bearer ${token}`,
         },
     });
-    const DTO = new LoginTenantDTO(reponse);
+    const DTO = new TBLoginTenantDTO(reponse);
     loggers.debug({ tenantId, DTO }, 'Login tenant account');
     return DTO;
 }
