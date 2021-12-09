@@ -97,11 +97,13 @@ export default async function autoLoginToGetTenantToken() {
             errorMessage: tenantToken.errorMessage,
         });
     }
-    return new AutoLoginToGetTenantTokenDTO({
+    const DTO = new AutoLoginToGetTenantTokenDTO({
         systemAdminEmail,
         tenantAdminName,
         tenantEmail,
         token: tenantToken.token,
         refreshToken: tenantToken.refreshToken,
     });
+    loggers.debug({ DTO }, 'Auto login tenant account response');
+    return DTO;
 }
