@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import WinstonLogger from '../helpers/loggers';
 import HTTPError from '../constants/defaultHTTPCode';
 
-const loggers = new WinstonLogger({ type: 'User component' });
+const loggers = new WinstonLogger({ type: 'API router error' });
 
 export default function notFoundError(req: Request, res: Response, _next: NextFunction) {
     // 找不到該路由

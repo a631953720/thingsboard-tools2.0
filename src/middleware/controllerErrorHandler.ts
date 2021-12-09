@@ -4,7 +4,7 @@ import WinstonLogger from '../helpers/loggers';
 import HTTPError from '../constants/defaultHTTPCode';
 import { HTTPStatusRes } from '../interface/HTTPStatus';
 
-const loggers = new WinstonLogger({ type: 'User component' });
+const loggers = new WinstonLogger({ type: 'Controller error' });
 
 export default function controllerErrorHandler(
     err: HTTPStatusRes,

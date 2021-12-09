@@ -7,7 +7,7 @@ import { SystemAdminProfileProps } from '../../interface/user';
 import isTenantEntityNotFound from './helpers/isTenantEntityNotFound';
 
 // eslint-disable-next-line no-unused-vars
-const loggers = new WinstonLogger({ type: 'User component' });
+const loggers = new WinstonLogger({ type: 'User service' });
 
 const { tenantAdminName, tenantEmail, systemAdminEmail } = TB_USER;
 const defaultAdminProfile: SystemAdminProfileProps = {
