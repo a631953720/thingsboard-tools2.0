@@ -1,10 +1,10 @@
-import checkStatusError from '../../helpers/checkStatusError';
 import { TB_USER } from '../../constants/env';
-import WinstonLogger from '../../helpers/loggers';
 import { loginByTenantId, loginSystemAdmin } from '../../library/thingsboardConnecter/user';
+import checkStatusError from '../../helpers/checkStatusError';
+import WinstonLogger from '../../helpers/loggers';
 import getTenantList from './helpers/getTenantList';
-import { SystemAdminProfileProps } from '../../interface/user';
 import isTenantEntityNotFound from './helpers/isTenantEntityNotFound';
+import { SystemAdminProfileProps } from '../../interface/user';
 import AutoLoginToGetTenantTokenDTO from '../../interface/serviceResponse/autoLoginToGetTenantTokenDTO';
 
 // eslint-disable-next-line no-unused-vars
