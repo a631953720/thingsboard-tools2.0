@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 // 分為兩種不同的env檔案 1.development 2.production
 // 在package.json script裡面設定
 dotenv.config({
-    path: path.resolve(__dirname, `../../../${process.env.NODE_ENV}.env`),
+    path: path.resolve(__dirname, `../config/${process.env.NODE_ENV}.env`),
 });
 
 export const SERVER = {
