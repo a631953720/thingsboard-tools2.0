@@ -1,7 +1,7 @@
 import express from 'express';
-import notFoundErrorHandler from './middleware/notFoundErrorHandler';
-import controllerErrorHandler from './middleware/controllerErrorHandler';
-import commonErrorHandler from './middleware/commonErrorHandler';
+import notFoundErrorHandler from './middleware/notFoundError.middleware';
+import controllerErrorHandler from './middleware/controllerError.middleware';
+import commonErrorHandler from './middleware/commonError.middleware';
 import { SERVER } from './constants/env';
 import { simpleMsg } from './helpers/loggers';
 import { TBUser } from './router';

@@ -1,10 +1,11 @@
-import checkStatusError from '../../helpers/checkStatusError';
 import { TB_USER } from '../../constants/env';
-import WinstonLogger from '../../helpers/loggers';
 import { loginByTenantId, loginSystemAdmin } from '../../library/thingsboardConnecter/user';
+import checkStatusError from '../../helpers/checkStatusError';
+import WinstonLogger from '../../helpers/loggers';
 import getTenantList from './helpers/getTenantList';
-import { SystemAdminProfileProps } from '../../interface/user';
 import isTenantEntityNotFound from './helpers/isTenantEntityNotFound';
+import { SystemAdminProfileProps } from '../../interface/user';
+import AutoLoginToGetTenantTokenDTO from '../../interface/serviceResponse/autoLoginToGetTenantTokenDTO';
 
 // eslint-disable-next-line no-unused-vars
 const loggers = new WinstonLogger({ type: 'User service' });
@@ -14,42 +15,6 @@ const defaultAdminProfile: SystemAdminProfileProps = {
     username: TB_USER.systemAdminEmail,
     password: TB_USER.systemAdminPassword,
 };
-
-interface GetTenantTokenRes {
-    status: number;
-    systemAdminEmail: string;
-    tenantAdminName: string;
-    tenantEmail: string;
-    token: string;
-    refreshToken: string;
-    errorMessage: any;
-}
-
-class AutoLoginToGetTenantTokenDTO implements GetTenantTokenRes {
-    status: number;
-
-    systemAdminEmail: string;
-
-    tenantAdminName: string;
-
-    tenantEmail: string;
-
-    token: string;
-
-    refreshToken: string;
-
-    errorMessage: any;
-
-    constructor(data: any) {
-        this.status = data.status;
-        this.systemAdminEmail = data.systemAdminEmail;
-        this.tenantAdminName = data.tenantAdminName;
-        this.tenantEmail = data.tenantEmail;
-        this.token = data.token;
-        this.refreshToken = data.refreshToken;
-        this.errorMessage = data.errorMessage;
-    }
-}
 
 export default async function autoLoginToGetTenantToken() {
     // 1. 取得Admin token
