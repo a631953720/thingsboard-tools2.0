@@ -1,5 +1,5 @@
 import express from 'express';
-import { autoLoginTenantAccount } from '../../controller/userController';
+import { autoLoginTenantAccount } from '../controller/user.controller';
 
 const router = express.Router();
 
