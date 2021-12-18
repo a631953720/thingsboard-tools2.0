@@ -1,4 +1,5 @@
 import express from 'express';
+import getTBAdminToken from './middleware/getTBAdminToken.middleware';
 import notFoundErrorHandler from './middleware/notFoundError.middleware';
 import controllerErrorHandler from './middleware/controllerError.middleware';
 import commonErrorHandler from './middleware/commonError.middleware';
@@ -9,10 +10,13 @@ import { TBUser } from './router';
 const app = express();
 const { port } = SERVER;
 
+app.use(getTBAdminToken);
+
 app.use('/TB/user', TBUser);
 app.get('/hello', (req, res, next) => {
     try {
-        throw new Error('1');
+        // throw new Error('1');
+        res.status(200).send('hi');
     } catch (error) {
         next(error);
     }
