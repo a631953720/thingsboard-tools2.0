@@ -26,6 +26,13 @@ export const TB_USER = {
     tenantEmail: process.env.TENANT_EMAIL || 'test@gmail.com',
 };
 
+export const TB_DEVICE = {
+    deviceCount: Number(process.env.DEVICE_COUNT) || 10,
+    deviceName: process.env.DEVICE_NAME || 'TB-tools-device',
+    deviceType: process.env.DEVICE_TYPE || 'TB-tools',
+    deviceLabel: process.env.DEVICE_LABEL || '',
+};
+
 if (process.env.NODE_ENV === 'development') {
     console.log('project env: ', {
         mode: process.env.NODE_ENV,
