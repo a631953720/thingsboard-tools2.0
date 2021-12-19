@@ -14,6 +14,11 @@ export default class TBCreateDeviceDTO implements CreateDeviceRes {
         id: string;
     };
 
+    id: {
+        entityType: string;
+        id: string;
+    };
+
     additionalInfo: any;
 
     errorMessage?: any;
@@ -24,6 +29,7 @@ export default class TBCreateDeviceDTO implements CreateDeviceRes {
         this.type = data.type;
         this.label = data.label;
         this.deviceProfileId = data.deviceProfileId;
+        this.id = data.id;
         this.errorMessage = data.errorMessage;
         this.additionalInfo = data.additionalInfo;
     }

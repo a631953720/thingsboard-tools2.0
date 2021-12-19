@@ -44,7 +44,7 @@ export default async function createDevices(
             });
         }
         deviceArr.push({
-            id: res.deviceProfileId.id,
+            id: res.id.id,
             name: res.name,
         });
     }

@@ -7,6 +7,10 @@ export interface CreateDeviceRes {
         entityType: string;
         id: string;
     };
+    id: {
+        entityType: string;
+        id: string;
+    };
     additionalInfo: any;
     errorMessage?: any;
 }
