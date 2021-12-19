@@ -10,6 +10,7 @@ import { TBUser } from './router';
 const app = express();
 const { port } = SERVER;
 
+app.use(express.json());
 app.use(getTBAdminToken);
 
 app.use('/TB/user', TBUser);
