@@ -1,7 +1,7 @@
 import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';
-import SearchTenantDTO from '../../../interface/thingsboardConnector/TBSearchTenantDTO';
+import SearchTenantDTO from '../../../interface/thingsboardConnector/user/TBSearchTenantDTO';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 

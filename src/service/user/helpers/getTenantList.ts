@@ -1,5 +1,5 @@
-import TBSearchTenantAdminDTO from '../../../interface/thingsboardConnector/TBSearchTenantAdminDTO';
-import TBSearchTenantDTO from '../../../interface/thingsboardConnector/TBSearchTenantDTO';
+import TBSearchTenantAdminDTO from '../../../interface/thingsboardConnector/user/TBSearchTenantAdminDTO';
+import TBSearchTenantDTO from '../../../interface/thingsboardConnector/user/TBSearchTenantDTO';
 import { searchTenant, searchTenantAdmin } from '../../../library/thingsboardConnecter/user';
 
 type getTBFirstElementProps = {

@@ -1,10 +1,10 @@
-import { CreateTenantAdminRes } from '../../../interface/thingsboardConnector/TBUserInterface';
+import { CreateTenantAdminRes } from '../../../interface/thingsboardConnector/user/TBUserInterface';
 import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
 import { TenantAdminsProfileProps } from '../../../interface/user';
-import TBCreateTenantAdminDTO from '../../../interface/thingsboardConnector/TBCreateTenantAdminDTO';
+import TBCreateTenantAdminDTO from '../../../interface/thingsboardConnector/user/TBCreateTenantAdminDTO';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 

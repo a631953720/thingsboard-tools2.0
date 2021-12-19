@@ -3,7 +3,7 @@ import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
 import { SystemAdminProfileProps } from '../../../interface/user';
-import LoginSystemAdminDTO from '../../../interface/thingsboardConnector/TBLoginSystemAdminDTO';
+import LoginSystemAdminDTO from '../../../interface/thingsboardConnector/user/TBLoginSystemAdminDTO';
 
 const loggers = new WinstonLogger({ type: 'System admin' });
 

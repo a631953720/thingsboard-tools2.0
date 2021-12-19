@@ -4,7 +4,7 @@ import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import getTenantList from './helpers/getTenantList';
 import isTenantEntityNotFound from './helpers/isTenantEntityNotFound';
-import AutoLoginToGetTenantTokenDTO from '../../interface/serviceResponse/autoLoginToGetTenantTokenDTO';
+import AutoLoginToGetTenantTokenDTO from '../../interface/serviceResponse/user/autoLoginToGetTenantTokenDTO';
 
 // eslint-disable-next-line no-unused-vars
 const loggers = new WinstonLogger({ type: 'User service' });

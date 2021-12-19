@@ -3,7 +3,7 @@ import APICaller from '../../../helpers/apiCaller';
 import { jsonStringify } from '../../../helpers/jsonHandler';
 import WinstonLogger from '../../../helpers/loggers';
 import { TenantProfileProps } from '../../../interface/user';
-import CreateTenantDTO from '../../../interface/thingsboardConnector/TBCreateTenantDTO';
+import CreateTenantDTO from '../../../interface/thingsboardConnector/user/TBCreateTenantDTO';
 
 const loggers = new WinstonLogger({ type: 'Tenant' });
 
