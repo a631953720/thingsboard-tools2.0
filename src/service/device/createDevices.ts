@@ -46,6 +46,8 @@ export default async function createDevices(
         deviceArr.push({
             id: res.id.id,
             name: res.name,
+            type: res.type,
+            label: res.label || '',
         });
     }
     const DTO = new CreateDevicesDTO({
