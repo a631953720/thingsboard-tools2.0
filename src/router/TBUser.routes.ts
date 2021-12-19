@@ -1,20 +1,10 @@
 import express from 'express';
-import createDevice from '../library/thingsboardConnecter/device/createDevice';
-import { autoLoginTenantAccount } from '../controller/user.controller';
-import { autoLoginToGetTenantToken } from '../service/user';
+import { autoLoginTenantAccount } from '../controller/TBUser.controller';
 
 const router = express.Router();
 
-const test = {
-    name: `string${Date.now()}`,
-    type: 'string',
-    label: 'string',
-};
-
-router.get('/test', async (req, res) => {
-    const tenant = await autoLoginToGetTenantToken(req.headers.TBAdminToken as string);
-    const r = await createDevice(tenant.token, test);
-    res.json(r);
+router.get('/test', (req, res) => {
+    res.status(200).send('success');
 });
 
 // 若tenant或是tenant admin不存在會自動create
