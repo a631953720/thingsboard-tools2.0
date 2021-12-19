@@ -3,7 +3,7 @@
 import { Request, Response, NextFunction } from 'express';
 import HTTPError from '../constants/defaultHTTPCode';
 
-export function createDevicesValidator(req: Request, res: Response, next: NextFunction) {
+export function createDevicesValidator(req: Request, _res: Response, next: NextFunction) {
     const { body } = req;
     const { deviceCount, deviceName, deviceType, deviceLabel } = body;
     if (typeof deviceCount !== 'number') {

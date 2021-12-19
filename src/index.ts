@@ -5,7 +5,7 @@ import controllerErrorHandler from './middleware/controllerError.middleware';
 import commonErrorHandler from './middleware/commonError.middleware';
 import { SERVER } from './constants/env';
 import { simpleMsg } from './helpers/loggers';
-import { TBUser } from './router';
+import { TBUser, TBDevice } from './router';
 
 const app = express();
 const { port } = SERVER;
@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(getTBAdminToken);
 
 app.use('/TB/user', TBUser);
+app.use('/TB/device', TBDevice);
 app.get('/hello', (req, res, next) => {
     try {
         // throw new Error('1');

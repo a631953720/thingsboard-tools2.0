@@ -10,3 +10,14 @@ export interface CreateDeviceRes {
     additionalInfo: any;
     errorMessage?: any;
 }
+
+export type DeviceProfile = {
+    name: string;
+    type: string;
+    label?: string;
+};
+
+export type DeviceInfo = {
+    id: string;
+    name: string;
+};
