@@ -1,6 +1,6 @@
 import express from 'express';
 import { createDevicesValidator } from '../middleware/deviceValidator.middleware';
-import { createTBDevices } from '../controller/TBDevice.controller';
+import { createTBDevices, deleteTBDevices } from '../controller/TBDevice.controller';
 import getTenantToken from '../middleware/getTenantToken.middleware';
 
 const router = express.Router();
@@ -12,5 +12,6 @@ router.get('/test', (req, res) => {
     res.status(200).send('success');
 });
 router.post('/create', createTBDevices);
+router.delete('/delete', deleteTBDevices);
 
 export default router;

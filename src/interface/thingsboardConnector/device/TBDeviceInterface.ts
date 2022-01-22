@@ -1,3 +1,8 @@
+export interface DeleteDeviceRes {
+    status: number;
+    errorMessage?: any;
+}
+
 export interface CreateDeviceRes {
     status: number;
     name: string;
