@@ -3,19 +3,12 @@ import createTBDevice from '../../library/thingsboardConnecter/device/createDevi
 import { TB_DEVICE } from '../../constants/env';
 import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
-import {
-    DeviceInfo,
-    DeviceProfile,
-} from '../../interface/thingsboardConnector/device/TBDeviceInterface';
+import { DeviceInfo, DeviceProfile } from '../../interface/thingsboardConnector/device/TBDeviceInterface';
 import CreateDevicesDTO from '../../interface/serviceResponse/device/createDevicesDTO';
 
 const loggers = new WinstonLogger({ type: 'Device service' });
 
-export default async function createDevices(
-    tenantToken: string,
-    count?: number,
-    customProfile?: DeviceProfile
-) {
+export default async function createDevices(tenantToken: string, count?: number, customProfile?: DeviceProfile) {
     const deviceCount = count || TB_DEVICE.deviceCount;
     const deviceArr: DeviceInfo[] = [];
     let deviceProfile: DeviceProfile;

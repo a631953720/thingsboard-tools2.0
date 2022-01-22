@@ -6,10 +6,7 @@ import getDeviceIdList from '../../helpers/handleDataFormat';
 
 const loggers = new WinstonLogger({ type: 'Device service' });
 
-export default async function deleteDevices(
-    tenantToken: string,
-    deviceIdList: string[] | object[]
-) {
+export default async function deleteDevices(tenantToken: string, deviceIdList: string[] | object[]) {
     const newDeviceList = getDeviceIdList(deviceIdList);
     loggers.debug({ newDeviceList }, 'Delete devices id list');
     if (newDeviceList.length <= 0) {

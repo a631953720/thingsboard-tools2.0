@@ -1,8 +1,5 @@
 import express from 'express';
-import {
-    createDevicesValidator,
-    deleteDevicesValidator,
-} from '../middleware/deviceValidator.middleware';
+import { createDevicesValidator, deleteDevicesValidator } from '../middleware/deviceValidator.middleware';
 import { createTBDevices, deleteTBDevices } from '../controller/TBDevice.controller';
 import getTenantToken from '../middleware/getTenantToken.middleware';
 

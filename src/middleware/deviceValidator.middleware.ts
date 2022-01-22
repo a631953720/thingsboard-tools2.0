@@ -55,10 +55,7 @@ export function deleteDevicesValidator(req: Request, _res: Response, next: NextF
                 })
             );
         }
-        if (
-            !deviceList.every((v) => checkValueType(v, 'string')) &&
-            !deviceList.every((v) => checkValueType(v, 'object'))
-        ) {
+        if (!deviceList.every((v) => checkValueType(v, 'string')) && !deviceList.every((v) => checkValueType(v, 'object'))) {
             return next(
                 HTTPError({
                     status: 400,
