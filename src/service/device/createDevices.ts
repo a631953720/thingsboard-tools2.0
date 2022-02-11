@@ -30,12 +30,7 @@ export default async function createDevices(tenantToken: string, count?: number,
             name: `${deviceProfile.name}-${i}`,
         };
         const res = await createTBDevice(tenantToken, profile);
-        if (checkStatusError(res)) {
-            return new CreateDevicesDTO({
-                status: res.status,
-                errorMessage: res.errorMessage,
-            });
-        }
+        if (checkStatusError(res)) return new CreateDevicesDTO(res);
         deviceArr.push({
             id: res.id.id,
             name: res.name,

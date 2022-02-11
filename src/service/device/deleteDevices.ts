@@ -9,9 +9,7 @@ const loggers = new WinstonLogger({ type: 'Device service' });
 export default async function deleteDevices(tenantToken: string, deviceIdList: string[] | object[]) {
     const newDeviceList = getDeviceIdList(deviceIdList);
     loggers.debug({ newDeviceList }, 'Delete devices id list');
-    if (newDeviceList.length <= 0) {
-        return new DeleteDeviceDTO({ status: 500, errorMessage: 'Internal Server Error' });
-    }
+    if (newDeviceList.length <= 0) return new DeleteDeviceDTO({ status: 500, errorMessage: 'Internal Server Error' });
     if (Array.isArray(newDeviceList)) {
         for (let i = 0; i < newDeviceList.length; i += 1) {
             // eslint-disable-next-line no-await-in-loop
