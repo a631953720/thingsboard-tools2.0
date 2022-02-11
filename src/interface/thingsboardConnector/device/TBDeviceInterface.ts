@@ -32,3 +32,25 @@ export type DeviceInfo = {
     type: string;
     label: string;
 };
+
+export type GetDeviceRes = {
+    status: number;
+    data: Array<{
+        createdTime: number;
+        id: {
+            id: string;
+            entityType: string;
+        };
+        name: string;
+        type: string;
+        label: string;
+        tenantId: {
+            entityType: string;
+            id: string;
+        };
+    }>;
+    hasNext: boolean;
+    totalElements: number;
+    totalPages: number;
+    errorMessage?: any;
+};
