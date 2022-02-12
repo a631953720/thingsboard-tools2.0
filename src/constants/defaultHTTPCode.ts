@@ -6,3 +6,10 @@ export default function HTTPError({ status = 500, errorMessage }: HTTPErrorType)
         errorMessage,
     };
 }
+
+export function newHTTPError(status = 500) {
+    return (errorMessage: any) => ({
+        status,
+        errorMessage,
+    });
+}
