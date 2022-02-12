@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "fdd23fd5-648a-4188-849e-4bd1894b41ef",
+		"name": "TB_APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create devices",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceCount\": 2,\r\n    \"deviceName\": \"test\",\r\n    \"deviceType\": \"hehe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/TB/device/create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"TB",
+						"device",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete devices",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"id\": \"dc9fc080-8c1d-11ec-8a05-abf76407a14f\",\r\n            \"name\": \"test-0\",\r\n            \"type\": \"hehe\",\r\n            \"label\": \"\",\r\n            \"token\": \"BLIFROyD6zYLIJnoHxBt\"\r\n        },\r\n        {\r\n            \"id\": \"dcaae410-8c1d-11ec-8a05-abf76407a14f\",\r\n            \"name\": \"test-1\",\r\n            \"type\": \"hehe\",\r\n            \"label\": \"\",\r\n            \"token\": \"2CLDRBDpEOAL0NopLEXJ\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/TB/device/delete",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"TB",
+						"device",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3000/TB/device/list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"TB",
+						"device",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set device action",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"name\": \"device-0\",\r\n            \"id\": \"e1c4b5a0-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"d8EZAuUNKg0nbg0pZIPf\",\r\n            \"action\": [\r\n                \"sendData\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"device-1\",\r\n            \"id\": \"e1df6990-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"nFVueFPhNsR4RbEj90fY\",\r\n            \"action\": [\r\n                \"subscribeRPC\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"device-2\",\r\n            \"id\": \"e1f9cf60-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"j1aEqg2vLfGGEeG18KqM\",\r\n            \"action\": [\r\n                \"subscribeRPC\",\r\n                \"sendData\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"device-3\",\r\n            \"id\": \"e21aebf0-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"jWXQv23fU8nXDin1nbRx\",\r\n            \"action\": []\r\n        },\r\n        {\r\n            \"name\": \"device-4\",\r\n            \"id\": \"e22991f0-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"5cx48k7IhAcoSwMr1G8k\",\r\n            \"action\": []\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/TB/device/action",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"TB",
+						"device",
+						"action"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stop device action",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3000/TB/device/action/stop",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"TB",
+						"device",
+						"action",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "autoLoginTenant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3000/TB/user/autoLoginTenant",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"TB",
+						"user",
+						"autoLoginTenant"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
