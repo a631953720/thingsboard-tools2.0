@@ -5,6 +5,8 @@ import { createDevices, deleteDevices, getDevices } from '../service/device';
 import CreateTBDeviceReqDTO from '../interface/serviceRequest/device/createTBDevicesDTO';
 import DeleteTBDeviceReqDTO from '../interface/serviceRequest/device/deleteTBDeviceDTO';
 import WinstonLogger from '../helpers/loggers';
+import SetTBDeviceActionReqDTO from '../interface/serviceRequest/device/setTBDeviceActionDTO';
+import { setDeviceAction, getAllDeviceAction } from '../service/device/setDeviceAction';
 
 const loggers = new WinstonLogger({ type: 'Device controller' });
 
@@ -62,6 +64,20 @@ export async function getTBDevices(req: Request, res: Response, next: NextFuncti
         }
         loggers.debug(response);
         return res.status(response.status).json(response);
+    } catch (error) {
+        return next({
+            status: 500,
+            errorMessage: 'Internal Server Error',
+        });
+    }
+}
+
+export async function setTBDeviceAction(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { body } = req;
+        const { deviceList } = new SetTBDeviceActionReqDTO(body);
+        await setDeviceAction(deviceList);
+        return res.status(200).json(getAllDeviceAction());
     } catch (error) {
         return next({
             status: 500,

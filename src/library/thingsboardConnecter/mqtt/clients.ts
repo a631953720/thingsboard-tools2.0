@@ -4,7 +4,7 @@ import WinstonLogger from '../../../helpers/loggers';
 const loggers = new WinstonLogger({ type: 'MQTT' });
 
 type MQTTClient = {
-    [deviceName: string]: mqtt.Client;
+    [id: string]: mqtt.Client;
 };
 
 type MQTTClientArr = Array<MQTTClient>;
@@ -16,25 +16,32 @@ export default class MQTTClientEntity {
         this.clientList = [];
     }
 
-    public checkClientIsExist(deviceName: string) {
-        const client = this.clientList.find((c) => Object.keys(c)[0] === deviceName);
+    public checkClientIsExist(id: string) {
+        const client = this.clientList.find((c) => Object.keys(c)[0] === id);
         if (client) return true;
         return false;
     }
 
-    public getClientIndex(deviceName: string) {
-        const index = this.clientList.findIndex((c) => Object.keys(c)[0] === deviceName);
+    public getClientIndex(id: string) {
+        const index = this.clientList.findIndex((c) => Object.keys(c)[0] === id);
         return index;
     }
 
-    public removeClient(index: number) {
-        const client = this.clientList[index];
-        this.clientList = this.clientList.filter((c) => Object.keys(c)[0] !== Object.keys(client)[0]);
+    public getClient(id: string) {
+        const find = this.clientList.find((c) => Object.keys(c)[0] === id);
+        if (find) {
+            return find[id];
+        }
+        return find;
+    }
+
+    public removeClient(id: string) {
+        this.clientList = this.clientList.filter((c) => Object.keys(c)[0] !== id);
         loggers.debug({ clientList: this.clientList }, 'Update client array');
     }
 
     public addClient(client: MQTTClient) {
         this.clientList.push(client);
-        loggers.debug(`device name: ${Object.keys(client)[0]}`, 'Add mqtt client to array');
+        loggers.debug(`device id: ${Object.keys(client)[0]}`, 'Add mqtt client to array');
     }
 }

@@ -28,3 +28,7 @@ export function delay(time: number, callback = () => {}) {
         }, time * 1000);
     });
 }
+
+export function delayInterval(time: number, callback = () => {}) {
+    return setInterval(callback, time * 1000);
+}
