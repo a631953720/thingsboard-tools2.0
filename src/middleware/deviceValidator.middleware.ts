@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { Request, Response, NextFunction } from 'express';
 import HTTPError from '../constants/defaultHTTPCode';
-import { checkValueType } from '../helpers/utility';
+import { checkValueType, checkArrayValueType } from '../helpers/utility';
 
 export function createDevicesValidator(req: Request, _res: Response, next: NextFunction) {
     const { body } = req;
@@ -55,7 +55,8 @@ export function deleteDevicesValidator(req: Request, _res: Response, next: NextF
                 })
             );
         }
-        if (!deviceList.every((v) => checkValueType(v, 'string')) && !deviceList.every((v) => checkValueType(v, 'object'))) {
+        // if (!deviceList.every((v) => checkValueType(v, 'string')) && !deviceList.every((v) => checkValueType(v, 'object')))
+        if (!checkArrayValueType({ array: deviceList, type: 'string' }) && !checkArrayValueType({ array: deviceList, type: 'object' })) {
             return next(
                 HTTPError({
                     status: 400,
@@ -64,17 +65,20 @@ export function deleteDevicesValidator(req: Request, _res: Response, next: NextF
             );
         }
         // 檢查陣列元素是否為真
-        if (!deviceList.every((v) => v)) {
+        // if (!deviceList.every((v) => v))
+        if (!checkArrayValueType({ array: deviceList })) {
             return next(
                 HTTPError({
                     status: 400,
-                    errorMessage: 'deviceList items must be string or object',
+                    errorMessage: 'deviceList items is unavailable',
                 })
             );
         }
-        if (deviceList.every((v) => checkValueType(v, 'object'))) {
+        // if (deviceList.every((v) => checkValueType(v, 'object')))
+        if (checkArrayValueType({ array: deviceList, type: 'object' })) {
             // 檢查陣列元素是務件的情況下是否可以取得id
-            if (!deviceList.every((v) => v.id)) {
+            // if (!deviceList.every((v) => v.id))
+            if (!checkArrayValueType({ array: deviceList, key: 'id' })) {
                 return next(
                     HTTPError({
                         status: 400,
@@ -82,7 +86,8 @@ export function deleteDevicesValidator(req: Request, _res: Response, next: NextF
                     })
                 );
             }
-            if (!deviceList.every((v) => checkValueType(v.id, 'string'))) {
+            // if (!deviceList.every((v) => checkValueType(v.id, 'string')))
+            if (!checkArrayValueType({ array: deviceList, key: 'id', type: 'string' })) {
                 return next(
                     HTTPError({
                         status: 400,
