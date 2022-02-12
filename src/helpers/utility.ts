@@ -6,10 +6,11 @@ export function checkValueType(value: any, type: TypeList) {
     return typeof value === type;
 }
 
-export function delay(time: number) {
+export function delay(time: number, callback = () => {}) {
     // eslint-disable-next-line no-unused-vars
     return new Promise((res, _rej) => {
         setTimeout(() => {
+            if (typeof callback === 'function') callback();
             res(1);
         }, time * 1000);
     });
