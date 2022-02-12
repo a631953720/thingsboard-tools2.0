@@ -1,4 +1,4 @@
-import getTBDevice from '../../library/thingsboardConnecter/device/getDevices';
+import { getTBDevice } from '../../library/thingsboardConnecter/device';
 import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import GetDeviceDTO from '../../interface/serviceResponse/device/getDevicesDTO';

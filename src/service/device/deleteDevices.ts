@@ -1,4 +1,4 @@
-import deleteDevice from '../../library/thingsboardConnecter/device/deleteDevice';
+import { deleteTBDevice } from '../../library/thingsboardConnecter/device';
 import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
 import DeleteDeviceDTO from '../../interface/serviceResponse/device/deleteDeviceDTO';
@@ -13,7 +13,7 @@ export default async function deleteDevices(tenantToken: string, deviceIdList: s
     if (Array.isArray(newDeviceList)) {
         for (let i = 0; i < newDeviceList.length; i += 1) {
             // eslint-disable-next-line no-await-in-loop
-            const res = await deleteDevice(tenantToken, newDeviceList[i]);
+            const res = await deleteTBDevice(tenantToken, newDeviceList[i]);
             if (checkStatusError(res)) return new DeleteDeviceDTO(res);
         }
     }

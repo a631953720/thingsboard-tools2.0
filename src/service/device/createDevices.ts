@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import createTBDevice from '../../library/thingsboardConnecter/device/createDevice';
+import { createTBDevice } from '../../library/thingsboardConnecter/device';
 import { TB_DEVICE } from '../../constants/env';
 import checkStatusError from '../../helpers/checkStatusError';
 import WinstonLogger from '../../helpers/loggers';
