@@ -3,6 +3,7 @@ interface CreateDevicesRes {
     list: Array<{
         id: string;
         name: string;
+        token: string;
     }>;
     errorMessage?: any;
 }
@@ -13,6 +14,7 @@ export default class CreateDevicesDTO implements CreateDevicesRes {
     list: Array<{
         id: string;
         name: string;
+        token: string;
     }>;
 
     errorMessage?: any;
