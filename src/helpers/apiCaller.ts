@@ -21,7 +21,10 @@ const loggers = new WinstonLogger({ type: 'API caller' });
 async function APICaller(configs: AxiosRequestConfig) {
     try {
         const res = await axios(configs);
-        return res.data;
+        if (res.data) {
+            return res.data;
+        }
+        return { status: res.status };
     } catch (error: any) {
         if (error.response) {
             // The request was made and the server responded with a status code

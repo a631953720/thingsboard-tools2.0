@@ -1,4 +1,4 @@
-import SearchTenantAdminDTO from '../../../interface/thingsboardConnector/TBSearchTenantAdminDTO';
+import SearchTenantAdminDTO from '../../../interface/thingsboardConnector/user/TBSearchTenantAdminDTO';
 import { TB_SERVER } from '../../../constants/env';
 import APICaller from '../../../helpers/apiCaller';
 import WinstonLogger from '../../../helpers/loggers';

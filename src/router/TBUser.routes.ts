@@ -1,10 +1,10 @@
 import express from 'express';
-import { autoLoginTenantAccount } from '../controller/user.controller';
+import { autoLoginTenantAccount } from '../controller/TBUser.controller';
 
 const router = express.Router();
 
 router.get('/test', (req, res) => {
-    res.json('echo');
+    res.status(200).send('success');
 });
 
 // 若tenant或是tenant admin不存在會自動create

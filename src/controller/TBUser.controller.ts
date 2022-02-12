@@ -1,12 +1,11 @@
 /* eslint-disable import/prefer-default-export */
-/* eslint-disable prettier/prettier */
 import { Request, Response, NextFunction } from 'express';
 import checkStatusError from '../helpers/checkStatusError';
 import { autoLoginToGetTenantToken } from '../service/user';
 
-export async function autoLoginTenantAccount(_req: Request, res: Response, next: NextFunction) {
+export async function autoLoginTenantAccount(req: Request, res: Response, next: NextFunction) {
     try {
-        const response = await autoLoginToGetTenantToken();
+        const response = await autoLoginToGetTenantToken(req.headers.TBAdminToken as string);
         if (checkStatusError(response)) {
             return next({
                 status: response.status,
@@ -20,5 +19,4 @@ export async function autoLoginTenantAccount(_req: Request, res: Response, next:
             errorMessage: 'Internal Server Error',
         });
     }
-
 }
