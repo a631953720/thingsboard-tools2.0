@@ -31,6 +31,7 @@ export type DeviceInfo = {
     name: string;
     type: string;
     label: string;
+    token: string;
 };
 
 export type GetDeviceRes = {
@@ -53,4 +54,10 @@ export type GetDeviceRes = {
     totalElements: number;
     totalPages: number;
     errorMessage?: any;
+};
+
+export type GetDeviceTokenRes = {
+    createdTime: number;
+    credentialsId: string;
+    credentialsType: string;
 };

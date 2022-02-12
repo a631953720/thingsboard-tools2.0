@@ -1,12 +1,13 @@
 export default class GetDeviceDTO {
     status: number;
 
-    data: Array<{
+    deviceList: Array<{
         id: string;
         name: string;
         type: string;
         label: string;
         createdTime: number;
+        token: string;
     }>;
 
     totalElements: number;
@@ -15,7 +16,7 @@ export default class GetDeviceDTO {
 
     constructor(data: any) {
         this.status = data.status;
-        this.data = data.data;
+        this.deviceList = data.data;
         this.totalElements = data.totalElements;
         this.errorMessage = data.errorMessage;
     }
