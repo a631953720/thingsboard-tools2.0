@@ -1,8 +1,6 @@
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable no-unused-vars */
 import { Request, Response, NextFunction } from 'express';
-import HTTPError from '../constants/defaultHTTPCode';
-import { checkValueType, checkArrayValueType } from '../helpers/utility';
+import HTTPError, { newHTTPError } from '../constants/defaultHTTPCode';
+import { checkArrayValueType } from '../helpers/utility';
 
 export function createDevicesValidator(req: Request, _res: Response, next: NextFunction) {
     const { body } = req;
@@ -104,5 +102,20 @@ export function deleteDevicesValidator(req: Request, _res: Response, next: NextF
             })
         );
     }
+    return next();
+}
+
+export function setDevicesActionValidator(req: Request, _res: Response, next: NextFunction) {
+    const { body } = req;
+    const { deviceList } = body;
+    const commonError = newHTTPError(400);
+
+    if (!Array.isArray(deviceList)) return next(commonError('deviceList must be an array'));
+    if (deviceList.length === 0) return next(commonError('deviceList length is 0'));
+    if (!checkArrayValueType({ array: deviceList, key: 'name', type: 'string' })) return next(commonError('device name is unavailable'));
+    if (!checkArrayValueType({ array: deviceList, key: 'id', type: 'string' })) return next(commonError('device id is unavailable'));
+    if (!checkArrayValueType({ array: deviceList, key: 'token', type: 'string' })) return next(commonError('device token is unavailable'));
+    if (!deviceList.every((v) => Array.isArray(v.action))) return next(commonError('device action is unavailable'));
+
     return next();
 }
