@@ -7,6 +7,7 @@
     - 新增/刪除虛擬裝置
     - 修改虛擬裝置行為 (subscribeRPC or sendData)
 4. 目前尚未提供CLI的執行方式，若不想執行成一支Service，可以使用thingsboard-tools第一個版本
+5. 有關設計細節，我有一個[公開的notion可供參考](https://faint-comet-8c5.notion.site/d88dde02820a4628adc03b4c76e35563)
 
 ## 你可以用來做甚麼?
 1. 不需手動登入來取得tenant token，二次開發的過程中常常會需要這token貼在程式碼內做測試。
