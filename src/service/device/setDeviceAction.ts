@@ -33,7 +33,7 @@ async function setClientAction(client: TBDeviceEntity, action: Actions[]) {
     }
 }
 
-export async function setDeviceAction(deviceList: Devices) {
+export async function setDevicesAction(deviceList: Devices) {
     for (let i = 0; i < deviceList.length; i += 1) {
         const { action, id, name } = deviceList[i];
         const findClient = map.get(id);

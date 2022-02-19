@@ -6,7 +6,7 @@ import CreateTBDeviceReqDTO from '../interface/serviceRequest/device/createTBDev
 import DeleteTBDeviceReqDTO from '../interface/serviceRequest/device/deleteTBDeviceDTO';
 import WinstonLogger from '../helpers/loggers';
 import SetTBDeviceActionReqDTO from '../interface/serviceRequest/device/setTBDeviceActionDTO';
-import { setDeviceAction, getAllDeviceAction } from '../service/device/setDeviceAction';
+import { setDevicesAction, getAllDeviceAction } from '../service/device/setDeviceAction';
 import Mock from '../library/mockData';
 import SetTBDeviceMockDataDTO from '../interface/serviceRequest/device/setTBDeviceMockDataDTO';
 import { createEntity, updateEntity, deleteEntity } from '../service/device/mockData';
@@ -79,7 +79,7 @@ export async function setTBDeviceAction(req: Request, res: Response, next: NextF
     try {
         const { body } = req;
         const { deviceList } = new SetTBDeviceActionReqDTO(body);
-        await setDeviceAction(deviceList);
+        await setDevicesAction(deviceList);
         return res.status(200).json(getAllDeviceAction());
     } catch (error) {
         return next({
