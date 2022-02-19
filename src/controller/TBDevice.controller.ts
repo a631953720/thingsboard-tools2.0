@@ -7,6 +7,9 @@ import DeleteTBDeviceReqDTO from '../interface/serviceRequest/device/deleteTBDev
 import WinstonLogger from '../helpers/loggers';
 import SetTBDeviceActionReqDTO from '../interface/serviceRequest/device/setTBDeviceActionDTO';
 import { setDeviceAction, getAllDeviceAction } from '../service/device/setDeviceAction';
+import Mock from '../library/mockData';
+import SetTBDeviceMockDataDTO from '../interface/serviceRequest/device/setTBDeviceMockDataDTO';
+import { createMockDataEntity } from '../service/device/mockData';
 
 const loggers = new WinstonLogger({ type: 'Device controller' });
 
@@ -78,6 +81,33 @@ export async function setTBDeviceAction(req: Request, res: Response, next: NextF
         const { deviceList } = new SetTBDeviceActionReqDTO(body);
         await setDeviceAction(deviceList);
         return res.status(200).json(getAllDeviceAction());
+    } catch (error) {
+        return next({
+            status: 500,
+            errorMessage: 'Internal Server Error',
+        });
+    }
+}
+
+export async function setMockDataEntity(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { body } = req;
+        const config = new SetTBDeviceMockDataDTO(body);
+        const entity = createMockDataEntity(config);
+        if (checkStatusError(entity)) return next(entity);
+        return res.status(entity.status).json(entity);
+    } catch (error) {
+        return next({
+            status: 500,
+            errorMessage: 'Internal Server Error',
+        });
+    }
+}
+
+export async function getMockDataEntity(_req: Request, res: Response, next: NextFunction) {
+    try {
+        const entity = Mock.getNameList();
+        return res.status(200).json({ list: entity });
     } catch (error) {
         return next({
             status: 500,

@@ -140,10 +140,10 @@ export default class TBDeviceEntity {
     }
 
     public async removeMQTTClient() {
-        const client = MQTTClients.clientList.find((c) => Object.keys(c)[0] === this.device.id);
+        const client = MQTTClients.getClient(this.device.id);
         if (client) {
             simpleMsg(`${this.device.name} disconnect`);
-            client[this.device.id].end();
+            client.end();
             MQTTClients.removeClient(this.device.id);
             this.client = undefined;
         }
