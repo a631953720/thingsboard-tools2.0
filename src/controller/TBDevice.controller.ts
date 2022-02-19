@@ -9,7 +9,7 @@ import SetTBDeviceActionReqDTO from '../interface/serviceRequest/device/setTBDev
 import { setDeviceAction, getAllDeviceAction } from '../service/device/setDeviceAction';
 import Mock from '../library/mockData';
 import SetTBDeviceMockDataDTO from '../interface/serviceRequest/device/setTBDeviceMockDataDTO';
-import { createMockDataEntity } from '../service/device/mockData';
+import { createEntity, updateEntity, deleteEntity } from '../service/device/mockData';
 
 const loggers = new WinstonLogger({ type: 'Device controller' });
 
@@ -89,11 +89,11 @@ export async function setTBDeviceAction(req: Request, res: Response, next: NextF
     }
 }
 
-export async function setMockDataEntity(req: Request, res: Response, next: NextFunction) {
+export async function createMockData(req: Request, res: Response, next: NextFunction) {
     try {
         const { body } = req;
         const config = new SetTBDeviceMockDataDTO(body);
-        const entity = createMockDataEntity(config);
+        const entity = createEntity(config);
         if (checkStatusError(entity)) return next(entity);
         return res.status(entity.status).json(entity);
     } catch (error) {
@@ -104,7 +104,36 @@ export async function setMockDataEntity(req: Request, res: Response, next: NextF
     }
 }
 
-export async function getMockDataEntity(_req: Request, res: Response, next: NextFunction) {
+export async function updateMockData(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { body } = req;
+        const config = new SetTBDeviceMockDataDTO(body);
+        const entity = updateEntity(config);
+        if (checkStatusError(entity)) return next(entity);
+        return res.status(entity.status).json(entity);
+    } catch (error) {
+        return next({
+            status: 500,
+            errorMessage: 'Internal Server Error',
+        });
+    }
+}
+
+export async function deleteMockData(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { name } = req.params;
+        const response = deleteEntity(name);
+        if (checkStatusError(response)) return next(response);
+        return res.status(200).send('OK');
+    } catch (error) {
+        return next({
+            status: 500,
+            errorMessage: 'Internal Server Error',
+        });
+    }
+}
+
+export async function getMockDataList(_req: Request, res: Response, next: NextFunction) {
     try {
         const entity = Mock.getNameList();
         return res.status(200).json({ list: entity });

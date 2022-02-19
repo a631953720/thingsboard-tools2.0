@@ -8,9 +8,11 @@ import {
 import {
     createTBDevices,
     deleteTBDevices,
-    getMockDataEntity,
+    getMockDataList,
     getTBDevices,
-    setMockDataEntity,
+    createMockData,
+    updateMockData,
+    deleteMockData,
     setTBDeviceAction,
 } from '../controller/TBDevice.controller';
 import getTenantToken from '../middleware/getTenantToken.middleware';
@@ -22,6 +24,7 @@ router.use('/create', createDevicesValidator);
 router.use('/delete', deleteDevicesValidator);
 router.use('/action', setDevicesActionValidator);
 router.use('/data/setting/create', upsertMockDataEntityValidator);
+router.use('/data/setting/update', upsertMockDataEntityValidator);
 
 router.get('/test', (req, res) => {
     res.status(200).send('success');
@@ -32,8 +35,10 @@ router.post('/create', createTBDevices);
 router.delete('/delete', deleteTBDevices);
 router.post('/action', setTBDeviceAction);
 
-router.get('/data/setting/list', getMockDataEntity);
-router.post('/data/setting/create', setMockDataEntity);
+router.get('/data/setting/list', getMockDataList);
+router.post('/data/setting/create', createMockData);
+router.post('/data/setting/update', updateMockData);
+router.delete('/data/setting/delete/:name', deleteMockData);
 
 router.post('/action/stop', (req, res) => {
     res.status(200).send('API 開發中');
