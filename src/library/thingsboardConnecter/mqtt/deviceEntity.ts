@@ -43,7 +43,15 @@ export default class TBDeviceEntity {
 
     private timer?: ReturnType<typeof setInterval>;
 
+    private historySendTimes: number;
+
     private sendTimes: number;
+
+    private createTime: number;
+
+    private startTime?: number;
+
+    private endTime?: number;
 
     private firstToInitOnMessage: boolean;
 
@@ -55,6 +63,8 @@ export default class TBDeviceEntity {
         this.sendDataDelay = sendDataDelay;
         this.firstToInitOnMessage = true;
         this.sendTimes = 0;
+        this.historySendTimes = 0;
+        this.createTime = new Date().getTime();
 
         const find = MQTTClients.getClient(this.device.id);
         if (find) {
@@ -84,7 +94,11 @@ export default class TBDeviceEntity {
     public getInfos() {
         return {
             ...this.device,
+            historySendTimes: this.historySendTimes,
             sendTimes: this.sendTimes,
+            createTime: this.createTime,
+            startTime: this.startTime,
+            endTime: this.endTime,
             canMapMockDataEntity: this.canMapMockDataEntity,
         };
     }
@@ -126,15 +140,19 @@ export default class TBDeviceEntity {
         if (client) {
             const mock = Mock.getMockDataEntity(this.device.type);
             if (mock) {
+                this.sendTimes = 0;
                 const id = delayInterval(this.sendDataDelay, () => {
                     const rawData = jsonStringify(mock.generate());
                     client.publish('v1/devices/me/telemetry', rawData, () => {
                         simpleMsg(`${this.device.name} send data`);
+                        this.historySendTimes += 1;
                         this.sendTimes += 1;
+                        this.endTime = new Date().getTime();
                     });
                 });
                 this.timer = id;
                 this.updateSendDataFlag(true);
+                this.startTime = new Date().getTime();
                 return id;
             }
             this.updateSendDataFlag(false);
