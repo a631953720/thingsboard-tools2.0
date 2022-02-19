@@ -5,7 +5,6 @@ const loggers = new WinstonLogger({ type: 'Mock data entity' });
 
 export default function generateMockData(obj: any) {
     loggers.debug(obj, 'setMockData');
-    // checkValueType
     const newObj: any = {};
     const keys = Object.keys(obj);
     keys.forEach((key) => {

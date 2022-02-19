@@ -15,6 +15,9 @@ export default class MockDataListEntity {
         this.nameList = Array.from(map.keys());
     }
 
+    /**
+     * 嘗試取得 MockDataEntity config，若找不到則回傳 undefined
+     */
     public getEntityConfig(name: string) {
         const find = this.nameList.find((n) => n === name);
         if (!find) return undefined;
@@ -26,16 +29,26 @@ export default class MockDataListEntity {
         };
     }
 
+    /**
+     * 取得所有 MockDataEntity 設定列表
+     */
     public getNameList() {
         return this.nameList.map((name) => this.getEntityConfig(name));
     }
 
+    /**
+     * 嘗試取得 MockDataEntity 的實體，不存在則回傳undefined
+     */
     public getMockDataEntity(name: string) {
         const find = this.nameList.find((n) => n === name);
         if (find) return map.get(find);
         return undefined;
     }
 
+    /**
+     * 嘗試建立 MockDataEntity 的實體，不存在則回傳false。
+     * 成功 create 會將實體存在Map當中，以name:MockDataEntity的方式
+     */
     public createMockDataEntity(name: string, data: object) {
         const find = this.nameList.find((n) => n === name);
 
@@ -49,6 +62,9 @@ export default class MockDataListEntity {
         return entity;
     }
 
+    /**
+     * 嘗試更新 MockDataEntity 的設定，若找不到實體，回傳false
+     */
     public updateMockDataEntity(name: string, data: object) {
         const find = this.nameList.find((n) => n === name);
 
@@ -64,6 +80,9 @@ export default class MockDataListEntity {
         return entity;
     }
 
+    /**
+     * 嘗試刪除 MockDataEntity 的實體，無法刪除則回傳false
+     */
     public deleteMockDataEntity(name: string) {
         const find = this.nameList.find((n) => n === name);
         if (find) {

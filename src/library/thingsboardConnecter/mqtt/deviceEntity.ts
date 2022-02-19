@@ -43,6 +43,8 @@ export default class TBDeviceEntity {
 
     private timer?: ReturnType<typeof setInterval>;
 
+    private sendTimes: number;
+
     private firstToInitOnMessage: boolean;
 
     // 能找到匹配的假資料產生實體，就設定為true
@@ -52,6 +54,7 @@ export default class TBDeviceEntity {
         this.device = device;
         this.sendDataDelay = sendDataDelay;
         this.firstToInitOnMessage = true;
+        this.sendTimes = 0;
 
         const find = MQTTClients.getClient(this.device.id);
         if (find) {
@@ -67,29 +70,56 @@ export default class TBDeviceEntity {
         this.canMapMockDataEntity = true;
     }
 
+    /**
+     * 更新實體狀態，是否可配對到對應的 MockDataEntity
+     * @param flag 可配對為true否則false
+     */
     private updateSendDataFlag(flag: boolean) {
         this.canMapMockDataEntity = flag;
     }
 
+    /**
+     * @returns 跟裝置有關的資訊
+     */
     public getInfos() {
         return {
             ...this.device,
+            sendTimes: this.sendTimes,
             canMapMockDataEntity: this.canMapMockDataEntity,
         };
     }
 
+    /**
+     * 取得此時體的MqttClient，若為 undefined 則是沒有連線
+     * @returns MqttClient | undefined
+     */
     public getClient() {
         return this.client;
     }
 
+    /**
+     * 取得當前裝置的行為
+     * @returns device action
+     */
     public getAction() {
         return this.device.action;
     }
 
+    /**
+     * 取得當前裝置的行為
+     * @param action device action array
+     */
     public updateAction(action?: Array<Actions>) {
         this.device.action = action;
     }
 
+    /**
+     * 會嘗試尋找對應的MockDataEntity並設置發送資料的計時器
+     * 若有對應會更新 canMapMockDataEntity 的屬性為true
+     * 告知使用者此裝置可以發送訊息
+     * 找不到則是忽略此次設定，並回傳false
+     * @returns NodeJS.Timer | false
+     */
     public async setMQTTClientSendData() {
         const { client, timer } = this;
         if (timer) return timer;
@@ -100,6 +130,7 @@ export default class TBDeviceEntity {
                     const rawData = jsonStringify(mock.generate());
                     client.publish('v1/devices/me/telemetry', rawData, () => {
                         simpleMsg(`${this.device.name} send data`);
+                        this.sendTimes += 1;
                     });
                 });
                 this.timer = id;
@@ -112,6 +143,9 @@ export default class TBDeviceEntity {
         return false;
     }
 
+    /**
+     * 命令裝置訂閱RPC topic，若該裝置已經訂閱過則不再執行，並回傳false
+     */
     public async subscribeRPCTopic() {
         const { client, device, firstToInitOnMessage } = this;
         if (client) {
@@ -142,6 +176,9 @@ export default class TBDeviceEntity {
         return false;
     }
 
+    /**
+     * 清除計時器並清空timer的屬性
+     */
     public async stopMQTTClientSendData() {
         const { timer } = this;
         if (timer) {
@@ -150,6 +187,9 @@ export default class TBDeviceEntity {
         }
     }
 
+    /**
+     * 取消訂閱RPC topic
+     */
     public async unsubscribeRPCTopic() {
         const { client } = this;
         if (client) {
@@ -157,6 +197,9 @@ export default class TBDeviceEntity {
         }
     }
 
+    /**
+     * 嘗試刪除MQTT Client，若找不到則不處理
+     */
     public async removeMQTTClient() {
         const client = MQTTClients.getClient(this.device.id);
         if (client) {
