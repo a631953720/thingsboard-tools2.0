@@ -22,7 +22,7 @@ const router = express.Router();
 router.use(getTenantToken);
 router.use('/create', createDevicesValidator);
 router.use('/delete', deleteDevicesValidator);
-router.use('/action', setDevicesActionValidator);
+router.use('/action/update', setDevicesActionValidator);
 router.use('/data/setting/create', upsertMockDataEntityValidator);
 router.use('/data/setting/update', upsertMockDataEntityValidator);
 
@@ -33,7 +33,7 @@ router.get('/test', (req, res) => {
 router.get('/list', getTBDevices);
 router.post('/create', createTBDevices);
 router.delete('/delete', deleteTBDevices);
-router.post('/action', setTBDeviceAction);
+router.post('/action/update', setTBDeviceAction);
 
 router.get('/data/setting/list', getMockDataList);
 router.post('/data/setting/create', createMockData);

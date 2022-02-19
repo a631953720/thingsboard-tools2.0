@@ -5,6 +5,7 @@ import { delayInterval } from '../../../helpers/utility';
 import { jsonParse, jsonStringify } from '../../../helpers/jsonHandler';
 import MQTTClientEntity from './clients';
 import { Actions } from '../../../interface/serviceRequest/device/setTBDeviceActionDTO';
+// import Mock from '../../mockData';
 
 const MQTTClients = new MQTTClientEntity();
 
@@ -12,10 +13,9 @@ type Device = {
     id: string;
     name: string;
     token: string;
+    type: string;
     action?: Array<Actions>;
 };
-// eslint-disable-next-line no-unused-vars
-const allDelay = 0.1;
 
 function initConnect(name: string, token: string) {
     const client = mqtt.connect(`mqtt://${TB_SERVER.ip}:1883`, {

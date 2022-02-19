@@ -119,6 +119,7 @@ export function setDevicesActionValidator(req: Request, _res: Response, next: Ne
     if (!checkArrayValueType({ array: deviceList, key: 'name', type: 'string' })) return next(commonError('device name is unavailable'));
     if (!checkArrayValueType({ array: deviceList, key: 'id', type: 'string' })) return next(commonError('device id is unavailable'));
     if (!checkArrayValueType({ array: deviceList, key: 'token', type: 'string' })) return next(commonError('device token is unavailable'));
+    if (!checkArrayValueType({ array: deviceList, key: 'type', type: 'string' })) return next(commonError('device type is unavailable'));
     if (!deviceList.every((v) => Array.isArray(v.action))) return next(commonError('device action is unavailable'));
 
     return next();

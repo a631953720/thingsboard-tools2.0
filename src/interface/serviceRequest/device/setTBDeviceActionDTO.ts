@@ -4,6 +4,7 @@ export type Devices = Array<{
     id: string;
     name: string;
     token: string;
+    type: string;
     action?: Array<Actions>;
 }>;
 interface SetTBDeviceActionReq {
