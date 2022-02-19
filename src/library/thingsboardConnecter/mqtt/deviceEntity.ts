@@ -5,7 +5,7 @@ import { delayInterval } from '../../../helpers/utility';
 import { jsonParse, jsonStringify } from '../../../helpers/jsonHandler';
 import MQTTClientEntity from './clients';
 import { Actions } from '../../../interface/serviceRequest/device/setTBDeviceActionDTO';
-// import Mock from '../../mockData';
+import Mock from '../../mockData';
 
 const MQTTClients = new MQTTClientEntity();
 
@@ -45,6 +45,9 @@ export default class TBDeviceEntity {
 
     private firstToInitOnMessage: boolean;
 
+    // 能找到匹配的假資料產生實體，就設定為true
+    private canMapMockDataEntity: boolean;
+
     constructor(device: Device, sendDataDelay: number) {
         this.device = device;
         this.sendDataDelay = sendDataDelay;
@@ -58,10 +61,21 @@ export default class TBDeviceEntity {
             this.client = initConnect(this.device.name, this.device.token);
             MQTTClients.addClient({ [this.device.id]: this.client });
         }
+
+        const entity = Mock.getMockDataEntity(this.device.type);
+        if (!entity) this.canMapMockDataEntity = false;
+        this.canMapMockDataEntity = true;
+    }
+
+    private updateSendDataFlag(flag: boolean) {
+        this.canMapMockDataEntity = flag;
     }
 
     public getInfos() {
-        return this.device;
+        return {
+            ...this.device,
+            canMapMockDataEntity: this.canMapMockDataEntity,
+        };
     }
 
     public getClient() {
@@ -80,16 +94,20 @@ export default class TBDeviceEntity {
         const { client, timer } = this;
         if (timer) return timer;
         if (client) {
-            const rawData = jsonStringify({ test: 1 });
-
-            const id = delayInterval(this.sendDataDelay, () => {
-                client.publish('v1/devices/me/telemetry', rawData, () => {
-                    simpleMsg(`${this.device.name} send data`);
+            const mock = Mock.getMockDataEntity(this.device.type);
+            if (mock) {
+                const id = delayInterval(this.sendDataDelay, () => {
+                    const rawData = jsonStringify(mock.generate());
+                    client.publish('v1/devices/me/telemetry', rawData, () => {
+                        simpleMsg(`${this.device.name} send data`);
+                    });
                 });
-            });
-
-            this.timer = id;
-            return id;
+                this.timer = id;
+                this.updateSendDataFlag(true);
+                return id;
+            }
+            this.updateSendDataFlag(false);
+            return false;
         }
         return false;
     }

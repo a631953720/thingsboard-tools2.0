@@ -1,6 +1,7 @@
 type Devices = Array<{
     name: string;
     type: string;
+    canFindMockDataEntity: boolean;
     action?: Array<string>;
 }>;
 
@@ -13,6 +14,7 @@ export default class GetAllDeviceActionDTO {
                 name: d.name,
                 type: d.type,
                 action: d.action,
+                canFindMockDataEntity: d.canMapMockDataEntity,
             }));
         } else {
             this.devices = [];
