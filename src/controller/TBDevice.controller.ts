@@ -75,6 +75,17 @@ export async function getTBDevices(req: Request, res: Response, next: NextFuncti
     }
 }
 
+export async function getTBDeviceAction(req: Request, res: Response, next: NextFunction) {
+    try {
+        return res.status(200).json(getAllDeviceAction());
+    } catch (error) {
+        return next({
+            status: 500,
+            errorMessage: 'Internal Server Error',
+        });
+    }
+}
+
 export async function setTBDeviceAction(req: Request, res: Response, next: NextFunction) {
     try {
         const { body } = req;

@@ -14,6 +14,7 @@ import {
     updateMockData,
     deleteMockData,
     setTBDeviceAction,
+    getTBDeviceAction,
 } from '../controller/TBDevice.controller';
 import getTenantToken from '../middleware/getTenantToken.middleware';
 
@@ -33,6 +34,7 @@ router.get('/test', (req, res) => {
 router.get('/list', getTBDevices);
 router.post('/create', createTBDevices);
 router.delete('/delete', deleteTBDevices);
+router.get('/action/list', getTBDeviceAction);
 router.post('/action/update', setTBDeviceAction);
 
 router.get('/data/setting/list', getMockDataList);
