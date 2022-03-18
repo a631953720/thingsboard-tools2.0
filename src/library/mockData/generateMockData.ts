@@ -10,7 +10,7 @@ export default function generateMockData(obj: any) {
     keys.forEach((key) => {
         if (checkValueType(obj[key], 'string')) newObj[key] = obj[key];
         else if (checkValueType(obj[key], 'number')) newObj[key] = randomNum(obj[key]);
-        else if (Array.isArray(obj[key])) newObj[key] = obj[key].map((v: any) => randomNum(v));
+        // else if (Array.isArray(obj[key])) newObj[key] = obj[key].map((v: any) => randomNum(v)); 陣列不好判斷，先忽略
         else if (checkValueType(obj[key], 'object')) newObj[key] = generateMockData(obj[key]);
     });
     return newObj;
