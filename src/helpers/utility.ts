@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 type TypeList = 'bigint' | 'boolean' | 'function' | 'number' | 'object' | 'string' | 'symbol' | 'undefined';
 
 export function checkValueType(value: any, type: TypeList) {
@@ -31,4 +30,14 @@ export function delay(time: number, callback = () => {}) {
 
 export function delayInterval(time: number, callback = () => {}) {
     return setInterval(callback, time * 1000);
+}
+
+export function randomNum(params: number, max?: number, min?: number) {
+    if (typeof max === 'number' && typeof min === 'number') {
+        let v = Math.random() * params;
+        if (v > max) v = max;
+        if (v < min) v = min;
+        return v;
+    }
+    return Math.random() * params;
 }

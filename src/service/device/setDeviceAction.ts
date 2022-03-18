@@ -33,7 +33,7 @@ async function setClientAction(client: TBDeviceEntity, action: Actions[]) {
     }
 }
 
-export async function setDeviceAction(deviceList: Devices) {
+export async function setDevicesAction(deviceList: Devices) {
     for (let i = 0; i < deviceList.length; i += 1) {
         const { action, id, name } = deviceList[i];
         const findClient = map.get(id);
@@ -72,17 +72,10 @@ export async function setDeviceAction(deviceList: Devices) {
 }
 
 export function getAllDeviceAction() {
-    const array: Array<{
-        name: string;
-        action?: Array<string>;
-    }> = [];
-
+    const array: any[] = [];
     map.forEach((value) => {
-        const { name, action } = value.getInfos();
-        array.push({
-            name,
-            action,
-        });
+        const v = value.getInfos();
+        array.push(v);
     });
 
     const DTO = new GetAllDeviceActionDTO(array);

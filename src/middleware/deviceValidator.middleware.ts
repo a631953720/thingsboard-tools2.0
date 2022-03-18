@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
+import generateMockData from '../library/mockData/generateMockData';
 import HTTPError, { newHTTPError } from '../constants/defaultHTTPCode';
-import { checkArrayValueType } from '../helpers/utility';
+import { checkArrayValueType, checkValueType } from '../helpers/utility';
+import WinstonLogger from '../helpers/loggers';
+
+const loggers = new WinstonLogger({ type: 'deviceValidator.middleware' });
+const commonError = newHTTPError(400);
 
 export function createDevicesValidator(req: Request, _res: Response, next: NextFunction) {
     const { body } = req;
@@ -108,14 +113,32 @@ export function deleteDevicesValidator(req: Request, _res: Response, next: NextF
 export function setDevicesActionValidator(req: Request, _res: Response, next: NextFunction) {
     const { body } = req;
     const { deviceList } = body;
-    const commonError = newHTTPError(400);
 
     if (!Array.isArray(deviceList)) return next(commonError('deviceList must be an array'));
     if (deviceList.length === 0) return next(commonError('deviceList length is 0'));
     if (!checkArrayValueType({ array: deviceList, key: 'name', type: 'string' })) return next(commonError('device name is unavailable'));
     if (!checkArrayValueType({ array: deviceList, key: 'id', type: 'string' })) return next(commonError('device id is unavailable'));
     if (!checkArrayValueType({ array: deviceList, key: 'token', type: 'string' })) return next(commonError('device token is unavailable'));
+    if (!checkArrayValueType({ array: deviceList, key: 'type', type: 'string' })) return next(commonError('device type is unavailable'));
     if (!deviceList.every((v) => Array.isArray(v.action))) return next(commonError('device action is unavailable'));
+
+    return next();
+}
+
+export function upsertMockDataEntityValidator(req: Request, _res: Response, next: NextFunction) {
+    const { body } = req;
+    const { name, data } = body;
+
+    if (!checkValueType(name, 'string') && !checkValueType(name, 'number')) return next(commonError('name must be string or number'));
+    if (Array.isArray(data)) return next(commonError('data must be object'));
+
+    // 嘗試看看是否可以正常產生假資料
+    try {
+        const v = generateMockData(data);
+        loggers.debug(v, 'generateMockData');
+    } catch (error) {
+        return next(commonError('"data" formate error'));
+    }
 
     return next();
 }
