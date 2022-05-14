@@ -4,16 +4,23 @@ WORKDIR /TB-tools
 
 COPY . .
 
+ENV DEBUT=false
+ENV TB_PROXY_CONTAINER=haproxy-certbot
+ENV TENANT_EMAIL=a631953720@GMAIL.COM
+ENV TB_ADMIN_EMAIL=sysadmin@thingsboard.org
+ENV TENANT_ADMIN_NAME=thingsboard-tools-tenant-admin
+ENV TENANT_NAME=thingsboard-tools-tenant
+
 RUN cd src/config && \
 echo PORT=8080 >> production.env && \
-echo DEBUT=false >> production.env && \
-echo TB_SERVER_IP=127.0.0.1 >> production.env && \
-echo TB_SERVER_PORT=1618 >> production.env && \
-echo $TB_ADMIN_EMAIL >> production.env && \
-echo $TB_ADMIN_PASSWORD >> production.env && \
-echo TENANT_ADMIN_NAME=thingsboard-tools-tenant-admin >> production.env && \
-echo TENANT_NAME=thingsboard-tools-tenant >> production.env && \
-echo TENANT_EMAIL=test@gmail.com >> production.env && \
+echo ${DEBUT} >> production.env && \
+echo TB_SERVER_HOST=${TB_PROXY_CONTAINER} >> production.env && \
+echo TB_MQTT_HOST=${TB_PROXY_CONTAINER} >> production.env && \
+echo TB_ADMIN_EMAIL=${TB_ADMIN_EMAIL} >> production.env && \
+echo TB_ADMIN_PASSWORD=${TB_ADMIN_PASSWORD} >> production.env && \
+echo TENANT_ADMIN_NAME=${TENANT_ADMIN_NAME} >> production.env && \
+echo TENANT_NAME=${TENANT_NAME} >> production.env && \
+echo TENANT_EMAIL=${TENANT_EMAIL} >> production.env && \
 echo DEVICE_NAME='test' >> production.env && \
 echo DEVICE_TYPE='test' >> production.env && \
 echo DEVICE_LABEL='test' >> production.env

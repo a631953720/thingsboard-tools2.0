@@ -11,14 +11,13 @@ server:
 steps:
 - name: deploy
   environment:
-    TB_ADMIN_EMAIL:
-      from_secret: TB_ADMIN_EMAIL
     TB_ADMIN_PASSWORD:
       from_secret: TB_ADMIN_PASSWORD
   commands:
   - docker rm -f thingsboard-tools
   - docker build -t thingsboard-tools .
   - docker run -p 8080:8080 --name "thingsboard-tools" -d thingsboard-tools
+  - docker network connect docker_default thingsboard-tools # 跟TB在同一個機器，就能透過container name溝通
 
 trigger:
   branch:
