@@ -1,12 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { Request, Response, NextFunction } from 'express';
+import StopTBDeviceActionDTO from '../interface/serviceRequest/device/stopTBDeviceActionDTO';
 import checkStatusError from '../helpers/checkStatusError';
 import { createDevices, deleteDevices, getDevices } from '../service/device';
 import CreateTBDeviceReqDTO from '../interface/serviceRequest/device/createTBDevicesDTO';
 import DeleteTBDeviceReqDTO from '../interface/serviceRequest/device/deleteTBDeviceDTO';
 import WinstonLogger from '../helpers/loggers';
 import SetTBDeviceActionReqDTO from '../interface/serviceRequest/device/setTBDeviceActionDTO';
-import { setDevicesAction, getAllDeviceAction } from '../service/device/setDeviceAction';
+import { setDevicesAction, getAllDeviceAction, stopDeviceAction } from '../service/device/setDeviceAction';
 import Mock from '../library/mockData';
 import SetTBDeviceMockDataDTO from '../interface/serviceRequest/device/setTBDeviceMockDataDTO';
 import { createEntity, updateEntity, deleteEntity } from '../service/device/mockData';
@@ -75,7 +76,7 @@ export async function getTBDevices(req: Request, res: Response, next: NextFuncti
   }
 }
 
-export async function getTBDeviceAction(req: Request, res: Response, next: NextFunction) {
+export async function getTBDeviceAction(_req: Request, res: Response, next: NextFunction) {
   try {
     return res.status(200).json(getAllDeviceAction());
   } catch (error) {
@@ -91,6 +92,21 @@ export async function setTBDeviceAction(req: Request, res: Response, next: NextF
     const { body } = req;
     const { deviceList } = new SetTBDeviceActionReqDTO(body);
     await setDevicesAction(deviceList);
+    return res.status(200).json(getAllDeviceAction());
+  } catch (error) {
+    return next({
+      status: 500,
+      errorMessage: 'Internal Server Error',
+    });
+  }
+}
+
+export function stopTBDeviceAction(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { body } = req;
+    const { deviceIds, action } = new StopTBDeviceActionDTO(body);
+    loggers.debug({ deviceIds, action }, 'stopTBDeviceAction');
+    if (action) stopDeviceAction(deviceIds, action);
     return res.status(200).json(getAllDeviceAction());
   } catch (error) {
     return next({

@@ -198,10 +198,11 @@ export default class TBDeviceEntity {
    * 清除計時器並清空timer的屬性
    */
   public async stopMQTTClientSendData() {
-    const { timer } = this;
+    const { timer, device } = this;
     if (timer) {
       clearInterval(timer);
       this.timer = undefined;
+      this.updateAction(device.action?.filter((v) => v !== 'sendData'));
     }
   }
 
@@ -209,9 +210,10 @@ export default class TBDeviceEntity {
    * 取消訂閱RPC topic
    */
   public async unsubscribeRPCTopic() {
-    const { client } = this;
+    const { client, device } = this;
     if (client) {
       client.unsubscribe('v1/devices/me/rpc/request/+');
+      this.updateAction(device.action?.filter((v) => v !== 'subscribeRPC'));
     }
   }
 

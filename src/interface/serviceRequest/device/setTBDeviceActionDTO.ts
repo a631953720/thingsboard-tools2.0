@@ -1,5 +1,7 @@
 export type Actions = 'sendData' | 'subscribeRPC';
 
+export const actionConfigs: Actions[] = ['sendData', 'subscribeRPC'];
+
 export type Device = {
   id: string;
   name: string;

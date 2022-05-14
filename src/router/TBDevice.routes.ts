@@ -15,6 +15,7 @@ import {
   deleteMockData,
   setTBDeviceAction,
   getTBDeviceAction,
+  stopTBDeviceAction,
 } from '../controller/TBDevice.controller';
 import getTenantToken from '../middleware/getTenantToken.middleware';
 
@@ -42,8 +43,6 @@ router.post('/data/setting/create', createMockData);
 router.post('/data/setting/update', updateMockData);
 router.delete('/data/setting/delete/:name', deleteMockData);
 
-router.post('/action/stop', (req, res) => {
-  res.status(200).send('API 開發中');
-});
+router.post('/action/stop', stopTBDeviceAction);
 
 export default router;

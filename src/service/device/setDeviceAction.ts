@@ -1,5 +1,4 @@
 /* eslint-disable no-await-in-loop */
-// import { Device } from '../../interface/device';
 import { delay } from '../../helpers/utility';
 import { Actions, Devices } from '../../interface/serviceRequest/device/setTBDeviceActionDTO';
 import { TBDeviceEntity } from '../../library/thingsboardConnecter/mqtt';
@@ -83,10 +82,14 @@ export function getAllDeviceAction() {
   return DTO;
 }
 
-export async function stopDeviceAction(deviceIdList: string[]) {
+export function stopDeviceAction(deviceIdList: string[], action: Actions) {
   deviceIdList.forEach((id) => {
     const deviceEntity = map.get(id);
-    // deviceEntity
+    if (!deviceEntity) loggers.warning(`device id: ${id} not found`);
+    else {
+      if (action === 'sendData') deviceEntity.stopMQTTClientSendData();
+      if (action === 'subscribeRPC') deviceEntity.unsubscribeRPCTopic();
+    }
   });
 }
 
