@@ -1,4 +1,4 @@
-import MockDataListEntity from './MockDataListEntity';
+import MockDataListEntity from './mockDataListEntity';
 
 const mockDataListEntity = new MockDataListEntity();
 
