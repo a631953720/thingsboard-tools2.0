@@ -19,7 +19,7 @@ type Device = {
 };
 
 function initConnect(name: string, token: string) {
-  const client = mqtt.connect(`mqtt://${TB_SERVER.ip}:1883`, {
+  const client = mqtt.connect(`mqtt://${TB_SERVER.mqttHost}`, {
     username: token,
   });
 

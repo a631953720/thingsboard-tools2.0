@@ -8,7 +8,7 @@ const loggers = new WinstonLogger({ type: 'Device' });
 export default async function getTBDevice(token: string, pageSize = 1024, page = 0, sortProperty = 'createdTime', sortOrder = 'DESC', type = '') {
   const response = await APICaller({
     method: 'GET',
-    url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/tenant/deviceInfos?pageSize=${pageSize}&page=${page}&sortProperty=${sortProperty}&sortOrder=${sortOrder}&type=${type}`,
+    url: `http://${TB_SERVER.apiHost}/api/tenant/deviceInfos?pageSize=${pageSize}&page=${page}&sortProperty=${sortProperty}&sortOrder=${sortOrder}&type=${type}`,
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': `Bearer ${token}`,
