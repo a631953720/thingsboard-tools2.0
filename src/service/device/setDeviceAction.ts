@@ -12,6 +12,11 @@ const sendDataDelay = 1;
 const availableActions: Actions[] = ['sendData', 'subscribeRPC'];
 const map: Map<string, TBDeviceEntity> = new Map();
 
+function checkCanGetDataEntity(client: TBDeviceEntity) {
+  loggers.debug(client.getInfos());
+  return client.getCanMapMockDataEntity();
+}
+
 function checkHistoryActionIsRepeat(newAction: Actions[] | undefined, oldAction: Actions[] | undefined, target: Actions) {
   if (newAction && oldAction) {
     const a = newAction.findIndex((i) => i === target);
@@ -34,38 +39,46 @@ async function setClientAction(client: TBDeviceEntity, action: Actions[]) {
 
 export async function setDevicesAction(deviceList: Devices) {
   for (let i = 0; i < deviceList.length; i += 1) {
-    const { action, id, name } = deviceList[i];
+    const { action = [], id, name } = deviceList[i];
     const findClient = map.get(id);
+    let copyAction = [...action];
     if (findClient) {
       simpleMsg(`device "${name}" has been exist, try to overwrite action`);
       await delay(allDelay);
+      findClient.updateSendDataFlag();
+      if (checkCanGetDataEntity(findClient) === false) {
+        copyAction = copyAction.filter((v) => v !== 'sendData');
+      }
 
       // 避免反覆的解除訂閱造成無法正常接收RPC的訊息
       // 若上次的行為有subscribeRPC，則重置subscribeRPC以外的行為
-      if (checkHistoryActionIsRepeat(action, findClient.getAction(), 'subscribeRPC')) {
+      if (checkHistoryActionIsRepeat(copyAction, findClient.getAction(), 'subscribeRPC')) {
         await findClient.stopMQTTClientSendData();
-        if (action) {
-          await setClientAction(
-            findClient,
-            action.filter((a) => a !== 'subscribeRPC')
-          );
-        }
+        await setClientAction(
+          findClient,
+          copyAction.filter((a) => a !== 'subscribeRPC')
+        );
       } else {
         // reset client action
         await findClient.stopMQTTClientSendData();
         await findClient.unsubscribeRPCTopic();
         // set client action
-        if (action) await setClientAction(findClient, action);
+        await setClientAction(findClient, copyAction);
       }
 
-      findClient.updateAction(action);
+      findClient.updateAction(copyAction);
     } else {
       // init mqtt client
       await delay(allDelay);
       const client = new TBDeviceEntity(deviceList[i], sendDataDelay);
+      client.updateSendDataFlag();
+      if (checkCanGetDataEntity(client) === false) {
+        copyAction = copyAction.filter((v) => v !== 'sendData');
+      }
 
       map.set(id, client);
-      if (action) await setClientAction(client, action);
+      await setClientAction(client, copyAction);
+      client.updateAction(copyAction);
     }
   }
 }
