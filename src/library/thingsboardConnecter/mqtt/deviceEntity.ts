@@ -1,4 +1,4 @@
-import mqtt from 'mqtt';
+import mqtt, { MqttClient } from 'mqtt';
 import { TB_SERVER } from '../../../constants/env';
 import { simpleMsg } from '../../../helpers/loggers';
 import { delayInterval } from '../../../helpers/utility';
@@ -6,6 +6,7 @@ import { jsonParse, jsonStringify } from '../../../helpers/jsonHandler';
 import MQTTClientEntity from './clients';
 import { Actions } from '../../../interface/serviceRequest/device/setTBDeviceActionDTO';
 import Mock from '../../mockData';
+import MockDataEntity from '../../../library/mockData/mockDataEntity';
 
 const MQTTClients = new MQTTClientEntity();
 
@@ -58,6 +59,8 @@ export default class TBDeviceEntity {
   // 能找到匹配的假資料產生實體，就設定為true
   private canMapMockDataEntity: boolean;
 
+  private mockDataEntity?: MockDataEntity;
+
   constructor(device: Device, sendDataDelay: number) {
     this.device = device;
     this.sendDataDelay = sendDataDelay;
@@ -77,15 +80,21 @@ export default class TBDeviceEntity {
 
     const entity = Mock.getMockDataEntity(this.device.type);
     if (!entity) this.canMapMockDataEntity = false;
-    this.canMapMockDataEntity = true;
+    else this.canMapMockDataEntity = true;
   }
 
   /**
    * 更新實體狀態，是否可配對到對應的 MockDataEntity
-   * @param flag 可配對為true否則false
    */
-  private updateSendDataFlag(flag: boolean) {
-    this.canMapMockDataEntity = flag;
+  public updateSendDataFlag() {
+    const mock = Mock.getMockDataEntity(this.device.type);
+    if (mock) {
+      this.mockDataEntity = mock;
+      this.canMapMockDataEntity = true;
+      return true;
+    }
+    this.canMapMockDataEntity = false;
+    return false;
   }
 
   /**
@@ -101,6 +110,13 @@ export default class TBDeviceEntity {
       endTime: this.endTime,
       canMapMockDataEntity: this.canMapMockDataEntity,
     };
+  }
+
+  /**
+   * getCanMapMockDataEntity
+   */
+  public getCanMapMockDataEntity() {
+    return this.canMapMockDataEntity;
   }
 
   /**
@@ -127,68 +143,68 @@ export default class TBDeviceEntity {
     this.device.action = action;
   }
 
+  private startToSendMockData(client: MqttClient) {
+    const mock = this.mockDataEntity;
+    if (mock) {
+      this.sendTimes = 0;
+      const id = delayInterval(this.sendDataDelay, () => {
+        const rawData = jsonStringify(mock.generate());
+        client.publish('v1/devices/me/telemetry', rawData, () => {
+          simpleMsg(`${this.device.name} send data`);
+          this.historySendTimes += 1;
+          this.sendTimes += 1;
+          this.endTime = new Date().getTime();
+        });
+      });
+      this.timer = id;
+      this.startTime = new Date().getTime();
+    }
+  }
+
   /**
    * 會嘗試尋找對應的MockDataEntity並設置發送資料的計時器
    * 若有對應會更新 canMapMockDataEntity 的屬性為true
    * 告知使用者此裝置可以發送訊息
-   * 找不到則是忽略此次設定，並回傳false
-   * @returns NodeJS.Timer | false
    */
   public async setMQTTClientSendData() {
     const { client, timer } = this;
-    if (timer) return timer;
-    if (client) {
-      const mock = Mock.getMockDataEntity(this.device.type);
-      if (mock) {
-        this.sendTimes = 0;
-        const id = delayInterval(this.sendDataDelay, () => {
-          const rawData = jsonStringify(mock.generate());
-          client.publish('v1/devices/me/telemetry', rawData, () => {
-            simpleMsg(`${this.device.name} send data`);
-            this.historySendTimes += 1;
-            this.sendTimes += 1;
-            this.endTime = new Date().getTime();
-          });
+    if (timer) return;
+    if (client) this.startToSendMockData(client);
+  }
+
+  private startToSubscribeRPCTopic(client: MqttClient) {
+    const { device, firstToInitOnMessage } = this;
+    simpleMsg(`${device.name} subscribe TB RPC topic`);
+    client.subscribe('v1/devices/me/rpc/request/+');
+    if (firstToInitOnMessage) {
+      client.on('message', (topic, message) => {
+        simpleMsg(`device: ${device.name}`);
+        simpleMsg(`request.topic: ${topic}`);
+        simpleMsg('request.body: ', jsonParse(message));
+
+        const serverRPCMessage = jsonParse(message);
+        const requestId = topic.slice('v1/devices/me/rpc/request/'.length);
+        const responsePayload = jsonStringify({
+          method: serverRPCMessage.method,
+          params: {
+            ...serverRPCMessage.params,
+            isDone: true,
+          },
         });
-        this.timer = id;
-        this.updateSendDataFlag(true);
-        this.startTime = new Date().getTime();
-        return id;
-      }
-      this.updateSendDataFlag(false);
-      return false;
+
+        // client acts as an echo service
+        client.publish(`v1/devices/me/rpc/response/${requestId}`, responsePayload);
+      });
     }
-    return false;
   }
 
   /**
    * 命令裝置訂閱RPC topic，若該裝置已經訂閱過則不再執行，並回傳false
    */
   public async subscribeRPCTopic() {
-    const { client, device, firstToInitOnMessage } = this;
+    const { client } = this;
     if (client) {
-      simpleMsg(`${device.name} subscribe TB RPC topic`);
-      client.subscribe('v1/devices/me/rpc/request/+');
-      if (firstToInitOnMessage) {
-        client.on('message', (topic, message) => {
-          simpleMsg(`device: ${device.name}`);
-          simpleMsg(`request.topic: ${topic}`);
-          simpleMsg('request.body: ', jsonParse(message));
-
-          const serverRPCMessage = jsonParse(message);
-          const requestId = topic.slice('v1/devices/me/rpc/request/'.length);
-          const responsePayload = jsonStringify({
-            method: serverRPCMessage.method,
-            params: {
-              ...serverRPCMessage.params,
-              isDone: true,
-            },
-          });
-
-          // client acts as an echo service
-          client.publish(`v1/devices/me/rpc/response/${requestId}`, responsePayload);
-        });
-      }
+      this.startToSubscribeRPCTopic(client);
       this.firstToInitOnMessage = false;
     }
     return false;
