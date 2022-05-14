@@ -19,3 +19,11 @@ steps:
   - docker rm -f thingsoboard-tools
   - docker build -t thingsoboard-tools .
   - docker run -p 8080:8080 --name "thingsoboard-tools" -d thingsoboard-tools
+
+trigger:
+  branch:
+  - main
+  event:
+  - push
+  - pull_request
+  - tag
