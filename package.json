@@ -10,9 +10,6 @@
     "lint": "eslint --ext .ts src",
     "format": "eslint --ext .ts src --fix --cache "
   },
-  "pre-commit": [
-    "lint"
-  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
