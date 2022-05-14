@@ -20,8 +20,10 @@ export const SERVER = {
 };
 
 export const TB_SERVER = {
-  ip: process.env.TB_SERVER_IP || '127.0.0.1',
-  port: process.env.TB_SERVER_PORT || '80',
+  // ip: process.env.TB_SERVER_IP || '127.0.0.1',
+  // port: process.env.TB_SERVER_PORT || '80',
+  apiHost: process.env.TB_SERVER_HOST || '127.0.0.1',
+  mqttHost: process.env.TB_MQTT_HOST || '127.0.0.1:1883',
 };
 
 export const TB_USER = {

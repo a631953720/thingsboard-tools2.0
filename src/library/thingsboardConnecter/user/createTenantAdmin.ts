@@ -10,7 +10,7 @@ const loggers = new WinstonLogger({ type: 'Tenant' });
 export default async function createTenantAdmin(adminToken: string, tenantAdminsProfile: TenantAdminsProfileProps) {
   const response = await APICaller({
     method: 'post',
-    url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/tenant`,
+    url: `http://${TB_SERVER.apiHost}/api/tenant`,
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': `Bearer ${adminToken}`,

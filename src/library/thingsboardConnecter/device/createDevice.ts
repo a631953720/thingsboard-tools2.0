@@ -10,7 +10,7 @@ const loggers = new WinstonLogger({ type: 'Device' });
 export default async function createTBDevice(token: string, deviceProfile: DeviceProfile) {
   const response = await APICaller({
     method: 'post',
-    url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/device`,
+    url: `http://${TB_SERVER.apiHost}/api/device`,
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': `Bearer ${token}`,

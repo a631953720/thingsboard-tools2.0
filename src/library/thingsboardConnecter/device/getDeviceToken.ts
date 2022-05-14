@@ -8,7 +8,7 @@ const loggers = new WinstonLogger({ type: 'Device' });
 export default async function getTBDeviceToken(token: string, deviceId: string) {
   const response = await APICaller({
     method: 'GET',
-    url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/device/${deviceId}/credentials`,
+    url: `http://${TB_SERVER.apiHost}/api/device/${deviceId}/credentials`,
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': `Bearer ${token}`,

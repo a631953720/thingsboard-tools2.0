@@ -8,7 +8,7 @@ const loggers = new WinstonLogger({ type: 'Tenant' });
 export default async function loginByTenantId(token: string, tenantId: string) {
   const reponse = await APICaller({
     method: 'get',
-    url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/user/${tenantId}/token`,
+    url: `http://${TB_SERVER.apiHost}/api/user/${tenantId}/token`,
     headers: {
       'Content-Type': 'application/json',
       'X-Authorization': `Bearer ${token}`,
