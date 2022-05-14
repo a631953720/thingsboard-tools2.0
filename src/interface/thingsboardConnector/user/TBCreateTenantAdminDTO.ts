@@ -1,24 +1,24 @@
 import { CreateTenantAdminRes } from './TBUserInterface';
 
 export default class TBCreateTenantAdminDTO implements CreateTenantAdminRes {
-    status: number;
+  status: number;
 
-    id: {
-        entityType: string;
-        id: string;
-    };
+  id: {
+    entityType: string;
+    id: string;
+  };
 
-    name: string;
+  name: string;
 
-    email: string;
+  email: string;
 
-    errorMessage: any;
+  errorMessage: any;
 
-    constructor(data: any) {
-        this.status = data.status;
-        this.id = data.id;
-        this.name = data.name;
-        this.email = data.email;
-        this.errorMessage = data.errorMessage;
-    }
+  constructor(data: any) {
+    this.status = data.status;
+    this.id = data.id;
+    this.name = data.name;
+    this.email = data.email;
+    this.errorMessage = data.errorMessage;
+  }
 }

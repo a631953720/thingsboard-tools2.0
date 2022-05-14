@@ -4,11 +4,11 @@ import TBSearchTenantAdminDTO from '../../../interface/thingsboardConnector/user
 import TBSearchTenantDTO from '../../../interface/thingsboardConnector/user/TBSearchTenantDTO';
 
 export default function isTenantEntityNotFound(entity: TBSearchTenantDTO | TBSearchTenantAdminDTO) {
-    if (checkStatusError(entity)) {
-        return true;
-    }
-    if (checkTenantAdminOrTenantEmpty(entity)) {
-        return true;
-    }
-    return false;
+  if (checkStatusError(entity)) {
+    return true;
+  }
+  if (checkTenantAdminOrTenantEmpty(entity)) {
+    return true;
+  }
+  return false;
 }

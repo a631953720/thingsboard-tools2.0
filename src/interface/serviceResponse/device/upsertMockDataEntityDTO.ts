@@ -1,16 +1,16 @@
 export default class UpsertMockDataEntityDTO {
-    status: number;
+  status: number;
 
-    name: string;
+  name: string;
 
-    config: object;
+  config: object;
 
-    errorMessage?: any;
+  errorMessage?: any;
 
-    constructor(data: any) {
-        this.status = data.status;
-        this.name = data.name;
-        this.config = data.config;
-        this.errorMessage = data.errorMessage;
-    }
+  constructor(data: any) {
+    this.status = data.status;
+    this.name = data.name;
+    this.config = data.config;
+    this.errorMessage = data.errorMessage;
+  }
 }
