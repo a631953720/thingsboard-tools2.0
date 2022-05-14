@@ -46,9 +46,9 @@ npm i
 PORT=3000
 DEBUT=true
 
-# TB Server所在位置
-TB_SERVER_IP=127.0.0.1
-TB_SERVER_PORT=1618
+# TB Server所在位置，部屬時可以換成container name
+TB_SERVER_HOST=127.0.0.1:1618
+TB_MQTT_HOST=127.0.0.1:1883
 
 # TB 帳號相關設定
 TB_ADMIN_EMAIL=sysadmin@thingsboard.org

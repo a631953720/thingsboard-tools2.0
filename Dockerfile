@@ -10,6 +10,8 @@ ENV TENANT_EMAIL=a631953720@GMAIL.COM
 ENV TB_ADMIN_EMAIL=sysadmin@thingsboard.org
 ENV TENANT_ADMIN_NAME=thingsboard-tools-tenant-admin
 ENV TENANT_NAME=thingsboard-tools-tenant
+# drone會儲存password，若要測試可以直接在這裡指定密碼
+# ENV TB_ADMIN_PASSWORD="psw"
 
 RUN cd src/config && \
 echo PORT=8080 >> production.env && \
