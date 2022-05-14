@@ -9,16 +9,16 @@ server:
     from_secret: ssh_psw
 
 steps:
-- name: greeting
+- name: deploy
   environment:
     TB_ADMIN_EMAIL:
       from_secret: TB_ADMIN_EMAIL
     TB_ADMIN_PASSWORD:
       from_secret: TB_ADMIN_PASSWORD
   commands:
-  - docker rm -f thingsoboard-tools
-  - docker build -t thingsoboard-tools .
-  - docker run -p 8080:8080 --name "thingsoboard-tools" -d thingsoboard-tools
+  - docker rm -f thingsboard-tools
+  - docker build -t thingsboard-tools .
+  - docker run -p 8080:8080 --name "thingsboard-tools" -d thingsboard-tools
 
 trigger:
   branch:
