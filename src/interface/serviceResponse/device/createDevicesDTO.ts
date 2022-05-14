@@ -1,27 +1,27 @@
 interface CreateDevicesRes {
-    status: number;
-    list: Array<{
-        id: string;
-        name: string;
-        token: string;
-    }>;
-    errorMessage?: any;
+  status: number;
+  list: Array<{
+    id: string;
+    name: string;
+    token: string;
+  }>;
+  errorMessage?: any;
 }
 
 export default class CreateDevicesDTO implements CreateDevicesRes {
-    status: number;
+  status: number;
 
-    list: Array<{
-        id: string;
-        name: string;
-        token: string;
-    }>;
+  list: Array<{
+    id: string;
+    name: string;
+    token: string;
+  }>;
 
-    errorMessage?: any;
+  errorMessage?: any;
 
-    constructor(data: any) {
-        this.status = data.status;
-        this.list = data.list;
-        this.errorMessage = data.errorMessage;
-    }
+  constructor(data: any) {
+    this.status = data.status;
+    this.list = data.list;
+    this.errorMessage = data.errorMessage;
+  }
 }

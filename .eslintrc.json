@@ -15,9 +15,9 @@
     "rules": {
         "semi": ["error", "always"],
         "quotes": ["error", "single"],
-        "indent": ["error", 4],
         "import/no-unresolved": 0,
         "import/extensions": 0,
+        "no-unused-vars": "warn",
         "prettier/prettier": [
             "error",
             {
@@ -25,7 +25,7 @@
                 "trailingComma": "es5",
                 "singleQuote": true,
                 "printWidth": 150,
-                "tabWidth": 4,
+                "tabWidth": 2,
                 "endOfLine": "lf",
                 "arrowParens": "always"
             }

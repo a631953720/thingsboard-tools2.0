@@ -8,16 +8,16 @@ import TBCreateDeviceDTO from '../../../interface/thingsboardConnector/device/TB
 const loggers = new WinstonLogger({ type: 'Device' });
 
 export default async function createTBDevice(token: string, deviceProfile: DeviceProfile) {
-    const response = await APICaller({
-        method: 'post',
-        url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/device`,
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Authorization': `Bearer ${token}`,
-        },
-        data: jsonStringify(deviceProfile),
-    });
-    const DTO = new TBCreateDeviceDTO(response);
-    loggers.debug({ DTO }, 'Create device');
-    return DTO;
+  const response = await APICaller({
+    method: 'post',
+    url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/device`,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Authorization': `Bearer ${token}`,
+    },
+    data: jsonStringify(deviceProfile),
+  });
+  const DTO = new TBCreateDeviceDTO(response);
+  loggers.debug({ DTO }, 'Create device');
+  return DTO;
 }

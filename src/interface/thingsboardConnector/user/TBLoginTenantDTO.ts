@@ -1,18 +1,18 @@
 import { LoginTenantRes } from './TBUserInterface';
 
 export default class TBLoginTenantDTO implements LoginTenantRes {
-    status: number;
+  status: number;
 
-    token: string;
+  token: string;
 
-    refreshToken: string;
+  refreshToken: string;
 
-    errorMessage?: any;
+  errorMessage?: any;
 
-    constructor(data: any) {
-        this.status = data.status;
-        this.token = data.token;
-        this.refreshToken = data.refreshToken;
-        this.errorMessage = data.errorMessage;
-    }
+  constructor(data: any) {
+    this.status = data.status;
+    this.token = data.token;
+    this.refreshToken = data.refreshToken;
+    this.errorMessage = data.errorMessage;
+  }
 }

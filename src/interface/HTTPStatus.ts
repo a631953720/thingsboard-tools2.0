@@ -1,5 +1,5 @@
 export type HTTPStatusRes = {
-    status: number;
-    data?: any;
-    errorMessage?: any;
+  status: number;
+  data?: any;
+  errorMessage?: any;
 };

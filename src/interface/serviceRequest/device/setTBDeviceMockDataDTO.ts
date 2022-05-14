@@ -1,10 +1,10 @@
 export default class SetTBDeviceMockDataDTO {
-    name: string;
+  name: string;
 
-    data: object;
+  data: object;
 
-    constructor(data: { name: string; data: object }) {
-        this.name = data.name.toString();
-        this.data = data.data;
-    }
+  constructor(data: { name: string; data: object }) {
+    this.name = data.name.toString();
+    this.data = data.data;
+  }
 }

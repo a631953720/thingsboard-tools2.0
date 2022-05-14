@@ -8,15 +8,15 @@ import LoginSystemAdminDTO from '../../../interface/thingsboardConnector/user/TB
 const loggers = new WinstonLogger({ type: 'System admin' });
 
 export default async function loginSystemAdmin(adminProfile: SystemAdminProfileProps) {
-    const response = await APICaller({
-        method: 'post',
-        url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/auth/login`,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        data: jsonStringify(adminProfile),
-    });
-    const DTO = new LoginSystemAdminDTO(response);
-    loggers.debug({ adminProfile: adminProfile.username, DTO }, 'Login admin account');
-    return DTO;
+  const response = await APICaller({
+    method: 'post',
+    url: `http://${TB_SERVER.ip}:${TB_SERVER.port}/api/auth/login`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: jsonStringify(adminProfile),
+  });
+  const DTO = new LoginSystemAdminDTO(response);
+  loggers.debug({ adminProfile: adminProfile.username, DTO }, 'Login admin account');
+  return DTO;
 }

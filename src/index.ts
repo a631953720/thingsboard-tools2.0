@@ -16,12 +16,12 @@ app.use(getTBAdminToken);
 app.use('/TB/user', TBUser);
 app.use('/TB/device', TBDevice);
 app.get('/hello', (req, res, next) => {
-    try {
-        // throw new Error('1');
-        res.status(200).send('hi');
-    } catch (error) {
-        next(error);
-    }
+  try {
+    // throw new Error('1');
+    res.status(200).send('hi');
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.use(notFoundErrorHandler);

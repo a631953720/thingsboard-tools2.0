@@ -1,23 +1,23 @@
 export default class GetDeviceDTO {
-    status: number;
+  status: number;
 
-    deviceList: Array<{
-        id: string;
-        name: string;
-        type: string;
-        label: string;
-        createdTime: number;
-        token: string;
-    }>;
+  deviceList: Array<{
+    id: string;
+    name: string;
+    type: string;
+    label: string;
+    createdTime: number;
+    token: string;
+  }>;
 
-    totalElements: number;
+  totalElements: number;
 
-    errorMessage?: any;
+  errorMessage?: any;
 
-    constructor(data: any) {
-        this.status = data.status;
-        this.deviceList = data.data;
-        this.totalElements = data.totalElements;
-        this.errorMessage = data.errorMessage;
-    }
+  constructor(data: any) {
+    this.status = data.status;
+    this.deviceList = data.data;
+    this.totalElements = data.totalElements;
+    this.errorMessage = data.errorMessage;
+  }
 }
