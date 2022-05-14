@@ -1,6 +1,6 @@
 kind: pipeline
 type: ssh
-name: default
+name: deploy to VM
 
 server:
   host: 192.168.56.1 # 0.0.0.0 127.0.0.1 localhost 無法使用
