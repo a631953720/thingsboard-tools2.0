@@ -1,16 +1,21 @@
 kind: pipeline
-type: docker
+type: ssh
 name: default
+
+server:
+  host: 192.168.56.1 # 0.0.0.0 127.0.0.1 localhost 無法使用
+  user: test
+  password:
+    from_secret: ssh_psw
 
 steps:
 - name: greeting
-  image: alpine
+  environment:
+    TB_ADMIN_EMAIL:
+      from_secret: TB_ADMIN_EMAIL
+    TB_ADMIN_PASSWORD:
+      from_secret: TB_ADMIN_PASSWORD
   commands:
-  - echo hello
-  - echo world
-  when:
-    branch:
-    - chore/CICD
-  trigger:
-    event:
-    - push
+  - docker rm -f thingsoboard-tools
+  - docker build -t thingsoboard-tools .
+  - docker run -p 8080:8080 --name "thingsoboard-tools" -d thingsoboard-tools
