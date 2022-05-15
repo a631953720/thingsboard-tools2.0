@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import getTBAdminToken from './middleware/getTBAdminToken.middleware';
 import notFoundErrorHandler from './middleware/notFoundError.middleware';
 import controllerErrorHandler from './middleware/controllerError.middleware';
@@ -10,6 +11,7 @@ import { TBUser, TBDevice } from './router';
 const app = express();
 const { port } = SERVER;
 
+app.use(cors());
 app.use(express.json());
 app.use(getTBAdminToken);
 
