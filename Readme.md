@@ -73,9 +73,8 @@ npm run start:dev
 `TB_APIs.postman_collection.json` 是我在測試API的postman設定，由於目前尚未新增swagger，暫時只能使用postman匯出的檔案提供API測試。
 
 # 預計更新項目
-1. 自訂上傳裝置的資料結構 (優先)
-2. device API 更加完整
-3. 其他更多的功能
+- [x] 自訂上傳裝置的資料結構 (優先)
+- [ ] 更多的功能
 
 <!-- ## 3. APIs
 

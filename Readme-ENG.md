@@ -44,6 +44,7 @@ Improving your development efficiency on re-development of the thingsboard platf
 
 1. Get the tenant token of thingsboard easier.
 2. Need some virtual device onto the thingsboard, and you can control virtual device(s) behavior.
+3. Dynamic setting the virtual device action.
 
 
 ## Requirements
@@ -99,6 +100,5 @@ We provide the POSTMAN collection file for testing, the swagger document will pr
 
 ## TODO
 
-- Customize the data format for virtual device upload data. (High priority)
-- Device API
-- And more...
+- [x] Customize the data format for virtual device upload data. (High priority)
+- [ ] And more...
