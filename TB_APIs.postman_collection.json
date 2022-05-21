@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "fdd23fd5-648a-4188-849e-4bd1894b41ef",
 		"name": "TB_APIs",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8187701"
 	},
 	"item": [
 		{
@@ -12,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceCount\": 2,\r\n    \"deviceName\": \"test\",\r\n    \"deviceType\": \"hehe\"\r\n}",
+					"raw": "{\r\n    \"deviceCount\": 0,\r\n    \"deviceName\": \"test\",\r\n    \"deviceType\": \"hehe\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,15 +21,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/TB/device/create",
-					"protocol": "http",
+					"raw": "{{server}}/TB/device/create",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{server}}"
 					],
-					"port": "3000",
 					"path": [
 						"TB",
 						"device",
@@ -53,15 +49,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/TB/device/delete",
-					"protocol": "http",
+					"raw": "{{server}}/TB/device/delete",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{server}}"
 					],
-					"port": "3000",
 					"path": [
 						"TB",
 						"device",
@@ -77,18 +68,33 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:3000/TB/device/list",
-					"protocol": "http",
+					"raw": "{{server}}/TB/device/list",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{server}}"
 					],
-					"port": "3000",
 					"path": [
 						"TB",
 						"device",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get devices actions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/TB/device/action/list",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"TB",
+						"device",
+						"action",
 						"list"
 					]
 				}
@@ -102,7 +108,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"name\": \"device-0\",\r\n            \"id\": \"e1c4b5a0-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"d8EZAuUNKg0nbg0pZIPf\",\r\n            \"action\": [\r\n                \"sendData\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"device-1\",\r\n            \"id\": \"e1df6990-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"nFVueFPhNsR4RbEj90fY\",\r\n            \"action\": [\r\n                \"subscribeRPC\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"device-2\",\r\n            \"id\": \"e1f9cf60-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"j1aEqg2vLfGGEeG18KqM\",\r\n            \"action\": [\r\n                \"subscribeRPC\",\r\n                \"sendData\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"device-3\",\r\n            \"id\": \"e21aebf0-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"jWXQv23fU8nXDin1nbRx\",\r\n            \"action\": []\r\n        },\r\n        {\r\n            \"name\": \"device-4\",\r\n            \"id\": \"e22991f0-8b5c-11ec-8a05-abf76407a14f\",\r\n            \"token\": \"5cx48k7IhAcoSwMr1G8k\",\r\n            \"action\": []\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"id\": \"c0db4640-9180-11ec-b120-e5f12fac1d2c\",\r\n            \"name\": \"test-1\",\r\n            \"type\": \"hehe\",\r\n            \"label\": null,\r\n            \"createdTime\": 1645274271908,\r\n            \"token\": \"2BY5Km013nissm7unM28\",\r\n            \"action\": [\"sendData\",\"subscribeRPC\"]\r\n        },\r\n        {\r\n            \"id\": \"c0c7e550-9180-11ec-b120-e5f12fac1d2c\",\r\n            \"name\": \"test-0\",\r\n            \"type\": \"hehe\",\r\n            \"label\": null,\r\n            \"createdTime\": 1645274271781,\r\n            \"token\": \"yOvTVzjyMKBlvphshpKF\",\r\n            \"action\": [\"sendData\",\"subscribeRPC\"]\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -110,19 +116,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/TB/device/action",
-					"protocol": "http",
+					"raw": "{{server}}/TB/device/action/update",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{server}}"
 					],
-					"port": "3000",
 					"path": [
 						"TB",
 						"device",
-						"action"
+						"action",
+						"update"
 					]
 				}
 			},
@@ -133,16 +135,20 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceList\": [\"c0db4640-9180-11ec-b120-e5f12fac1d2c\", \"c0c7e550-9180-11ec-b120-e5f12fac1d2c\"],\r\n    \"action\": \"sendData\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/TB/device/action/stop",
-					"protocol": "http",
+					"raw": "{{server}}/TB/device/action/stop",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{server}}"
 					],
-					"port": "3000",
 					"path": [
 						"TB",
 						"device",
@@ -159,19 +165,133 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:3000/TB/user/autoLoginTenant",
-					"protocol": "http",
+					"raw": "{{server}}/TB/user/autoLoginTenant",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{server}}"
 					],
-					"port": "3000",
 					"path": [
 						"TB",
 						"user",
 						"autoLoginTenant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get device mock data entity list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/TB/device/data/setting/list",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"TB",
+						"device",
+						"data",
+						"setting",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create device mock data entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"hehe\",\r\n    \"data\": {\r\n        \"test\": 123456,\r\n        \"aaaaa\": 456789\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/TB/device/data/setting/create",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"TB",
+						"device",
+						"data",
+						"setting",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update device mock data entity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"hehe\",\r\n    \"data\": {\r\n        \"a\": [1,102],\r\n        \"b\": \"222\",\r\n        \"c\": {\r\n            \"d\": 555\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/TB/device/data/setting/update",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"TB",
+						"device",
+						"data",
+						"setting",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete device mock data entity",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"http://127.0.0.1:3000/TB/device/data/setting/list\", function (err, response) {\r",
+							"    const a = response.json();\r",
+							"    const find = a.list[0] ? a.list[0].name : null;\r",
+							"    const name = find || pm.environment.get(\"mockDataEntityName\");\r",
+							"    pm.environment.set(\"mockDataEntityName\", name);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/TB/device/data/setting/delete/{{mockDataEntityName}}",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"TB",
+						"device",
+						"data",
+						"setting",
+						"delete",
+						"{{mockDataEntityName}}"
 					]
 				}
 			},
