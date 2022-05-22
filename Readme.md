@@ -76,6 +76,9 @@ npm run start:dev
 - [x] 自訂上傳裝置的資料結構 (優先)
 - [ ] 更多的功能
 
+# 更多小工具
+此專案被收錄在[Awesome Thingsboard](https://github.com/devaskim/awesome-thingsboard/blob/main/README.md#tools)，若想了解其他好用的工具，可以前往參考看看
+
 <!-- ## 3. APIs
 
 ### 1. POST create devices
