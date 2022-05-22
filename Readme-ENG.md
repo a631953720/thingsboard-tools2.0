@@ -102,3 +102,7 @@ We provide the POSTMAN collection file for testing, the swagger document will pr
 
 - [x] Customize the data format for virtual device upload data. (High priority)
 - [ ] And more...
+
+## For more information
+This project also was recorded by [Awesome Thingsboard](https://github.com/devaskim/awesome-thingsboard/blob/main/README.md#tools).
+If you want to find other powerful developing tools, you can visit [Awesome Thingsboard](https://github.com/devaskim/awesome-thingsboard/blob/main/README.md)
