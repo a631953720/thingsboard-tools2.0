@@ -104,5 +104,6 @@ We provide the POSTMAN collection file for testing, the swagger document will pr
 - [ ] And more...
 
 ## For more information
-This project also was recorded by [Awesome Thingsboard](https://github.com/devaskim/awesome-thingsboard/blob/main/README.md#tools).
-If you want to find other powerful developing tools, you can visit [Awesome Thingsboard](https://github.com/devaskim/awesome-thingsboard/blob/main/README.md)
+This project also was recorded by [Awesome Thingsboard -- Tools](https://github.com/devaskim/awesome-thingsboard/blob/main/README.md#tools).
+
+If you want to find other powerful developing tools, you can visit [Awesome Thingsboard](https://github.com/devaskim/awesome-thingsboard/blob/main/README.md).
