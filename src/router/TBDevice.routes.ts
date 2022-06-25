@@ -28,7 +28,7 @@ router.use('/action/update', setDevicesActionValidator);
 router.use('/data/setting/create', upsertMockDataEntityValidator);
 router.use('/data/setting/update', upsertMockDataEntityValidator);
 
-router.get('/test', (req, res) => {
+router.get('/test', (_req, res) => {
   res.status(200).send('success');
 });
 
