@@ -8,6 +8,7 @@ export type Device = {
   token: string;
   type: string;
   action?: Array<Actions>;
+  frequency: number;
 };
 
 export type Devices = Array<Device>;
