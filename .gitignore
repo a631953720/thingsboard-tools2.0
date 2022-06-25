@@ -5,3 +5,5 @@ development.env
 production.env
 *.log
 .eslintcache
+
+.prettierrc*
