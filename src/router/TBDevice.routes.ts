@@ -3,6 +3,7 @@ import {
   createDevicesValidator,
   deleteDevicesValidator,
   setDevicesActionValidator,
+  setTBDeviceFrequencyValidator,
   upsertMockDataEntityValidator,
 } from '../middleware/deviceValidator.middleware';
 import {
@@ -16,6 +17,7 @@ import {
   setTBDeviceAction,
   getTBDeviceAction,
   stopTBDeviceAction,
+  setTBDeviceFrequency,
 } from '../controller/TBDevice.controller';
 import getTenantToken from '../middleware/getTenantToken.middleware';
 
@@ -27,6 +29,7 @@ router.use('/delete', deleteDevicesValidator);
 router.use('/action/update', setDevicesActionValidator);
 router.use('/data/setting/create', upsertMockDataEntityValidator);
 router.use('/data/setting/update', upsertMockDataEntityValidator);
+router.post('/action/frequency', setTBDeviceFrequencyValidator);
 
 router.get('/test', (_req, res) => {
   res.status(200).send('success');
@@ -37,6 +40,7 @@ router.post('/create', createTBDevices);
 router.delete('/delete', deleteTBDevices);
 router.get('/action/list', getTBDeviceAction);
 router.post('/action/update', setTBDeviceAction);
+router.post('/action/frequency', setTBDeviceFrequency);
 
 router.get('/data/setting/list', getMockDataList);
 router.post('/data/setting/create', createMockData);
