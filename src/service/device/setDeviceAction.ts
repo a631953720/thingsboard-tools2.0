@@ -10,7 +10,7 @@ const loggers = new WinstonLogger({ type: 'Device service' });
 const map: Map<string, TBDeviceEntity> = new Map();
 
 export async function setDevicesAction(tenantToken: string, deviceList: Devices) {
-  const errorDeviceResult: Array<Device> = [];
+  const errorDeviceResult: Array<Device & { error: any }> = [];
   // query TB entity list
   const { errorMessage, entityIdList } = await entityFind(tenantToken, {
     entityType: 'DEVICE',
@@ -34,7 +34,11 @@ export async function setDevicesAction(tenantToken: string, deviceList: Devices)
 
     const { isFind, haveBeenUsed } = checkEntity(id);
     // 如果device不存在就記錄下來，且忽略已經處理過的device
-    if (!isFind) errorDeviceResult.push(deviceList[i]);
+    if (!isFind) {
+      errorDeviceResult.push({ ...deviceList[i], error: 'device is not found' });
+      // TB 的資料庫找不到，因此要刪除map裡面對應的實體
+      map.delete(id);
+    }
     if (isFind && !haveBeenUsed) {
       await deviceActionBuilder(deviceList[i], map);
     }
