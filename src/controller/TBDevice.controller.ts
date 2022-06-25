@@ -91,8 +91,12 @@ export async function setTBDeviceAction(req: Request, res: Response, next: NextF
   try {
     const { body } = req;
     const { deviceList } = new SetTBDeviceActionReqDTO(body);
-    await setDevicesAction(deviceList);
-    return res.status(200).json(getAllDeviceAction());
+    const { status, errorMessage, errorDeviceResult } = await setDevicesAction(req.headers.TBTenantToken as string, deviceList);
+    if (errorMessage) return res.status(status).json({ errorMessage });
+    return res.status(status).json({
+      deviceActions: getAllDeviceAction(),
+      errorDeviceResult: errorDeviceResult || [],
+    });
   } catch (error) {
     return next({
       status: 500,
