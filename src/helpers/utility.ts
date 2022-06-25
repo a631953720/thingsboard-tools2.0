@@ -41,3 +41,23 @@ export function randomNum(params: number, max?: number, min?: number) {
   }
   return Math.random() * params;
 }
+
+export function handleTestTime(start: number, end: number) {
+  if (start > end) return 0;
+  const v = end - start;
+  return Number.isNaN(v) ? 0 : v;
+}
+
+export function convertTimeToString(time: number) {
+  const s = time / 1000;
+  if (s < 60) return `${s} s`;
+
+  const min = s / 60;
+  if (min < 60) return `${Math.floor(min)} min ${Math.floor(s % 60)} s`;
+
+  const hr = min / 60;
+  if (hr < 24) return `${Math.floor(hr)} hr ${Math.floor(min % 60)} min ${Math.floor(s % 60)} s`;
+
+  const d = hr / 24;
+  return `${Math.floor(d)} day ${Math.floor(hr % 24)} hr ${Math.floor(min % 60)} min ${Math.floor(s % 60)} s`;
+}
