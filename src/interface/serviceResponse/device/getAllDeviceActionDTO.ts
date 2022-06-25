@@ -1,12 +1,14 @@
+import { convertTimeToString, handleTestTime } from '../../../helpers/utility';
+
 type Devices = Array<{
   name: string;
   type: string;
   canFindMockDataEntity: boolean;
-  historySendTimes: number;
+  totalSendTimes: number;
   sendTimes: number;
   createTime: number;
   startTime: number;
-  endTime: number;
+  lastSendTime: number;
   testTime: string;
   action?: Array<string>;
   sendDataFrequency: number;
@@ -21,12 +23,12 @@ export default class GetAllDeviceActionDTO {
         name: d.name,
         type: d.type,
         action: d.action,
-        historySendTimes: d.historySendTimes,
+        totalSendTimes: d.historySendTimes,
         sendTimes: d.sendTimes,
         createTime: d.createTime,
         startTime: d.startTime,
-        endTime: d.endTime,
-        testTime: `${(d.endTime - d.startTime) / 1000} s`,
+        lastSendTime: d.endTime,
+        testTime: convertTimeToString(handleTestTime(d.startTime, d.endTime)),
         canFindMockDataEntity: d.canMapMockDataEntity,
         sendDataFrequency: d.sendDataFrequency,
       }));
