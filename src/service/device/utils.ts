@@ -7,7 +7,7 @@ import WinstonLogger, { simpleMsg } from '../../helpers/loggers';
 const loggers = new WinstonLogger({ type: 'Device service' });
 
 const allDelay = 0.1;
-const sendDataDelay = 1;
+const defaultSendDataDelay = 10;
 const availableActions: Actions[] = ['sendData', 'subscribeRPC'];
 
 // device action
@@ -86,7 +86,7 @@ export async function deviceActionBuilder(device: Device, map: Map<string, TBDev
   } else {
     // init mqtt client
     await delay(allDelay);
-    const client = new TBDeviceEntity(device, sendDataDelay);
+    const client = new TBDeviceEntity(device, defaultSendDataDelay);
     client.updateSendDataFlag();
     if (checkCanGetDataEntity(client) === false) {
       copyAction = copyAction.filter((v) => v !== 'sendData');
