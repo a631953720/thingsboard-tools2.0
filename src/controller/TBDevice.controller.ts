@@ -7,7 +7,7 @@ import CreateTBDeviceReqDTO from '../interface/serviceRequest/device/createTBDev
 import DeleteTBDeviceReqDTO from '../interface/serviceRequest/device/deleteTBDeviceDTO';
 import WinstonLogger from '../helpers/loggers';
 import SetTBDeviceActionReqDTO from '../interface/serviceRequest/device/setTBDeviceActionDTO';
-import { setDevicesAction, getAllDeviceAction, stopDeviceAction } from '../service/device/setDeviceAction';
+import { setDevicesAction, getAllDeviceAction, stopDeviceAction, setActionFrequency } from '../service/device/setDeviceAction';
 import Mock from '../library/mockData';
 import SetTBDeviceMockDataDTO from '../interface/serviceRequest/device/setTBDeviceMockDataDTO';
 import { createEntity, updateEntity, deleteEntity } from '../service/device/mockData';
@@ -112,6 +112,24 @@ export function stopTBDeviceAction(req: Request, res: Response, next: NextFuncti
     loggers.debug({ deviceIds, action }, 'stopTBDeviceAction');
     if (action) stopDeviceAction(deviceIds, action);
     return res.status(200).json(getAllDeviceAction());
+  } catch (error) {
+    return next({
+      status: 500,
+      errorMessage: 'Internal Server Error',
+    });
+  }
+}
+
+export async function setTBDeviceFrequency(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { body } = req;
+    const { deviceList, frequency } = body;
+    const { status, errorDeviceResult, errorMessage } = await setActionFrequency(req.headers.TBTenantToken as string, deviceList, frequency);
+    if (errorMessage) return res.status(status).json({ errorMessage });
+    return res.status(status).json({
+      deviceActions: getAllDeviceAction(),
+      errorDeviceResult: errorDeviceResult || [],
+    });
   } catch (error) {
     return next({
       status: 500,

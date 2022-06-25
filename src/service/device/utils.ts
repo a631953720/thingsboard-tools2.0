@@ -111,4 +111,19 @@ export function buildSetDevicesActionDTO(data: any): SetDevicesActionDTO {
     errorDeviceResult: data.errorDeviceResult,
   };
 }
+
+type SetDevicesActionFrequencyDTO = {
+  status: number;
+  errorMessage?: any;
+  errorDeviceResult?: any;
+};
+
+export function buildSetDevicesActionFrequencyDTO(data: any): SetDevicesActionFrequencyDTO {
+  return {
+    status: data.status,
+    errorMessage: data.errorMessage,
+    errorDeviceResult: data.errorDeviceResult,
+  };
+}
+
 // device action

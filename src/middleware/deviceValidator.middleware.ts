@@ -145,11 +145,11 @@ export function upsertMockDataEntityValidator(req: Request, _res: Response, next
 
 export function setTBDeviceFrequencyValidator(req: Request, _res: Response, next: NextFunction) {
   const { body } = req;
-  const { deviceList, time } = body;
+  const { deviceList, frequency } = body;
 
   if (!Array.isArray(deviceList)) return next(commonError('deviceList must be a string array'));
   if (!checkArrayValueType({ array: deviceList, type: 'string' })) return next(commonError('deviceList must be a string array'));
-  if (!checkValueType(time, 'number')) return next(commonError('time must be a number'));
+  if (!checkValueType(frequency, 'number')) return next(commonError('frequency must be a number'));
 
   return next();
 }

@@ -4,7 +4,7 @@ import { TBDeviceEntity } from '../../library/thingsboardConnecter/mqtt';
 import WinstonLogger from '../../helpers/loggers';
 import GetAllDeviceActionDTO from '../../interface/serviceResponse/device/getAllDeviceActionDTO';
 import { entityFind } from '../../library/thingsboardConnecter/entityQuery';
-import { buildSetDevicesActionDTO, checkEntityFunctionBuilder, deviceActionBuilder } from './utils';
+import { buildSetDevicesActionDTO, buildSetDevicesActionFrequencyDTO, checkEntityFunctionBuilder, deviceActionBuilder } from './utils';
 
 const loggers = new WinstonLogger({ type: 'Device service' });
 const map: Map<string, TBDeviceEntity> = new Map();
@@ -66,4 +66,45 @@ export function stopDeviceAction(deviceIdList: string[], action: Actions) {
       if (action === 'subscribeRPC') deviceEntity.unsubscribeRPCTopic();
     }
   });
+}
+
+export async function setActionFrequency(tenantToken: string, deviceIdList: string[], frequency: number) {
+  const errorDeviceResult: Array<any> = [];
+
+  // query TB entity list
+  const { errorMessage, entityIdList } = await entityFind(tenantToken, {
+    entityType: 'DEVICE',
+    entityList: deviceIdList,
+    pageLink: { page: 0, pageSize: 1024 },
+    entityFields: ['name'],
+    latestValues: [],
+  });
+
+  // 檢查是否有錯誤，並建立對照表做檢查
+  if (errorMessage) return buildSetDevicesActionFrequencyDTO({ status: 500, errorMessage: 'entityFind error' });
+  const actionMapping: Record<string, boolean> = {};
+  entityIdList.forEach((id) => {
+    actionMapping[id] = false;
+  });
+
+  const checkEntity = checkEntityFunctionBuilder(actionMapping);
+
+  for (let i = 0; i < deviceIdList.length; i += 1) {
+    const deviceId = deviceIdList[i];
+    const { isFind, haveBeenUsed } = checkEntity(deviceId);
+
+    if (!isFind) errorDeviceResult.push({ deviceId, error: 'device not found' });
+    if (isFind && !haveBeenUsed) {
+      const findClient = map.get(deviceId);
+      if (findClient) {
+        findClient.updateSendDataFrequency(frequency);
+      } else {
+        errorDeviceResult.push({ deviceId, error: 'device must be set action config first' });
+      }
+    }
+  }
+  if (errorDeviceResult.length > 0) {
+    loggers.warning(errorDeviceResult, 'errorDeviceResult length > 0');
+  }
+  return buildSetDevicesActionFrequencyDTO({ status: 200, errorDeviceResult });
 }

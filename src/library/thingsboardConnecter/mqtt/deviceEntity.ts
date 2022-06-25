@@ -109,6 +109,7 @@ export default class TBDeviceEntity {
       startTime: this.startTime,
       endTime: this.endTime,
       canMapMockDataEntity: this.canMapMockDataEntity,
+      sendDataFrequency: this.sendDataDelay,
     };
   }
 
@@ -243,6 +244,19 @@ export default class TBDeviceEntity {
       client.end();
       MQTTClients.removeClient(this.device.id);
       this.client = undefined;
+    }
+  }
+
+  /**
+   * updateSendDataFrequency
+   */
+  public updateSendDataFrequency(time: number) {
+    const { client, timer } = this;
+    this.sendDataDelay = time;
+
+    if (client && timer) {
+      this.stopMQTTClientSendData();
+      this.startToSendMockData(client);
     }
   }
 }

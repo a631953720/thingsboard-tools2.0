@@ -9,6 +9,7 @@ type Devices = Array<{
   endTime: number;
   testTime: string;
   action?: Array<string>;
+  sendDataFrequency: number;
 }>;
 
 export default class GetAllDeviceActionDTO {
@@ -27,6 +28,7 @@ export default class GetAllDeviceActionDTO {
         endTime: d.endTime,
         testTime: `${(d.endTime - d.startTime) / 1000} s`,
         canFindMockDataEntity: d.canMapMockDataEntity,
+        sendDataFrequency: d.sendDataFrequency,
       }));
     } else {
       this.devices = [];
