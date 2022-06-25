@@ -51,7 +51,7 @@ export function getAllDeviceAction() {
     // 因為send data是每次interval才會執行
     // 因此要確保Get action config list狀態是即時的
     entity.updateSendDataFlag();
-    if (entity.getCanMapMockDataEntity()) {
+    if (entity.getCanMapMockDataEntity() === false) {
       entity.deleteSendDataAction();
     }
     const infos = entity.getInfos();
