@@ -65,7 +65,6 @@ export async function deviceActionBuilder(device: Device, map: Map<string, TBDev
     if (checkCanGetDataEntity(findClient) === false) {
       copyAction = copyAction.filter((v) => v !== 'sendData');
     }
-
     // 避免反覆的解除訂閱造成無法正常接收RPC的訊息
     // 若上次的行為有subscribeRPC，則重置subscribeRPC以外的行為
     if (checkHistoryActionIsRepeat(copyAction, findClient.getAction(), 'subscribeRPC')) {
@@ -77,16 +76,20 @@ export async function deviceActionBuilder(device: Device, map: Map<string, TBDev
     } else {
       // reset client action
       await findClient.stopMQTTClientSendData();
+      findClient.deleteSendDataAction();
       await findClient.unsubscribeRPCTopic();
+      findClient.deleteSubscribeRPCAction();
       // set client action
       await setClientAction(findClient, copyAction);
     }
 
     findClient.updateAction(copyAction);
+    findClient.updateSendDataFrequency(device.frequency || defaultSendDataDelay);
+    findClient.restartSendDataIfTimerExist();
   } else {
     // init mqtt client
     await delay(allDelay);
-    const client = new TBDeviceEntity(device, defaultSendDataDelay);
+    const client = new TBDeviceEntity(device, device.frequency || defaultSendDataDelay);
     client.updateSendDataFlag();
     if (checkCanGetDataEntity(client) === false) {
       copyAction = copyAction.filter((v) => v !== 'sendData');

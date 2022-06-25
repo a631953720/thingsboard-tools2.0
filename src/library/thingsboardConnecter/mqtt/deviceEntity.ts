@@ -215,23 +215,37 @@ export default class TBDeviceEntity {
    * 清除計時器並清空timer的屬性
    */
   public async stopMQTTClientSendData() {
-    const { timer, device } = this;
+    const { timer } = this;
     if (timer) {
       clearInterval(timer);
       this.timer = undefined;
-      this.updateAction(device.action?.filter((v) => v !== 'sendData'));
     }
+  }
+
+  /**
+   * deleteSendDataAction
+   */
+  public deleteSendDataAction() {
+    const { device } = this;
+    this.updateAction(device.action?.filter((v) => v !== 'sendData'));
   }
 
   /**
    * 取消訂閱RPC topic
    */
   public async unsubscribeRPCTopic() {
-    const { client, device } = this;
+    const { client } = this;
     if (client) {
       client.unsubscribe('v1/devices/me/rpc/request/+');
-      this.updateAction(device.action?.filter((v) => v !== 'subscribeRPC'));
     }
+  }
+
+  /**
+   * deleteSubscribeRPCAction
+   */
+  public deleteSubscribeRPCAction() {
+    const { device } = this;
+    this.updateAction(device.action?.filter((v) => v !== 'subscribeRPC'));
   }
 
   /**
@@ -251,9 +265,14 @@ export default class TBDeviceEntity {
    * updateSendDataFrequency
    */
   public updateSendDataFrequency(time: number) {
-    const { client, timer } = this;
     this.sendDataDelay = time;
+  }
 
+  /**
+   * restartSendDataIfTimerExist
+   */
+  public restartSendDataIfTimerExist() {
+    const { client, timer } = this;
     if (client && timer) {
       this.stopMQTTClientSendData();
       this.startToSendMockData(client);

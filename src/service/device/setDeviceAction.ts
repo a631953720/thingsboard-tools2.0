@@ -62,8 +62,14 @@ export function stopDeviceAction(deviceIdList: string[], action: Actions) {
     const deviceEntity = map.get(id);
     if (!deviceEntity) loggers.warning(`device id: ${id} not found`);
     else {
-      if (action === 'sendData') deviceEntity.stopMQTTClientSendData();
-      if (action === 'subscribeRPC') deviceEntity.unsubscribeRPCTopic();
+      if (action === 'sendData') {
+        deviceEntity.stopMQTTClientSendData();
+        deviceEntity.deleteSendDataAction();
+      }
+      if (action === 'subscribeRPC') {
+        deviceEntity.unsubscribeRPCTopic();
+        deviceEntity.deleteSubscribeRPCAction();
+      }
     }
   });
 }
@@ -98,6 +104,7 @@ export async function setActionFrequency(tenantToken: string, deviceIdList: stri
       const findClient = map.get(deviceId);
       if (findClient) {
         findClient.updateSendDataFrequency(frequency);
+        findClient.restartSendDataIfTimerExist();
       } else {
         errorDeviceResult.push({ deviceId, error: 'device must be set action config first' });
       }
