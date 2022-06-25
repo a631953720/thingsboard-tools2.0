@@ -20,6 +20,7 @@ export default class GetAllDeviceActionDTO {
   constructor(data: any) {
     if (Array.isArray(data)) {
       this.devices = data.map((d) => ({
+        id: d.id,
         name: d.name,
         type: d.type,
         action: d.action,
