@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceCount\": 0,\r\n    \"deviceName\": \"test\",\r\n    \"deviceType\": \"hehe\"\r\n}",
+					"raw": "{\r\n    \"deviceCount\": 1,\r\n    \"deviceName\": \"TB-tools2\",\r\n    \"deviceType\": \"ggg\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -32,7 +32,39 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "create devices",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceCount\": 1,\r\n    \"deviceName\": \"TB-tools2\",\r\n    \"deviceType\": \"ggg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/TB/device/create",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"TB",
+								"device",
+								"create"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "delete devices",
@@ -41,7 +73,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"id\": \"dc9fc080-8c1d-11ec-8a05-abf76407a14f\",\r\n            \"name\": \"test-0\",\r\n            \"type\": \"hehe\",\r\n            \"label\": \"\",\r\n            \"token\": \"BLIFROyD6zYLIJnoHxBt\"\r\n        },\r\n        {\r\n            \"id\": \"dcaae410-8c1d-11ec-8a05-abf76407a14f\",\r\n            \"name\": \"test-1\",\r\n            \"type\": \"hehe\",\r\n            \"label\": \"\",\r\n            \"token\": \"2CLDRBDpEOAL0NopLEXJ\"\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"deviceList\": [\r\n        \"c5dfa660-f45c-11ec-b120-e5f12fac1d2c\"\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -60,7 +92,39 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "delete devices",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceList\": [\r\n        \"c5dfa660-f45c-11ec-b120-e5f12fac1d2c\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/TB/device/delete",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"TB",
+								"device",
+								"delete"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "get devices",
@@ -108,7 +172,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"id\": \"c0db4640-9180-11ec-b120-e5f12fac1d2c\",\r\n            \"name\": \"test-1\",\r\n            \"type\": \"hehe\",\r\n            \"label\": null,\r\n            \"createdTime\": 1645274271908,\r\n            \"token\": \"2BY5Km013nissm7unM28\",\r\n            \"action\": [\"sendData\",\"subscribeRPC\"]\r\n        },\r\n        {\r\n            \"id\": \"c0c7e550-9180-11ec-b120-e5f12fac1d2c\",\r\n            \"name\": \"test-0\",\r\n            \"type\": \"hehe\",\r\n            \"label\": null,\r\n            \"createdTime\": 1645274271781,\r\n            \"token\": \"yOvTVzjyMKBlvphshpKF\",\r\n            \"action\": [\"sendData\",\"subscribeRPC\"]\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"id\": \"cc124820-9189-11ec-b120-e5f12fac1d2c\",\r\n            \"name\": \"test2-0\",\r\n            \"type\": \"ggg\",\r\n            \"token\": \"L4DBE6QsWcY2TDZxhdgA\",\r\n            \"action\": [\"sendData\",\"subscribeRPC\"],\r\n            \"frequency\": 5\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -128,7 +192,40 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "set device action",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceList\": [\r\n        {\r\n            \"id\": \"cc124820-9189-11ec-b120-e5f12fac1d2c\",\r\n            \"name\": \"test2-0\",\r\n            \"type\": \"ggg\",\r\n            \"token\": \"L4DBE6QsWcY2TDZxhdgA\",\r\n            \"action\": [\"sendData\",\"subscribeRPC\"],\r\n            \"frequency\": 5\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/TB/device/action/update",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"TB",
+								"device",
+								"action",
+								"update"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "stop device action",
@@ -137,7 +234,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"deviceList\": [\"c0db4640-9180-11ec-b120-e5f12fac1d2c\", \"c0c7e550-9180-11ec-b120-e5f12fac1d2c\"],\r\n    \"action\": \"sendData\"\r\n}",
+					"raw": "{\r\n    \"deviceList\": [\"cc124820-9189-11ec-b120-e5f12fac1d2c\"],\r\n    \"action\": \"subscribeRPC\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -157,7 +254,72 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "stop sendData",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceList\": [\"cc124820-9189-11ec-b120-e5f12fac1d2c\"],\r\n    \"action\": \"sendData\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/TB/device/action/stop",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"TB",
+								"device",
+								"action",
+								"stop"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "stop subscribeRPC",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceList\": [\"cc124820-9189-11ec-b120-e5f12fac1d2c\"],\r\n    \"action\": \"subscribeRPC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/TB/device/action/stop",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"TB",
+								"device",
+								"action",
+								"stop"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "autoLoginTenant",
@@ -206,7 +368,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"hehe\",\r\n    \"data\": {\r\n        \"test\": 123456,\r\n        \"aaaaa\": 456789\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"ggg\",\r\n    \"data\": {\r\n        \"a\": [1,102],\r\n        \"b\": \"222\",\r\n        \"c\": {\r\n            \"d\": 555\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -227,7 +389,41 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "create device mock data entity",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ggg\",\r\n    \"data\": {\r\n        \"a\": [1,102],\r\n        \"b\": \"222\",\r\n        \"c\": {\r\n            \"d\": 555\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/TB/device/data/setting/create",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"TB",
+								"device",
+								"data",
+								"setting",
+								"create"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "update device mock data entity",
@@ -236,7 +432,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"hehe\",\r\n    \"data\": {\r\n        \"a\": [1,102],\r\n        \"b\": \"222\",\r\n        \"c\": {\r\n            \"d\": 555\r\n        }\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"ggg\",\r\n    \"data\": {\r\n        \"a\": [1,102],\r\n        \"b\": \"222\",\r\n        \"c\": {\r\n            \"d\": 555\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -266,7 +462,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.sendRequest(\"http://127.0.0.1:3000/TB/device/data/setting/list\", function (err, response) {\r",
+							"pm.sendRequest(\"http://127.0.0.1:4000/TB/device/data/setting/list\", function (err, response) {\r",
 							"    const a = response.json();\r",
 							"    const find = a.list[0] ? a.list[0].name : null;\r",
 							"    const name = find || pm.environment.get(\"mockDataEntityName\");\r",
@@ -292,6 +488,35 @@
 						"setting",
 						"delete",
 						"{{mockDataEntityName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set device send data frequency",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceList\": [\"cc124820-9189-11ec-b120-e5f12fac1d2c\"],\r\n    \"frequency\": 22\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/TB/device/action/frequency",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"TB",
+						"device",
+						"action",
+						"frequency"
 					]
 				}
 			},

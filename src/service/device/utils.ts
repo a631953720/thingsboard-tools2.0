@@ -7,7 +7,7 @@ import WinstonLogger, { simpleMsg } from '../../helpers/loggers';
 const loggers = new WinstonLogger({ type: 'Device service' });
 
 const allDelay = 0.1;
-const sendDataDelay = 1;
+const defaultSendDataDelay = 10;
 const availableActions: Actions[] = ['sendData', 'subscribeRPC'];
 
 // device action
@@ -65,7 +65,6 @@ export async function deviceActionBuilder(device: Device, map: Map<string, TBDev
     if (checkCanGetDataEntity(findClient) === false) {
       copyAction = copyAction.filter((v) => v !== 'sendData');
     }
-
     // 避免反覆的解除訂閱造成無法正常接收RPC的訊息
     // 若上次的行為有subscribeRPC，則重置subscribeRPC以外的行為
     if (checkHistoryActionIsRepeat(copyAction, findClient.getAction(), 'subscribeRPC')) {
@@ -77,16 +76,20 @@ export async function deviceActionBuilder(device: Device, map: Map<string, TBDev
     } else {
       // reset client action
       await findClient.stopMQTTClientSendData();
+      findClient.deleteSendDataAction();
       await findClient.unsubscribeRPCTopic();
+      findClient.deleteSubscribeRPCAction();
       // set client action
       await setClientAction(findClient, copyAction);
     }
 
     findClient.updateAction(copyAction);
+    findClient.updateSendDataFrequency(device.frequency || defaultSendDataDelay);
+    findClient.restartSendDataIfTimerExist();
   } else {
     // init mqtt client
     await delay(allDelay);
-    const client = new TBDeviceEntity(device, sendDataDelay);
+    const client = new TBDeviceEntity(device, device.frequency || defaultSendDataDelay);
     client.updateSendDataFlag();
     if (checkCanGetDataEntity(client) === false) {
       copyAction = copyAction.filter((v) => v !== 'sendData');
@@ -111,4 +114,19 @@ export function buildSetDevicesActionDTO(data: any): SetDevicesActionDTO {
     errorDeviceResult: data.errorDeviceResult,
   };
 }
+
+type SetDevicesActionFrequencyDTO = {
+  status: number;
+  errorMessage?: any;
+  errorDeviceResult?: any;
+};
+
+export function buildSetDevicesActionFrequencyDTO(data: any): SetDevicesActionFrequencyDTO {
+  return {
+    status: data.status,
+    errorMessage: data.errorMessage,
+    errorDeviceResult: data.errorDeviceResult,
+  };
+}
+
 // device action

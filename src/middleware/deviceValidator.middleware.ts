@@ -120,6 +120,8 @@ export function setDevicesActionValidator(req: Request, _res: Response, next: Ne
   if (!checkArrayValueType({ array: deviceList, key: 'id', type: 'string' })) return next(commonError('device id is unavailable'));
   if (!checkArrayValueType({ array: deviceList, key: 'token', type: 'string' })) return next(commonError('device token is unavailable'));
   if (!checkArrayValueType({ array: deviceList, key: 'type', type: 'string' })) return next(commonError('device type is unavailable'));
+  // eslint-disable-next-line prettier/prettier
+  if (!checkArrayValueType({ array: deviceList, key: 'frequency', type: 'number' })) return next(commonError('device frequency is unavailable'));
   if (!deviceList.every((v) => Array.isArray(v.action))) return next(commonError('device action is unavailable'));
 
   return next();
@@ -139,6 +141,17 @@ export function upsertMockDataEntityValidator(req: Request, _res: Response, next
   } catch (error) {
     return next(commonError('"data" formate error'));
   }
+
+  return next();
+}
+
+export function setTBDeviceFrequencyValidator(req: Request, _res: Response, next: NextFunction) {
+  const { body } = req;
+  const { deviceList, frequency } = body;
+
+  if (!Array.isArray(deviceList)) return next(commonError('deviceList must be a string array'));
+  if (!checkArrayValueType({ array: deviceList, type: 'string' })) return next(commonError('deviceList must be a string array'));
+  if (!checkValueType(frequency, 'number')) return next(commonError('frequency must be a number'));
 
   return next();
 }
