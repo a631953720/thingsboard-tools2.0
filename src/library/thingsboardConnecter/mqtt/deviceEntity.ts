@@ -155,6 +155,7 @@ export default class TBDeviceEntity {
           this.timer = undefined;
           this.deleteSendDataAction();
           clearInterval(id);
+          simpleMsg(`The ${this.device.name}'s mockDataEntity not exist. Clear send data interval`);
         } else {
           const rawData = jsonStringify(mock.generate());
           client.publish('v1/devices/me/telemetry', rawData, () => {
