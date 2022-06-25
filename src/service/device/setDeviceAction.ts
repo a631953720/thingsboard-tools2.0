@@ -47,9 +47,16 @@ export async function setDevicesAction(tenantToken: string, deviceList: Devices)
 
 export function getAllDeviceAction() {
   const array: any[] = [];
-  map.forEach((value) => {
-    const v = value.getInfos();
-    array.push(v);
+  loggers.debug('update device entity status', 'Get all devices action');
+  map.forEach((entity) => {
+    // 因為send data是每次interval才會執行
+    // 因此要確保Get action config list狀態是即時的
+    entity.updateSendDataFlag();
+    if (entity.getCanMapMockDataEntity() === false) {
+      entity.deleteSendDataAction();
+    }
+    const infos = entity.getInfos();
+    array.push(infos);
   });
 
   const DTO = new GetAllDeviceActionDTO(array);

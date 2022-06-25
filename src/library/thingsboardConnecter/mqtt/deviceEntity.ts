@@ -94,6 +94,7 @@ export default class TBDeviceEntity {
       return true;
     }
     this.canMapMockDataEntity = false;
+    this.mockDataEntity = undefined;
     return false;
   }
 
@@ -149,13 +150,21 @@ export default class TBDeviceEntity {
     if (mock) {
       this.sendTimes = 0;
       const id = delayInterval(this.sendDataDelay, () => {
-        const rawData = jsonStringify(mock.generate());
-        client.publish('v1/devices/me/telemetry', rawData, () => {
-          simpleMsg(`${this.device.name} send data`);
-          this.historySendTimes += 1;
-          this.sendTimes += 1;
-          this.endTime = new Date().getTime();
-        });
+        this.updateSendDataFlag();
+        if (!this.canMapMockDataEntity) {
+          this.timer = undefined;
+          this.deleteSendDataAction();
+          clearInterval(id);
+          simpleMsg(`The ${this.device.name}'s mockDataEntity not exist. Clear send data interval`);
+        } else {
+          const rawData = jsonStringify(mock.generate());
+          client.publish('v1/devices/me/telemetry', rawData, () => {
+            simpleMsg(`${this.device.name} send data`);
+            this.historySendTimes += 1;
+            this.sendTimes += 1;
+            this.endTime = new Date().getTime();
+          });
+        }
       });
       this.timer = id;
       this.startTime = new Date().getTime();
