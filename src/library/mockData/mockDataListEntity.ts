@@ -50,10 +50,14 @@ export default class MockDataListEntity {
    * 成功 create 會將實體存在Map當中，以name:MockDataEntity的方式
    */
   public createMockDataEntity(name: string, data: object) {
-    const find = this.nameList.find((n) => n === name);
+    // const find = this.nameList.find((n) => n === name);
+    const canFind = map.has(name);
 
     // can not create
-    if (find) return false;
+    if (canFind) {
+      this.updateMockDataEntity(name, data);
+      return map.get(name) as MockDataEntity;
+    }
 
     loggers.warning(`can not find MockDataEntity: ${name}, try create new one`, 'createMockDataEntity');
     const entity = new MockDataEntity(data);
