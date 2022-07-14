@@ -9,8 +9,10 @@ import { buildSetDevicesActionDTO, buildSetDevicesActionFrequencyDTO, checkEntit
 const loggers = new WinstonLogger({ type: 'Device service' });
 const map: Map<string, TBDeviceEntity> = new Map();
 
+export type SetDeviceActionErrorResult = Array<Device & { error: any }>;
+
 export async function setDevicesAction(tenantToken: string, deviceList: Devices) {
-  const errorDeviceResult: Array<Device & { error: any }> = [];
+  const errorDeviceResult: SetDeviceActionErrorResult = [];
   // query TB entity list
   const { errorMessage, entityIdList } = await entityFind(tenantToken, {
     entityType: 'DEVICE',

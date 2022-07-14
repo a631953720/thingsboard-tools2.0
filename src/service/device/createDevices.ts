@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+import { Devices } from 'interface/serviceRequest/device/setTBDeviceActionDTO';
 import { createTBDevice } from '../../library/thingsboardConnecter/device';
 import { TB_DEVICE } from '../../constants/env';
 import checkStatusError from '../../helpers/checkStatusError';
@@ -6,6 +7,7 @@ import WinstonLogger from '../../helpers/loggers';
 import { DeviceInfo, DeviceProfile } from '../../interface/thingsboardConnector/device/TBDeviceInterface';
 import CreateDevicesDTO from '../../interface/serviceResponse/device/createDevicesDTO';
 import getTBDeviceToken from '../../library/thingsboardConnecter/device/getDeviceToken';
+import { setDevicesAction, SetDeviceActionErrorResult } from './setDeviceAction';
 
 const loggers = new WinstonLogger({ type: 'Device service' });
 
@@ -42,9 +44,26 @@ export default async function createDevices(tenantToken: string, count?: number,
       token: deviceToken.credentialsId,
     });
   }
+
+  const deviceActionConfig: Devices = deviceArr.map((d) => ({
+    ...d,
+    action: [],
+    frequency: 60,
+  }));
+
+  const { errorMessage, errorDeviceResult } = await setDevicesAction(tenantToken, deviceActionConfig);
+
+  if ((errorDeviceResult as SetDeviceActionErrorResult).length > 0) {
+    loggers.warning(
+      { errorMessage, errorDeviceList: (errorDeviceResult as SetDeviceActionErrorResult).map((v) => v.name) },
+      'Init devices actions config when create device'
+    );
+  }
+
   const DTO = new CreateDevicesDTO({
     status: 201,
     list: deviceArr,
+    errorDeviceResult,
   });
   loggers.debug({ DTO }, 'Create devices to TB');
   return DTO;
