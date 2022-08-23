@@ -37,9 +37,9 @@ export function randomNum(params: number, max?: number, min?: number) {
     let v = Math.random() * params;
     if (v > max) v = max;
     if (v < min) v = min;
-    return v;
+    return Number(v.toFixed(2));
   }
-  return Math.random() * params;
+  return Number((Math.random() * params).toFixed(2));
 }
 
 export function handleTestTime(start: number, end: number) {
@@ -60,4 +60,27 @@ export function convertTimeToString(time: number) {
 
   const d = hr / 24;
   return `${Math.floor(d)} day ${Math.floor(hr % 24)} hr ${Math.floor(min % 60)} min ${Math.floor(s % 60)} s`;
+}
+
+export function DateToMMDD(date: number) {
+  const newDate = new Date(date);
+  if (newDate.toString() === 'Invalid Date') return 'Invalid Date';
+  const m = (newDate.getMonth() + 1).toString();
+  const d = newDate.getDate().toString();
+  const mm = m.length < 2 ? `0${m}` : m;
+  const dd = d.length < 2 ? `0${d}` : d;
+  return `${mm}-${dd}`;
+}
+
+export function DateFormat(date: string) {
+  const newDate = new Date(date);
+  if (newDate.toString() === 'Invalid Date') return 'Invalid Date';
+  const yyyymmdd = newDate.toISOString().split('T')[0].replace(/-/gm, '/');
+  const h = newDate.getHours().toString();
+  const m = newDate.getMinutes().toString();
+  const s = newDate.getSeconds().toString();
+  const hh = h.length < 2 ? `0${h}` : h;
+  const mm = m.length < 2 ? `0${m}` : m;
+  const ss = s.length < 2 ? `0${s}` : s;
+  return `${yyyymmdd} ${hh}:${mm}:${ss}`;
 }
