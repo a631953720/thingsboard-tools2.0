@@ -1,5 +1,6 @@
 import { SERVER } from '../constants/env';
 import winstonLoggers from './createWinstonLogger';
+import { DateFormat, DateToMMDD } from './utility';
 
 const { isDebug } = SERVER;
 const { CommonLoggerConfig, ShowSimpleMessage } = winstonLoggers;
@@ -17,7 +18,8 @@ export default class Loggers {
 
   debug(message: any, action = '') {
     if (isDebug) {
-      CommonLoggerConfig.info({
+      CommonLoggerConfig(DateToMMDD(Date.now())).info({
+        time: DateFormat(new Date().toISOString()),
         label: `[${this.type}]`,
         message: {
           action,
@@ -28,7 +30,8 @@ export default class Loggers {
   }
 
   error(message: any, action = '') {
-    CommonLoggerConfig.error({
+    CommonLoggerConfig(DateToMMDD(Date.now())).error({
+      time: DateFormat(new Date().toISOString()),
       label: `[${this.type}]`,
       message: {
         action,
@@ -38,7 +41,8 @@ export default class Loggers {
   }
 
   warning(message: any, action = '') {
-    CommonLoggerConfig.warn({
+    CommonLoggerConfig(DateToMMDD(Date.now())).warn({
+      time: DateFormat(new Date().toISOString()),
       label: `[${this.type}]`,
       message: {
         action,

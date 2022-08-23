@@ -29,18 +29,29 @@ const alignColorsAndTime = combine(
 );
 
 // This logger will show log likes debug, warning, error, etc...
-const CommonLoggerConfig = createLogger({
-  transports: [
-    new transports.Console({
-      format: alignColorsAndTime,
-    }),
-    new transports.File({
-      format: prettyPrint(), // Log file don't need color!
-      filename: './logs/error.log',
-      level: 'error',
-    }),
-  ],
-});
+const CommonLoggerConfig = (fileName = '') =>
+  createLogger({
+    transports: [
+      new transports.Console({
+        format: alignColorsAndTime,
+      }),
+      new transports.File({
+        format: prettyPrint(), // Log file don't need color!
+        filename: `Logs/${fileName}.log`,
+        level: 'error',
+      }),
+      new transports.File({
+        format: prettyPrint(), // Log file don't need color!
+        filename: `Logs/${fileName}.log`,
+        level: 'warn',
+      }),
+      new transports.File({
+        format: prettyPrint(), // Log file don't need color!
+        filename: `Logs/${fileName}.log`,
+        level: 'info',
+      }),
+    ],
+  });
 
 const createWinstonLogger = {
   ShowSimpleMessage,
